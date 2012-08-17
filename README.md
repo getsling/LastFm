@@ -34,4 +34,4 @@ https://github.com/gangverk/LastFm/issues
 
 
 ## License
-RemoteConfig is available under the MIT license. See the LICENSE file for more info.
+LastFm is available under the MIT license. See the LICENSE file for more info.
