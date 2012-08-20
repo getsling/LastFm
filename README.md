@@ -29,9 +29,9 @@ Save the session you get with `getSessionForUser:password:successHandler:failure
 
 
 ## Requirements
-LastFm is built using ARC and modern Objective-C syntax. You will need Xcode 4.4 or higher to use it in your project.
-
-You will need your own API key by registering at http://www.last.fm/api.
+* LastFm is built using ARC and modern Objective-C syntax. You will need Xcode 4.4 or higher to use it in your project.
+* You will need your own API key by registering at http://www.last.fm/api.
+* [KissXML](https://github.com/robbiehanson/KissXML)
 
 
 ## Issues and questions
