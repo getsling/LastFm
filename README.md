@@ -4,25 +4,26 @@ Last.fm SDK for iOS
 
 
 ## Usage
+```objective-c
+// Set the Last.fm session info
+[LastFm sharedInstance].api_key = @"xxx";
+[LastFm sharedInstance].api_secret = @"xxx";
+[LastFm sharedInstance].session = session;
 
-    // Set the Last.fm session info
-    [LastFm sharedInstance].api_key = @"xxx";
-    [LastFm sharedInstance].api_secret = @"xxx";
-    [LastFm sharedInstance].session = session;
+// Get artist info
+[[LastFm sharedInstance] getInfoForArtist:@"Pinn Floyd" successHandler:^(NSDictionary *result) {
+    NSLog(@"result: %@", result);
+} failureHandler:^(NSError *error) {
+    NSLog(@"error: %@", error);
+}];
 
-    // Get artist info
-    [[LastFm sharedInstance] getInfoForArtist:@"Pinn Floyd" successHandler:^(NSDictionary *result) {
-        NSLog(@"result: %@", result);
-    } failureHandler:^(NSError *error) {
-        NSLog(@"error: %@", error);
-    }];
-
-	// Get images for an artist
-    [[LastFm sharedInstance] getImagesForArtist:@"Cher" successHandler:^(NSArray *result) {
-        NSLog(@"result: %@", result);
-    } failureHandler:^(NSError *error) {
-        NSLog(@"error: %@", error);
-    }];
+// Get images for an artist
+[[LastFm sharedInstance] getImagesForArtist:@"Cher" successHandler:^(NSArray *result) {
+    NSLog(@"result: %@", result);
+} failureHandler:^(NSError *error) {
+    NSLog(@"error: %@", error);
+}];
+```
 
 Save the session you get with `getSessionForUser:password:successHandler:failureHandler:` somewhere, for example in `NSUserDefaults`, and on app start up set it back on `[LastFm sharedInstance].session`.
 
