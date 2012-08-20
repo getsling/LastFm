@@ -6,7 +6,7 @@ Last.fm SDK for iOS
 ## Usage
 
     // Set the Last.fm session info
-    [LastFm sharedInstance].api_key = @"b25b959554ed76058ac220b7b2e0a026";
+    [LastFm sharedInstance].api_key = @"xxx";
     [LastFm sharedInstance].api_secret = @"xxx";
     [LastFm sharedInstance].session = session;
 
@@ -27,10 +27,14 @@ Last.fm SDK for iOS
 Save the session you get with `getSessionForUser:password:successHandler:failureHandler:` somewhere, for example in `NSUserDefaults`, and on app start up set it back on `[LastFm sharedInstance].session`.
 
 
-## Issues and questions
-Have a bug? Please create an issue on GitHub!
+## Requirements
+LastFm is built using ARC and modern Objective-C syntax. You will need Xcode 4.4 or higher to use it in your project.
 
-https://github.com/gangverk/LastFm/issues
+You will need your own API key by registering at http://www.last.fm/api.
+
+
+## Issues and questions
+Have a bug? Please [create an issue on GitHub](https://github.com/gangverk/LastFm/issues)!
 
 
 ## License
