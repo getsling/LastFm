@@ -11,7 +11,7 @@ Last.fm SDK for iOS
 [LastFm sharedInstance].session = session;
 
 // Get artist info
-[[LastFm sharedInstance] getInfoForArtist:@"Pinn Floyd" successHandler:^(NSDictionary *result) {
+[[LastFm sharedInstance] getInfoForArtist:@"Pink Floyd" successHandler:^(NSDictionary *result) {
     NSLog(@"result: %@", result);
 } failureHandler:^(NSError *error) {
     NSLog(@"error: %@", error);

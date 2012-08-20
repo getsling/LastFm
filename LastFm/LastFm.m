@@ -12,6 +12,9 @@
 
 #define API_URL @"http://ws.audioscrobbler.com/2.0/"
 
+typedef void (^LastFmReturnBlockWithObject)(id result);
+
+
 @interface DDXMLNode (objectAtXPath)
 - (id)objectAtXPath:(NSString *)XPath;
 @end
@@ -166,13 +169,13 @@
 
 - (void)getInfoForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-    @"bio": @"./bio/content",
-    @"summary": @"./bio/summary",
-    @"name": @"./name",
-    @"listeners": @"./stats/listeners",
-    @"playcount": @"./stats/playcount",
-    @"url": @"./url",
-    @"images": @"./image"
+        @"bio": @"./bio/content",
+        @"summary": @"./bio/summary",
+        @"name": @"./name",
+        @"listeners": @"./stats/listeners",
+        @"playcount": @"./stats/playcount",
+        @"url": @"./url",
+        @"images": @"./image"
     };
 
     [self performApiCallForMethod:@"artist.getInfo"
@@ -186,12 +189,12 @@
 
 - (void)getEventsForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-    @"headliner": @"./artists/headliner",
-    @"attendance": @"./attendance",
-    @"description": @"./description",
-    @"startDate": @"./startDate",
-    @"url": @"./url",
-    @"images": @"./image"
+        @"headliner": @"./artists/headliner",
+        @"attendance": @"./attendance",
+        @"description": @"./description",
+        @"startDate": @"./startDate",
+        @"url": @"./url",
+        @"images": @"./image"
     };
 
     [self performApiCallForMethod:@"artist.getEvents"
@@ -205,11 +208,11 @@
 
 - (void)getTopAlbumsForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-    @"artist": @"./artist/name",
-    @"title": @"./name",
-    @"playcount": @"./playcount",
-    @"url": @"./url",
-    @"images": @"./image"
+        @"artist": @"./artist/name",
+        @"title": @"./name",
+        @"playcount": @"./playcount",
+        @"url": @"./url",
+        @"images": @"./image"
     };
 
     [self performApiCallForMethod:@"artist.getTopAlbums"
@@ -223,15 +226,15 @@
 
 - (void)getImagesForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-    @"format": @"format",
-    @"original": @"./sizes/size[@name=\"original\"]",
-    @"extralarge": @"./sizes/size[@name=\"extralarge\"]",
-    @"large": @"./sizes/size[@name=\"large\"]",
-    @"largesquare": @"./sizes/size[@name=\"largesquare\"]",
-    @"medium": @"./sizes/size[@name=\"medium\"]",
-    @"small": @"./sizes/size[@name=\"small\"]",
-    @"title": @"title",
-    @"utl": @"url"
+        @"format": @"format",
+        @"original": @"./sizes/size[@name=\"original\"]",
+        @"extralarge": @"./sizes/size[@name=\"extralarge\"]",
+        @"large": @"./sizes/size[@name=\"large\"]",
+        @"largesquare": @"./sizes/size[@name=\"largesquare\"]",
+        @"medium": @"./sizes/size[@name=\"medium\"]",
+        @"small": @"./sizes/size[@name=\"small\"]",
+        @"title": @"title",
+        @"utl": @"url"
     };
 
     [self performApiCallForMethod:@"artist.getImages"
@@ -247,13 +250,13 @@
 
 - (void)getInfoForAlbum:(NSString *)album artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-    @"artist": @"./artist",
-    @"name": @"./name",
-    @"listeners": @"./listeners",
-    @"playcount": @"./playcount",
-    @"url": @"./url",
-    @"images": @"./image",
-    @"releasedate": @"./releasedate"
+        @"artist": @"./artist",
+        @"name": @"./name",
+        @"listeners": @"./listeners",
+        @"playcount": @"./playcount",
+        @"url": @"./url",
+        @"images": @"./image",
+        @"releasedate": @"./releasedate"
     };
 
     [self performApiCallForMethod:@"album.getInfo"
@@ -267,11 +270,11 @@
 
 - (void)getTracksForAlbum:(NSString *)album artist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-    @"rank": @"@rank",
-    @"artist": @"./artist/name",
-    @"name": @"./name",
-    @"duration": @"./duration",
-    @"url": @"./url"
+        @"rank": @"@rank",
+        @"artist": @"./artist/name",
+        @"name": @"./name",
+        @"duration": @"./duration",
+        @"url": @"./url"
     };
 
     [self performApiCallForMethod:@"album.getInfo"
@@ -289,13 +292,59 @@
     NSString *authToken = [self md5sumFromString:[NSString stringWithFormat:@"%@%@", [username lowercaseString], [self md5sumFromString:password]]];
 
     NSDictionary *mappingObject = @{
-    @"key": @"./key",
-    @"subscriber": @"./subscriber"
+        @"key": @"./key",
+        @"subscriber": @"./subscriber"
     };
 
     [self performApiCallForMethod:@"auth.getMobileSession"
                        withParams:@{@"username": [username lowercaseString], @"authToken": authToken}
                         rootXpath:@"./session"
+                 returnDictionary:YES
+                    mappingObject:mappingObject
+                   successHandler:successHandler
+                   failureHandler:failureHandler];
+}
+
+- (void)getSessionInfoWithSuccessHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"subscriber": @"./session/subscriber",
+        @"country": @"./country",
+        @"radio_enabled": @"./radioPermission/user[@type=\"you\"]/radio",
+        @"trial_enabled": @"./radioPermission/user[@type=\"you\"]/freetrial",
+        @"trial_expired": @"./radioPermission/user[@type=\"you\"]/trial/expired",
+        @"trial_playsleft": @"./radioPermission/user[@type=\"you\"]/trial/playsleft",
+        @"trial_playselapsed": @"./radioPermission/user[@type=\"you\"]/trial/playselapsed"
+    };
+
+    [self performApiCallForMethod:@"auth.getSessionInfo"
+                       withParams:@{}
+                        rootXpath:@"./application"
+                 returnDictionary:YES
+                    mappingObject:mappingObject
+                   successHandler:successHandler
+                   failureHandler:failureHandler];
+}
+
+- (void)getInfoForUserOrNil:(NSString *)username successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"name": @"./realname",
+        @"username": @"./name",
+        @"gender": @"./gender",
+        @"age": @"./age",
+        @"playcount": @"./playcount",
+        @"country": @"./country",
+        @"images": @"./image",
+        @"url": @"./url"
+    };
+
+    NSDictionary *params = @{};
+    if (username) {
+        params = @{@"user": username};
+    }
+
+    [self performApiCallForMethod:@"user.getInfo"
+                       withParams:params
+                        rootXpath:@"./user"
                  returnDictionary:YES
                     mappingObject:mappingObject
                    successHandler:successHandler

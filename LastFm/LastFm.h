@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^LastFmReturnBlockWithObject)(id result);
 typedef void (^LastFmReturnBlockWithDictionary)(NSDictionary *result);
 typedef void (^LastFmReturnBlockWithArray)(NSArray *result);
 typedef void (^LastFmReturnBlockWithError)(NSError *error);
@@ -36,5 +35,7 @@ typedef void (^LastFmReturnBlockWithError)(NSError *error);
 #pragma mark User methods
 
 - (void)getSessionForUser:(NSString *)username password:(NSString *)password successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
+- (void)getSessionInfoWithSuccessHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
+- (void)getInfoForUserOrNil:(NSString *)username successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
 
 @end
