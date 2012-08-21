@@ -6,8 +6,8 @@ Last.fm SDK for iOS
 ## Usage
 ```objective-c
 // Set the Last.fm session info
-[LastFm sharedInstance].api_key = @"xxx";
-[LastFm sharedInstance].api_secret = @"xxx";
+[LastFm sharedInstance].apiKey = @"xxx";
+[LastFm sharedInstance].apiSecret = @"xxx";
 [LastFm sharedInstance].session = session;
 
 // Get artist info

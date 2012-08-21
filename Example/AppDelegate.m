@@ -13,9 +13,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Set the Last.fm session info
-    [LastFm sharedInstance].api_key = @"b25b959554ed76058ac220b7b2e0a026";
-    [LastFm sharedInstance].api_secret = @"";
-    [LastFm sharedInstance].session = nil;
+    [LastFm sharedInstance].apiKey = @"b25b959554ed76058ac220b7b2e0a026";
     return YES;
 }
 							

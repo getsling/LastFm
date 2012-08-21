@@ -15,8 +15,8 @@ typedef void (^LastFmReturnBlockWithError)(NSError *error);
 @interface LastFm : NSObject
 
 @property (strong, nonatomic) NSString *session;
-@property (strong, nonatomic) NSString *api_key;
-@property (strong, nonatomic) NSString *api_secret;
+@property (strong, nonatomic) NSString *apiKey;
+@property (strong, nonatomic) NSString *apiSecret;
 
 + (LastFm *)sharedInstance;
 

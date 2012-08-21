@@ -57,6 +57,15 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
     return sharedInstance;
 }
 
+- (id)init {
+    self = [super init];
+    if (self) {
+        self.apiKey = @"";
+        self.apiSecret = @"";
+    }
+    return self;
+}
+
 #pragma mark - Private methods
 
 - (NSString *)md5sumFromString:(NSString *)string {
@@ -88,7 +97,7 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
     dispatch_async(concurrentQueue, ^{
         NSMutableDictionary *newParams = [params mutableCopy];
         [newParams setObject:method forKey:@"method"];
-        [newParams setObject:self.api_key forKey:@"api_key"];
+        [newParams setObject:self.apiKey forKey:@"api_key"];
 
         if (self.session) {
             [newParams setObject:self.session forKey:@"sk"];
@@ -100,7 +109,7 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
         for (NSString *key in sortedParamKeys) {
             [signature appendString:[NSString stringWithFormat:@"%@%@", key, [newParams objectForKey:key]]];
         }
-        [signature appendString:self.api_secret];
+        [signature appendString:self.apiSecret];
 
         // We even need to *send* all the params in a sorted fashion
         NSMutableArray *sortedParamsArray = [NSMutableArray array];
