@@ -234,20 +234,31 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
 }
 
 - (void)getImagesForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
-    NSDictionary *mappingObject = @{
-        @"format": @"format",
-        @"original": @"./sizes/size[@name=\"original\"]",
-        @"extralarge": @"./sizes/size[@name=\"extralarge\"]",
-        @"large": @"./sizes/size[@name=\"large\"]",
-        @"largesquare": @"./sizes/size[@name=\"largesquare\"]",
-        @"medium": @"./sizes/size[@name=\"medium\"]",
-        @"small": @"./sizes/size[@name=\"small\"]",
-        @"title": @"title",
-        @"utl": @"url"
-    };
+    [self getImagesForArtist:artist fromUser:nil successHandler:successHandler failureHandler:failureHandler];
+}
 
+- (void)getImagesForArtist:(NSString *)artist fromUser:(NSString*)user successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler{
+    
+    NSDictionary *mappingObject = @{
+    @"format": @"format",
+    @"original": @"./sizes/size[@name=\"original\"]",
+    @"extralarge": @"./sizes/size[@name=\"extralarge\"]",
+    @"large": @"./sizes/size[@name=\"large\"]",
+    @"largesquare": @"./sizes/size[@name=\"largesquare\"]",
+    @"medium": @"./sizes/size[@name=\"medium\"]",
+    @"small": @"./sizes/size[@name=\"small\"]",
+    @"title": @"title",
+    @"utl": @"url"
+    };
+    
+    NSDictionary *params;
+    if(user){
+        params = @{@"artist": artist, @"limit": @"500", @"user":user};
+    }else{
+        params = @{@"artist": artist, @"limit": @"500"};
+    }
     [self performApiCallForMethod:@"artist.getImages"
-                       withParams:@{@"artist": artist, @"limit": @"500"}
+                       withParams:params
                         rootXpath:@"./images/image"
                  returnDictionary:NO
                     mappingObject:mappingObject
