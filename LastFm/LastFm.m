@@ -248,7 +248,8 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
     @"medium": @"./sizes/size[@name=\"medium\"]",
     @"small": @"./sizes/size[@name=\"small\"]",
     @"title": @"title",
-    @"utl": @"url"
+    @"utl": @"url",
+    @"tags":@"./tags/tag/name"
     };
     
     NSDictionary *params;
@@ -276,7 +277,8 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
         @"playcount": @"./playcount",
         @"url": @"./url",
         @"images": @"./image",
-        @"releasedate": @"./releasedate"
+        @"releasedate": @"./releasedate",
+        @"tags":@"./toptags/tag/name"
     };
 
     [self performApiCallForMethod:@"album.getInfo"
