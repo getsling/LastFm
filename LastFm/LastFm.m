@@ -234,10 +234,10 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
 }
 
 - (void)getImagesForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
-    [self getImagesForArtist:artist fromUser:nil successHandler:successHandler failureHandler:failureHandler];
+    [self getImagesForArtist:artist fromUserOrNil:nil successHandler:successHandler failureHandler:failureHandler];
 }
 
-- (void)getImagesForArtist:(NSString *)artist fromUser:(NSString*)user successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler{
+- (void)getImagesForArtist:(NSString *)artist fromUserOrNil:(NSString *)user successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler{
     NSDictionary *mappingObject = @{
         @"format": @"format",
         @"original": @"./sizes/size[@name=\"original\"]",
@@ -253,7 +253,7 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
     
     NSDictionary *params;
     if (user) {
-        params = @{@"artist": artist, @"limit": @"500", @"user":user};
+        params = @{@"artist": artist, @"limit": @"500", @"user": user};
     } else {
         params = @{@"artist": artist, @"limit": @"500"};
     }
@@ -303,6 +303,64 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
                        withParams:@{@"artist": artist, @"album": album}
                         rootXpath:@"./album/tracks/track"
                  returnDictionary:NO
+                    mappingObject:mappingObject
+                   successHandler:successHandler
+                   failureHandler:failureHandler];
+}
+
+#pragma mark Track methods
+
+- (void)getInfoForTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    [self getInfoForTrack:title artist:artist fromUserOrNil:nil successHandler:successHandler failureHandler:failureHandler];
+}
+
+- (void)getInfoForTrack:(NSString *)title artist:(NSString *)artist fromUserOrNil:(NSString*)user successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"name": @"./name",
+        @"listeners": @"./listeners",
+        @"playcount": @"./playcount",
+        @"userplaycount": @"./userplaycount",
+        @"tags": @"./toptags/tag/name",
+        @"artist": @"./artist/name"
+    };
+
+    NSDictionary *params;
+    if (user) {
+        params = @{@"track": title, @"artist": artist, @"username": user};
+    } else {
+        params = @{@"track": title, @"artist": artist};
+    }
+
+    [self performApiCallForMethod:@"track.getInfo"
+                       withParams:params
+                        rootXpath:@"./track"
+                 returnDictionary:YES
+                    mappingObject:mappingObject
+                   successHandler:successHandler
+                   failureHandler:failureHandler];
+}
+
+- (void)getInfoForTrack:(NSString *)musicBrainId fromUserOrNil:(NSString *)user successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+    @"name": @"./name",
+    @"listeners": @"./listeners",
+    @"playcount": @"./playcount",
+    @"userplaycount": @"./userplaycount",
+    @"tags": @"./toptags/tag/name",
+    @"artist": @"./artist/name"
+    };
+
+    NSDictionary *params;
+    if (user) {
+        params = @{@"mbid": musicBrainId, @"username": user};
+    } else {
+        params = @{@"mbid": musicBrainId};
+    }
+
+    [self performApiCallForMethod:@"track.getInfo"
+                       withParams:params
+                        rootXpath:@"./track"
+                 returnDictionary:YES
                     mappingObject:mappingObject
                    successHandler:successHandler
                    failureHandler:failureHandler];
