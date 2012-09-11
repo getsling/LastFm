@@ -238,26 +238,26 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
 }
 
 - (void)getImagesForArtist:(NSString *)artist fromUser:(NSString*)user successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler{
-    
     NSDictionary *mappingObject = @{
-    @"format": @"format",
-    @"original": @"./sizes/size[@name=\"original\"]",
-    @"extralarge": @"./sizes/size[@name=\"extralarge\"]",
-    @"large": @"./sizes/size[@name=\"large\"]",
-    @"largesquare": @"./sizes/size[@name=\"largesquare\"]",
-    @"medium": @"./sizes/size[@name=\"medium\"]",
-    @"small": @"./sizes/size[@name=\"small\"]",
-    @"title": @"title",
-    @"utl": @"url",
-    @"tags":@"./tags/tag/name"
+        @"format": @"format",
+        @"original": @"./sizes/size[@name=\"original\"]",
+        @"extralarge": @"./sizes/size[@name=\"extralarge\"]",
+        @"large": @"./sizes/size[@name=\"large\"]",
+        @"largesquare": @"./sizes/size[@name=\"largesquare\"]",
+        @"medium": @"./sizes/size[@name=\"medium\"]",
+        @"small": @"./sizes/size[@name=\"small\"]",
+        @"title": @"title",
+        @"utl": @"url",
+        @"tags":@"./tags/tag/name"
     };
     
     NSDictionary *params;
-    if(user){
+    if (user) {
         params = @{@"artist": artist, @"limit": @"500", @"user":user};
-    }else{
+    } else {
         params = @{@"artist": artist, @"limit": @"500"};
     }
+
     [self performApiCallForMethod:@"artist.getImages"
                        withParams:params
                         rootXpath:@"./images/image"
