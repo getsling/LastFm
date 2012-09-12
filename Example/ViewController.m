@@ -55,6 +55,9 @@
         // Save the session into NSUserDefaults. It is loaded on app start up in AppDelegate.
         [[NSUserDefaults standardUserDefaults] setObject:[result objectForKey:@"key"] forKey:SESSION_KEY];
 
+        // Also set the session of the LastFm object
+        [LastFm sharedInstance].session = [result objectForKey:@"key"];
+
         // Dismiss the keyboard
         [self.usernameField resignFirstResponder];
         [self.passwordField resignFirstResponder];
