@@ -342,12 +342,12 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
 
 - (void)getInfoForTrack:(NSString *)musicBrainId fromUserOrNil:(NSString *)user successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-    @"name": @"./name",
-    @"listeners": @"./listeners",
-    @"playcount": @"./playcount",
-    @"userplaycount": @"./userplaycount",
-    @"tags": @"./toptags/tag/name",
-    @"artist": @"./artist/name"
+        @"name": @"./name",
+        @"listeners": @"./listeners",
+        @"playcount": @"./playcount",
+        @"userplaycount": @"./userplaycount",
+        @"tags": @"./toptags/tag/name",
+        @"artist": @"./artist/name"
     };
 
     NSDictionary *params;

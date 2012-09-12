@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define SESSION_KEY @"is.gangverk.lastfm.example.session"
+
 @interface ViewController : UIViewController
 
 @end

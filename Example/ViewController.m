@@ -9,29 +9,97 @@
 #import "ViewController.h"
 #import "LastFm.h"
 
-@interface ViewController ()
-
+@interface ViewController () <UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UIView *loginFormView;
+@property (weak, nonatomic) IBOutlet UIView *logoutFormView;
+@property (weak, nonatomic) IBOutlet UITextField *usernameField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordField;
+@property (weak, nonatomic) IBOutlet UIView *popupView;
+@property (weak, nonatomic) IBOutlet UITextView *textView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
+
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [[LastFm sharedInstance] getInfoForArtist:@"Pink Floyd" successHandler:^(NSDictionary *result) {
-        NSLog(@"result: %@", result);
+    // Check if we're logged in with a valid session
+    [[LastFm sharedInstance] getSessionInfoWithSuccessHandler:^(NSDictionary *result) {
+        // Yes, show logout form
+        self.logoutFormView.hidden = NO;
     } failureHandler:^(NSError *error) {
-        NSLog(@"error: %@", error);
+        // No, show login form
+        self.loginFormView.hidden = NO;
     }];
 }
 
 - (void)viewDidUnload {
+    [self setLoginFormView:nil];
+    [self setLogoutFormView:nil];
+    [self setUsernameField:nil];
+    [self setPasswordField:nil];
+    [self setPopupView:nil];
+    [self setTextView:nil];
+    [self setActivityIndicator:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
+
+- (IBAction)loginButtonPressed {
+    [[LastFm sharedInstance] getSessionForUser:self.usernameField.text password:self.passwordField.text successHandler:^(NSDictionary *result) {
+        // Save the session into NSUserDefaults. It is loaded on app start up in AppDelegate.
+        [[NSUserDefaults standardUserDefaults] setObject:[result objectForKey:@"key"] forKey:SESSION_KEY];
+
+        // Dismiss the keyboard
+        [self.usernameField resignFirstResponder];
+        [self.passwordField resignFirstResponder];
+
+        // Show the logout button
+        self.loginFormView.hidden = YES;
+        self.logoutFormView.hidden = NO;
+    } failureHandler:^(NSError *error) {
+        NSLog(@"Failure: %@", [error localizedDescription]);
+    }];
+}
+
+- (IBAction)logoutButtonPressed {
+    self.loginFormView.hidden = NO;
+    self.logoutFormView.hidden = YES;
+    [LastFm sharedInstance].session = nil;
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:SESSION_KEY];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == self.usernameField) {
+        [self.passwordField becomeFirstResponder];
+    } else {
+        [textField resignFirstResponder];
+        [self loginButtonPressed];
+    }
+
+    return YES;
+}
+
+- (IBAction)artistButtonPressed {
+    self.popupView.hidden = NO;
+    [self.activityIndicator startAnimating];
+
+    [[LastFm sharedInstance] getInfoForArtist:@"Pink Floyd" successHandler:^(NSDictionary *result) {
+        [self.activityIndicator stopAnimating];
+        self.textView.text = [result objectForKey:@"bio"];
+    } failureHandler:^(NSError *error) {
+        [self.activityIndicator stopAnimating];
+        self.textView.text = [NSString stringWithFormat:@"Error: %@", [error localizedDescription]];
+    }];
+}
+
+- (IBAction)closePopupButtonPressed {
+    self.popupView.hidden = YES;
 }
 
 @end
