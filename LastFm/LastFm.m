@@ -214,12 +214,17 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
 
 - (void)getEventsForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
+        @"title": @"./title",
         @"headliner": @"./artists/headliner",
         @"attendance": @"./attendance",
         @"description": @"./description",
         @"startDate": @"./startDate",
         @"url": @"./url",
-        @"images": @"./image"
+        @"images": @"./image",
+        @"venue": @"./venue/name",
+        @"city": @"./venue/location/city",
+        @"country": @"./venue/location/country",
+        @"venue_url": @"./venue/website"
     };
 
     [self performApiCallForMethod:@"artist.getEvents"
