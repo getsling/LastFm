@@ -23,6 +23,13 @@ Last.fm SDK for iOS
 } failureHandler:^(NSError *error) {
     NSLog(@"error: %@", error);
 }];
+
+// Scrobble a track
+[[LastFm sharedInstance] sendScrobbledTrack:@"Wish You Were Here" byArtist:@"Pink Floyd" onAlbum:@"Wish You Were Here" withDuration:534 atTimestamp:(int)[[NSDate date] timeIntervalSince1970] successHandler:^(NSDictionary *result) {
+    NSLog(@"result: %@", result);
+} failureHandler:^(NSError *error) {
+    NSLog(@"error: %@", error);
+}];
 ```
 
 Save the session you get with `getSessionForUser:password:successHandler:failureHandler:` somewhere, for example in `NSUserDefaults`, and on app start up set it back on `[LastFm sharedInstance].session`.

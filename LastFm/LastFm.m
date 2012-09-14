@@ -505,6 +505,24 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
                    failureHandler:failureHandler];
 }
 
+- (void)sendScrobbledTrack:(NSString *)track byArtist:(NSString *)artist onAlbum:(NSString *)album withDuration:(NSTimeInterval)duration atTimestamp:(NSTimeInterval)timestamp successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *params = @{
+        @"track": track,
+        @"artist": artist,
+        @"album": album,
+        @"duration": @(duration),
+        @"timestamp": @(timestamp)
+    };
+
+    [self performApiCallForMethod:@"track.scrobble"
+                       withParams:params
+                        rootXpath:@"."
+                 returnDictionary:YES
+                    mappingObject:@{}
+                   successHandler:successHandler
+                   failureHandler:failureHandler];
+}
+
 #pragma mark Chart methods
 
 - (void)getTopTracksWithLimit:(NSInteger)limit page:(NSInteger)page successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
