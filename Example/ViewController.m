@@ -34,9 +34,11 @@
         self.loginFormView.hidden = NO;
     }];
 
-    [[LastFm sharedInstance] getSimilarArtistsTo:@"Pink Floyd" successHandler:^(NSArray *result) {
-        NSLog(@"Array: %@", result);
-    } failureHandler:nil];
+    [[LastFm sharedInstance] getTopTracksForArtist:@"Pink Floyd" successHandler:^(NSArray *result) {
+        NSLog(@"Result: %@", result);
+    } failureHandler:^(NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
 }
 
 - (void)viewDidUnload {

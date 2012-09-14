@@ -170,7 +170,9 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
             });
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
-                failureHandler(error);
+                if (failureHandler) {
+                    failureHandler(error);
+                }
             });
         }
     });
@@ -230,6 +232,22 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
     [self performApiCallForMethod:@"artist.getTopAlbums"
                        withParams:@{@"artist": artist, @"limit": @"500"}
                         rootXpath:@"./topalbums/album"
+                 returnDictionary:NO
+                    mappingObject:mappingObject
+                   successHandler:successHandler
+                   failureHandler:failureHandler];
+}
+
+- (void)getTopTracksForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"name": @"./name",
+        @"playcount": @"./playcount",
+        @"images": @"./image"
+    };
+
+    [self performApiCallForMethod:@"artist.getTopTracks"
+                       withParams:@{@"artist": artist, @"limit": @"500"}
+                        rootXpath:@"./toptracks/track"
                  returnDictionary:NO
                     mappingObject:mappingObject
                    successHandler:successHandler
