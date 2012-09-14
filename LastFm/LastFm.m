@@ -78,11 +78,14 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
 	return [ms copy];
 }
 
-- (NSString*)urlEscapeString:(NSString *)unencodedString {
-    CFStringRef originalStringRef = (__bridge_retained CFStringRef)unencodedString;
-    NSString *s = (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,originalStringRef, NULL, NULL,kCFStringEncodingUTF8);
-    CFRelease(originalStringRef);
-    return s;
+- (NSString*)urlEscapeString:(id)unencodedString {
+    if ([unencodedString isKindOfClass:[NSString class]]) {
+        CFStringRef originalStringRef = (__bridge_retained CFStringRef)unencodedString;
+        NSString *s = (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,originalStringRef, NULL, NULL,kCFStringEncodingUTF8);
+        CFRelease(originalStringRef);
+        return s;
+    }
+    return unencodedString;
 }
 
 - (void)performApiCallForMethod:(NSString*)method
@@ -426,6 +429,43 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
                        withParams:params
                         rootXpath:@"./user"
                  returnDictionary:YES
+                    mappingObject:mappingObject
+                   successHandler:successHandler
+                   failureHandler:failureHandler];
+}
+
+#pragma mark Chart methods
+
+- (void)getTopTracksWithLimit:(NSInteger)limit page:(NSInteger)page successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"name": @"./name",
+        @"playcount": @"./playcount",
+        @"listeners": @"./listeners",
+        @"image": @"./image[@size=\"large\"]",
+        @"artist": @"./artist/name"
+    };
+
+    [self performApiCallForMethod:@"chart.getTopTracks"
+                       withParams:@{@"limit": @(limit), @"page": @(page)}
+                        rootXpath:@"./tracks/track"
+                 returnDictionary:NO
+                    mappingObject:mappingObject
+                   successHandler:successHandler
+                   failureHandler:failureHandler];
+}
+
+- (void)getHypedTracksWithLimit:(NSInteger)limit page:(NSInteger)page successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"name": @"./name",
+        @"image": @"./image[@size=\"large\"]",
+        @"artist": @"./artist/name",
+        @"percentagechange": @"./percentagechange"
+    };
+
+    [self performApiCallForMethod:@"chart.getHypedTracks"
+                       withParams:@{@"limit": @(limit), @"page": @(page)}
+                        rootXpath:@"./tracks/track"
+                 returnDictionary:NO
                     mappingObject:mappingObject
                    successHandler:successHandler
                    failureHandler:failureHandler];
