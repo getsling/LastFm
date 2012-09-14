@@ -109,6 +109,10 @@
             [newParams setObject:self.session forKey:@"sk"];
         }
 
+        if (self.username && ![params objectForKey:@"username"]) {
+            [newParams setObject:self.username forKey:@"username"];
+        }
+
         // Create signature. This is annoying, we need to sort all the params
         NSArray *sortedParamKeys = [[newParams allKeys] sortedArrayUsingSelector:@selector(compare:)];
         NSMutableString *signature = [[NSMutableString alloc] init];
@@ -132,6 +136,7 @@
 
         NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
 
+        // Check for NSURLConnection errors
         if (error) {
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 failureHandler(error);
@@ -141,6 +146,7 @@
 
         DDXMLDocument *document = [[DDXMLDocument alloc] initWithData:data options:0 error:&error];
 
+        // Check for XML parsing errors
         if (error) {
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 failureHandler(error);
@@ -148,6 +154,7 @@
             return;
         }
 
+        // Check for Last.fm errors
         if (![[[document rootElement] objectAtXPath:@"./@status"] isEqualToString:@"ok"]) {
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 NSError *lastfmError = [[NSError alloc] initWithDomain:LastFmServiceErrorDomain
@@ -207,7 +214,7 @@
 #pragma mark -
 #pragma mark Artist methods
 
-- (void)getInfoForArtist:(NSString *)artist fromUserOrNil:(NSString *)user successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+- (void)getInfoForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
         @"bio": @"./bio/content",
         @"summary": @"./bio/summary",
@@ -219,15 +226,8 @@
         @"userplaycount": @"./stats/userplaycount"
     };
 
-    NSDictionary *params;
-    if (user) {
-        params = @{@"artist": artist, @"username": user};
-    } else {
-        params = @{@"artist": artist};
-    }
-
     [self performApiCallForMethod:@"artist.getInfo"
-                       withParams:params
+                       withParams:@{@"artist": artist}
                         rootXpath:@"./artist"
                  returnDictionary:YES
                     mappingObject:mappingObject
@@ -335,7 +335,7 @@
 
 #pragma mark Album methods
 
-- (void)getInfoForAlbum:(NSString *)album artist:(NSString *)artist fromUserOrNil:(NSString *)user successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+- (void)getInfoForAlbum:(NSString *)album artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
         @"artist": @"./artist",
         @"name": @"./name",
@@ -347,13 +347,6 @@
         @"tags": @"./toptags/tag/name",
         @"userplaycount": @"./userplaycount"
     };
-
-    NSDictionary *params;
-    if (user) {
-        params = @{@"artist": artist, @"album": album, @"username": user};
-    } else {
-        params = @{@"artist": artist, @"album": album};
-    }
 
     [self performApiCallForMethod:@"album.getInfo"
                        withParams:@{@"artist": artist, @"album": album}
@@ -384,7 +377,7 @@
 
 #pragma mark Track methods
 
-- (void)getInfoForTrack:(NSString *)title artist:(NSString *)artist fromUserOrNil:(NSString*)user successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+- (void)getInfoForTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
         @"name": @"./name",
         @"listeners": @"./listeners",
@@ -399,15 +392,8 @@
         @"userloved": @"./userloved"
     };
 
-    NSDictionary *params;
-    if (user) {
-        params = @{@"track": title, @"artist": artist, @"username": user};
-    } else {
-        params = @{@"track": title, @"artist": artist};
-    }
-
     [self performApiCallForMethod:@"track.getInfo"
-                       withParams:params
+                       withParams:@{@"track": title, @"artist": artist}
                         rootXpath:@"./track"
                  returnDictionary:YES
                     mappingObject:mappingObject
@@ -415,7 +401,7 @@
                    failureHandler:failureHandler];
 }
 
-- (void)getInfoForTrack:(NSString *)musicBrainId fromUserOrNil:(NSString *)user successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+- (void)getInfoForTrack:(NSString *)musicBrainId successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
         @"name": @"./name",
         @"listeners": @"./listeners",
@@ -429,15 +415,8 @@
         @"duration": @"./duration"
     };
 
-    NSDictionary *params;
-    if (user) {
-        params = @{@"mbid": musicBrainId, @"username": user};
-    } else {
-        params = @{@"mbid": musicBrainId};
-    }
-
     [self performApiCallForMethod:@"track.getInfo"
-                       withParams:params
+                       withParams:@{@"mbid": musicBrainId}
                         rootXpath:@"./track"
                  returnDictionary:YES
                     mappingObject:mappingObject
