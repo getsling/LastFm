@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define LastFmServiceErrorDomain @"LastFmServiceErrorDomain"
+
 enum LastFmServiceErrorCodes {
 	kLastFmErrorCodeInvalidService = 2,
 	kLastFmErrorCodeInvalidMethod = 3,

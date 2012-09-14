@@ -11,7 +11,6 @@
 #include <CommonCrypto/CommonDigest.h>
 
 #define API_URL @"http://ws.audioscrobbler.com/2.0/"
-#define LastFMServiceErrorDomain @"LastFmServiceErrorDomain"
 
 typedef void (^LastFmReturnBlockWithObject)(id result);
 
@@ -148,7 +147,7 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
 
         if (![[[document rootElement] objectAtXPath:@"./@status"] isEqualToString:@"ok"]) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                NSError *lastfmError = [[NSError alloc] initWithDomain:LastFMServiceErrorDomain
+                NSError *lastfmError = [[NSError alloc] initWithDomain:LastFmServiceErrorDomain
                                                    code:[[[document rootElement] objectAtXPath:@"./error/@code"] intValue]
                                                userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[[document rootElement] objectAtXPath:@"./error"], NSLocalizedDescriptionKey, method, @"method", nil]];
 
