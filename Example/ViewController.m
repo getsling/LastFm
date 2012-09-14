@@ -92,7 +92,7 @@
     self.popupView.hidden = NO;
     [self.activityIndicator startAnimating];
 
-    [[LastFm sharedInstance] getInfoForArtist:@"Pink Floyd" successHandler:^(NSDictionary *result) {
+    [[LastFm sharedInstance] getInfoForArtist:@"Pink Floyd" fromUserOrNil:nil successHandler:^(NSDictionary *result) {
         [self.activityIndicator stopAnimating];
         self.textView.text = [result objectForKey:@"bio"];
     } failureHandler:^(NSError *error) {
