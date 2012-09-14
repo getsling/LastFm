@@ -12,9 +12,6 @@
 
 #define API_URL @"http://ws.audioscrobbler.com/2.0/"
 
-typedef void (^LastFmReturnBlockWithObject)(id result);
-
-
 @interface DDXMLNode (objectAtXPath)
 - (id)objectAtXPath:(NSString *)XPath;
 @end
@@ -210,19 +207,27 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
 #pragma mark -
 #pragma mark Artist methods
 
-- (void)getInfoForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+- (void)getInfoForArtist:(NSString *)artist fromUserOrNil:(NSString *)user successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
         @"bio": @"./bio/content",
         @"summary": @"./bio/summary",
         @"name": @"./name",
+        @"url": @"./url",
+        @"image": @"./image[@size=\"large\"]",
         @"listeners": @"./stats/listeners",
         @"playcount": @"./stats/playcount",
-        @"url": @"./url",
-        @"image": @"./image[@size=\"large\"]"
+        @"userplaycount": @"./stats/userplaycount"
     };
 
+    NSDictionary *params;
+    if (user) {
+        params = @{@"artist": artist, @"username": user};
+    } else {
+        params = @{@"artist": artist};
+    }
+
     [self performApiCallForMethod:@"artist.getInfo"
-                       withParams:@{@"artist": artist}
+                       withParams:params
                         rootXpath:@"./artist"
                  returnDictionary:YES
                     mappingObject:mappingObject
@@ -289,10 +294,6 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
 }
 
 - (void)getImagesForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
-    [self getImagesForArtist:artist fromUserOrNil:nil successHandler:successHandler failureHandler:failureHandler];
-}
-
-- (void)getImagesForArtist:(NSString *)artist fromUserOrNil:(NSString *)user successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler{
     NSDictionary *mappingObject = @{
         @"format": @"format",
         @"original": @"./sizes/size[@name=\"original\"]",
@@ -305,21 +306,15 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
         @"utl": @"url",
         @"tags": @"./tags/tag/name"
     };
-    
-    NSDictionary *params;
-    if (user) {
-        params = @{@"artist": artist, @"limit": @"500", @"user": user};
-    } else {
-        params = @{@"artist": artist, @"limit": @"500"};
-    }
 
     [self performApiCallForMethod:@"artist.getImages"
-                       withParams:params
+                       withParams:@{@"artist": artist, @"limit": @"500"}
                         rootXpath:@"./images/image"
                  returnDictionary:NO
                     mappingObject:mappingObject
                    successHandler:successHandler
                    failureHandler:failureHandler];
+
 }
 
 - (void)getSimilarArtistsTo:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
@@ -340,7 +335,7 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
 
 #pragma mark Album methods
 
-- (void)getInfoForAlbum:(NSString *)album artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+- (void)getInfoForAlbum:(NSString *)album artist:(NSString *)artist fromUserOrNil:(NSString *)user successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
         @"artist": @"./artist",
         @"name": @"./name",
@@ -349,8 +344,16 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
         @"url": @"./url",
         @"image": @"./image[@size=\"large\"]",
         @"releasedate": @"./releasedate",
-        @"tags": @"./toptags/tag/name"
+        @"tags": @"./toptags/tag/name",
+        @"userplaycount": @"./userplaycount"
     };
+
+    NSDictionary *params;
+    if (user) {
+        params = @{@"artist": artist, @"album": album, @"username": user};
+    } else {
+        params = @{@"artist": artist, @"album": album};
+    }
 
     [self performApiCallForMethod:@"album.getInfo"
                        withParams:@{@"artist": artist, @"album": album}
@@ -381,22 +384,19 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
 
 #pragma mark Track methods
 
-- (void)getInfoForTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
-    [self getInfoForTrack:title artist:artist fromUserOrNil:nil successHandler:successHandler failureHandler:failureHandler];
-}
-
 - (void)getInfoForTrack:(NSString *)title artist:(NSString *)artist fromUserOrNil:(NSString*)user successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
         @"name": @"./name",
         @"listeners": @"./listeners",
         @"playcount": @"./playcount",
-        @"userplaycount": @"./userplaycount",
         @"tags": @"./toptags/tag/name",
         @"artist": @"./artist/name",
         @"album": @"./album/title",
         @"image": @"./album/image[@size=\"large\"]",
         @"wiki": @"./wiki/summary",
-        @"duration": @"./duration"
+        @"duration": @"./duration",
+        @"userplaycount": @"./userplaycount",
+        @"userloved": @"./userloved"
     };
 
     NSDictionary *params;
