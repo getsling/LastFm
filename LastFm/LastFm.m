@@ -168,6 +168,16 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
                 [result setObject:[node objectAtXPath:xpath] forKey:key];
             }
 
+            // If the string "startDate" exists, then convert it into an NSDate, saved as "startNSDate"
+            if ([result objectForKey:@"startDate"]) {
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
+                [formatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss"]; //"Fri, 21 Jan 2011 21:00:00"
+
+                NSDate *date = [formatter dateFromString:[result objectForKey:@"startDate"]];
+                [result setObject:date forKey:@"startNSDate"];
+            }
+
             [returnArray addObject:result];
         }
 
