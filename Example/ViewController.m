@@ -33,6 +33,10 @@
         // No, show login form
         self.loginFormView.hidden = NO;
     }];
+
+    [[LastFm sharedInstance] getSimilarArtistsTo:@"Pink Floyd" successHandler:^(NSArray *result) {
+        NSLog(@"Array: %@", result);
+    } failureHandler:nil];
 }
 
 - (void)viewDidUnload {
