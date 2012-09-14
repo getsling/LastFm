@@ -48,6 +48,11 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
 @end
 
 
+@interface LastFm ()
+@property (nonatomic, strong) NSOperationQueue *queue;
+@end
+
+
 @implementation LastFm
 
 + (LastFm *)sharedInstance {
@@ -62,6 +67,7 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
     if (self) {
         self.apiKey = @"";
         self.apiSecret = @"";
+        self.queue = [[NSOperationQueue alloc] init];
     }
     return self;
 }
@@ -96,8 +102,8 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
                  successHandler:(LastFmReturnBlockWithObject)successHandler
                  failureHandler:(LastFmReturnBlockWithError)failureHandler {
 
-    dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(concurrentQueue, ^{
+    NSBlockOperation *op = [[NSBlockOperation alloc] init];
+    [op addExecutionBlock:^{
         NSMutableDictionary *newParams = [params mutableCopy];
         [newParams setObject:method forKey:@"method"];
         [newParams setObject:self.apiKey forKey:@"api_key"];
@@ -130,29 +136,29 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
         NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
 
         if (error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 failureHandler(error);
-            });
+            }];
             return;
         }
 
         DDXMLDocument *document = [[DDXMLDocument alloc] initWithData:data options:0 error:&error];
 
         if (error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 failureHandler(error);
-            });
+            }];
             return;
         }
 
         if (![[[document rootElement] objectAtXPath:@"./@status"] isEqualToString:@"ok"]) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 NSError *lastfmError = [[NSError alloc] initWithDomain:LastFmServiceErrorDomain
                                                    code:[[[document rootElement] objectAtXPath:@"./error/@code"] intValue]
                                                userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[[document rootElement] objectAtXPath:@"./error"], NSLocalizedDescriptionKey, method, @"method", nil]];
 
                 failureHandler(lastfmError);
-            });
+            }];
             return;
         }
 
@@ -182,21 +188,23 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
         }
 
         if (returnArray && returnArray.count) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 if (returnDictionary) {
                     successHandler([returnArray objectAtIndex:0]);
                 } else {
                     successHandler(returnArray);
                 }
-            });
+            }];
         } else {
-            dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 if (failureHandler) {
                     failureHandler(error);
                 }
-            });
+            }];
         }
-    });
+    }];
+
+    [self.queue addOperation:op];
 }
 
 #pragma mark -
