@@ -33,12 +33,6 @@
         // No, show login form
         self.loginFormView.hidden = NO;
     }];
-
-    [[LastFm sharedInstance] getTopTracksForArtist:@"Pink Floyd" successHandler:^(NSArray *result) {
-        NSLog(@"Result: %@", result);
-    } failureHandler:^(NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
 }
 
 - (void)viewDidUnload {
