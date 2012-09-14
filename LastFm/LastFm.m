@@ -210,7 +210,7 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
         @"listeners": @"./stats/listeners",
         @"playcount": @"./stats/playcount",
         @"url": @"./url",
-        @"images": @"./image"
+        @"image": @"./image[@size=\"large\"]"
     };
 
     [self performApiCallForMethod:@"artist.getInfo"
@@ -230,7 +230,7 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
         @"description": @"./description",
         @"startDate": @"./startDate",
         @"url": @"./url",
-        @"images": @"./image",
+        @"image": @"./image[@size=\"large\"]",
         @"venue": @"./venue/name",
         @"city": @"./venue/location/city",
         @"country": @"./venue/location/country",
@@ -252,7 +252,7 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
         @"title": @"./name",
         @"playcount": @"./playcount",
         @"url": @"./url",
-        @"images": @"./image"
+        @"image": @"./image[@size=\"large\"]"
     };
 
     [self performApiCallForMethod:@"artist.getTopAlbums"
@@ -268,7 +268,7 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
     NSDictionary *mappingObject = @{
         @"name": @"./name",
         @"playcount": @"./playcount",
-        @"images": @"./image"
+        @"image": @"./image[@size=\"large\"]"
     };
 
     [self performApiCallForMethod:@"artist.getTopTracks"
@@ -318,7 +318,7 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
     NSDictionary *mappingObject = @{
         @"name": @"./name",
         @"match": @"./match",
-        @"images": @"./image"
+        @"image": @"./image[@size=\"large\"]"
     };
 
     [self performApiCallForMethod:@"artist.getSimilar"
@@ -339,7 +339,7 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
         @"listeners": @"./listeners",
         @"playcount": @"./playcount",
         @"url": @"./url",
-        @"images": @"./image",
+        @"image": @"./image[@size=\"large\"]",
         @"releasedate": @"./releasedate",
         @"tags": @"./toptags/tag/name"
     };
@@ -386,7 +386,7 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
         @"tags": @"./toptags/tag/name",
         @"artist": @"./artist/name",
         @"album": @"./album/title",
-        @"images": @"./album/image",
+        @"image": @"./album/image[@size=\"large\"]",
         @"wiki": @"./wiki/summary",
         @"duration": @"./duration"
     };
@@ -416,7 +416,7 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
         @"tags": @"./toptags/tag/name",
         @"artist": @"./artist/name",
         @"album": @"./album/title",
-        @"images": @"./album/image",
+        @"image": @"./album/image[@size=\"large\"]",
         @"wiki": @"./wiki/summary",
         @"duration": @"./duration"
     };
@@ -484,7 +484,7 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
         @"age": @"./age",
         @"playcount": @"./playcount",
         @"country": @"./country",
-        @"images": @"./image",
+        @"image": @"./image[@size=\"large\"]",
         @"url": @"./url"
     };
 
@@ -544,7 +544,7 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
         @"name": @"./name",
         @"playcount": @"./playcount",
         @"listeners": @"./listeners",
-        @"images": @"./image",
+        @"image": @"./image[@size=\"large\"]",
         @"artist": @"./artist/name"
     };
 
@@ -560,7 +560,7 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
 - (void)getHypedTracksWithLimit:(NSInteger)limit page:(NSInteger)page successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
         @"name": @"./name",
-        @"images": @"./image",
+        @"image": @"./image[@size=\"large\"]",
         @"artist": @"./artist/name",
         @"percentagechange": @"./percentagechange"
     };
