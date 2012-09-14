@@ -324,7 +324,11 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
         @"playcount": @"./playcount",
         @"userplaycount": @"./userplaycount",
         @"tags": @"./toptags/tag/name",
-        @"artist": @"./artist/name"
+        @"artist": @"./artist/name",
+        @"album": @"./album/title",
+        @"image": @"./album/image[@size=\"extralarge\"]",
+        @"wiki": @"./wiki/summary",
+        @"duration": @"./duration"
     };
 
     NSDictionary *params;
@@ -350,7 +354,11 @@ typedef void (^LastFmReturnBlockWithObject)(id result);
         @"playcount": @"./playcount",
         @"userplaycount": @"./userplaycount",
         @"tags": @"./toptags/tag/name",
-        @"artist": @"./artist/name"
+        @"artist": @"./artist/name",
+        @"album": @"./album/title",
+        @"image": @"./album/image[@size=\"extralarge\"]",
+        @"wiki": @"./wiki/summary",
+        @"duration": @"./duration"
     };
 
     NSDictionary *params;
