@@ -8,6 +8,31 @@
 
 #import <Foundation/Foundation.h>
 
+enum LastFmServiceErrorCodes {
+	kLastFmErrorCodeInvalidService = 2,
+	kLastFmErrorCodeInvalidMethod = 3,
+	kLastFmErrorCodeAuthenticationFailed = 4,
+	kLastFmErrorCodeInvalidFormat = 5,
+	kLastFmErrorCodeInvalidParameters = 6,
+	kLastFmErrorCodeInvalidResource = 7,
+	kLastFmErrorCodeOperationFailed = 8,
+	kLastFmErrorCodeInvalidSession = 9,
+	kLastFmErrorCodeInvalidAPIKey = 10,
+	kLastFmErrorCodeServiceOffline = 11,
+	kLastFmErrorCodeSubscribersOnly = 12,
+	kLastFmErrorCodeInvalidAPISignature = 13
+};
+
+enum LastFmRadioErrorCodes {
+	kLastFmErrorCodeTrialExpired = 18,
+	kLastFmErrorCodeNotEnoughContent = 20,
+	kLastFmErrorCodeNotEnoughMembers = 21,
+	kLastFmErrorCodeNotEnoughFans = 22,
+	kLastFmErrorCodeNotEnoughNeighbours = 23,
+	kLastFmErrorCodeDeprecated = 27,
+	kLastFmErrorCodeGeoRestricted = 28
+};
+
 typedef void (^LastFmReturnBlockWithDictionary)(NSDictionary *result);
 typedef void (^LastFmReturnBlockWithArray)(NSArray *result);
 typedef void (^LastFmReturnBlockWithError)(NSError *error);
