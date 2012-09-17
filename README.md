@@ -1,4 +1,4 @@
-# LastFm - block based Last.fm SDK for iOS
+# LastFm - block based Last.fm SDK for iOS and Mac OS X
 
 Loosely based on LastFMService from the [official Last.fm iPhone app](https://github.com/lastfm/lastfm-iphone/blob/master/Classes/LastFMService.m), but non-blocking, more readable, much easier to use (and to extend) and with less dependencies.
 
@@ -7,6 +7,7 @@ Loosely based on LastFMService from the [official Last.fm iPhone app](https://gi
 - Only one dependency ([KissXML](https://github.com/robbiehanson/KissXML))
 - Returns values in the correct data type (NSDate, NSURL, NSNumber, etc)
 - Actively developed and maintained (note: at the moment **backwards-incompatible changes are to be expected**)
+
 
 ## Usage
 ```objective-c
@@ -43,7 +44,10 @@ Save the username and session you get with `getSessionForUser:password:successHa
 See the included iOS project for examples on login, logout, getting artist info and more.
 
 
-## Requirements
+## Installation
+You can install LastFm with [CocoaPods](http://cocoapods.org). You can also get the code and drag the LastFm subfolder into your Xcode project.
+
+### Requirements
 * LastFm is built using ARC and modern Objective-C syntax. You will need Xcode 4.4 or higher to use it in your project.
 * You will need your own API key by registering at http://www.last.fm/api.
 * [KissXML](https://github.com/robbiehanson/KissXML)
