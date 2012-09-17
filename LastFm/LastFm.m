@@ -110,7 +110,10 @@
     }
 
     if ([targetClass isEqualToString:@"NSURL"]) {
-        return [NSURL URLWithString:value];
+        if ([value isKindOfClass:[NSString class]] && [value length]) {
+            return [NSURL URLWithString:value];
+        }
+        return nil;
     }
 
     if ([targetClass isEqualToString:@"NSDate"]) {
