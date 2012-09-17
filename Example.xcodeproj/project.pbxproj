@@ -21,6 +21,7 @@
 		0A49B90B15E267E0006ED696 /* DDXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49B90215E267E0006ED696 /* DDXMLDocument.m */; };
 		0A49B90C15E267E0006ED696 /* DDXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49B90415E267E0006ED696 /* DDXMLElement.m */; };
 		0A49B90D15E267E0006ED696 /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49B90615E267E0006ED696 /* DDXMLNode.m */; };
+		0ABB9D18160766D200503C5B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0ABB9D17160766D200503C5B /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		0A49B90515E267E0006ED696 /* DDXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLNode.h; sourceTree = "<group>"; };
 		0A49B90615E267E0006ED696 /* DDXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDXMLNode.m; sourceTree = "<group>"; };
 		0A49B90815E267E0006ED696 /* DDXMLPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLPrivate.h; sourceTree = "<group>"; };
+		0ABB9D17160766D200503C5B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 				0A49B8D515E26300006ED696 /* Example */,
 				0A49B8CE15E26300006ED696 /* Frameworks */,
 				0A49B8CC15E26300006ED696 /* Products */,
+				0ABB9D17160766D200503C5B /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -225,6 +228,7 @@
 			files = (
 				0A49B8DA15E26300006ED696 /* InfoPlist.strings in Resources */,
 				0A49B8E315E26300006ED696 /* MainStoryboard.storyboard in Resources */,
+				0ABB9D18160766D200503C5B /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

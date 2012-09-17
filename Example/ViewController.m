@@ -17,10 +17,12 @@
 @property (weak, nonatomic) IBOutlet UIView *popupView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 @end
 
 
 @implementation ViewController
+@synthesize logoutButton = _logoutButton;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -28,6 +30,7 @@
     // Check if we're logged in with a valid session
     [[LastFm sharedInstance] getSessionInfoWithSuccessHandler:^(NSDictionary *result) {
         // Yes, show logout form
+        [self.logoutButton setTitle:[NSString stringWithFormat:@"Logout %@", [result objectForKey:@"name"]] forState:UIControlStateNormal];
         self.logoutFormView.hidden = NO;
     } failureHandler:^(NSError *error) {
         // No, show login form
@@ -43,6 +46,7 @@
     [self setPopupView:nil];
     [self setTextView:nil];
     [self setActivityIndicator:nil];
+    [self setLogoutButton:nil];
     [super viewDidUnload];
 }
 
@@ -54,15 +58,18 @@
     [[LastFm sharedInstance] getSessionForUser:self.usernameField.text password:self.passwordField.text successHandler:^(NSDictionary *result) {
         // Save the session into NSUserDefaults. It is loaded on app start up in AppDelegate.
         [[NSUserDefaults standardUserDefaults] setObject:[result objectForKey:@"key"] forKey:SESSION_KEY];
+        [[NSUserDefaults standardUserDefaults] setObject:[result objectForKey:@"name"] forKey:USERNAME_KEY];
 
         // Also set the session of the LastFm object
         [LastFm sharedInstance].session = [result objectForKey:@"key"];
+        [LastFm sharedInstance].username = [result objectForKey:@"name"];
 
         // Dismiss the keyboard
         [self.usernameField resignFirstResponder];
         [self.passwordField resignFirstResponder];
 
         // Show the logout button
+        [self.logoutButton setTitle:[NSString stringWithFormat:@"Logout %@", [result objectForKey:@"name"]] forState:UIControlStateNormal];
         self.loginFormView.hidden = YES;
         self.logoutFormView.hidden = NO;
     } failureHandler:^(NSError *error) {
@@ -93,6 +100,7 @@
     [self.activityIndicator startAnimating];
 
     [[LastFm sharedInstance] getInfoForArtist:@"Pink Floyd" successHandler:^(NSDictionary *result) {
+        NSLog(@"result: %@", result);
         [self.activityIndicator stopAnimating];
         self.textView.text = [result objectForKey:@"bio"];
     } failureHandler:^(NSError *error) {

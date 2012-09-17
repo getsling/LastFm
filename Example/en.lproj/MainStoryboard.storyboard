@@ -130,6 +130,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="mOx-xA-g0M" id="Ekh-Rd-DJe"/>
                         <outlet property="loginFormView" destination="AO1-Li-1z1" id="B6t-IE-ZSb"/>
+                        <outlet property="logoutButton" destination="8cJ-Vu-t2D" id="KQI-qX-hcP"/>
                         <outlet property="logoutFormView" destination="QQh-cb-cJA" id="6y8-xm-BWp"/>
                         <outlet property="passwordField" destination="Ex3-hG-Pyz" id="70e-BI-yUD"/>
                         <outlet property="popupView" destination="PSe-7e-sDU" id="Ym8-rD-guj"/>
@@ -140,20 +141,6 @@
             </objects>
         </scene>
     </scenes>
-    <classes>
-        <class className="ViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="loginFormView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="logoutFormView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="popupView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="textView" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="usernameField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

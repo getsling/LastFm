@@ -474,6 +474,7 @@
     NSString *authToken = [self md5sumFromString:[NSString stringWithFormat:@"%@%@", [username lowercaseString], [self md5sumFromString:password]]];
 
     NSDictionary *mappingObject = @{
+        @"name": @[@"./name", @"NSString"],
         @"key": @[@"./key", @"NSString"],
         @"subscriber": @[@"./subscriber", @"NSNumber"]
     };
@@ -489,6 +490,7 @@
 
 - (void)getSessionInfoWithSuccessHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
+        @"name": @[@"./session/name", @"NSString"],
         @"subscriber": @[@"./session/subscriber", @"NSNumber"],
         @"country": @[@"./country", @"NSString"],
         @"radio_enabled": @[@"./radioPermission/user[@type=\"you\"]/radio", @"NSNumber"],

@@ -9,6 +9,7 @@ Last.fm SDK for iOS
 [LastFm sharedInstance].apiKey = @"xxx";
 [LastFm sharedInstance].apiSecret = @"xxx";
 [LastFm sharedInstance].session = session;
+[LastFm sharedInstance].username = username;
 
 // Get artist info
 [[LastFm sharedInstance] getInfoForArtist:@"Pink Floyd" successHandler:^(NSDictionary *result) {
@@ -32,7 +33,9 @@ Last.fm SDK for iOS
 }];
 ```
 
-Save the session you get with `getSessionForUser:password:successHandler:failureHandler:` somewhere, for example in `NSUserDefaults`, and on app start up set it back on `[LastFm sharedInstance].session`.
+Save the username and session you get with `getSessionForUser:password:successHandler:failureHandler:` somewhere, for example in `NSUserDefaults`, and on app start up set it back on `[LastFm sharedInstance].username` and `[LastFm sharedInstance].session`.
+
+See the included iOS project for examples on login, logout, getting artist info and more.
 
 
 ## Requirements
