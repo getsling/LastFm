@@ -1,7 +1,12 @@
-# LastFm
+# LastFm - block based Last.fm SDK for iOS
 
-Last.fm SDK for iOS
+Loosely based on LastFMService from the [official Last.fm iPhone app](https://github.com/lastfm/lastfm-iphone/blob/master/Classes/LastFMService.m), but non-blocking, more readable, much easier to use (and to extend) and with less dependencies.
 
+### Features
+- Block based for easier usage
+- Only one dependency ([KissXML](https://github.com/robbiehanson/KissXML))
+- Returns values in the correct data type (NSDate, NSURL, NSNumber, etc)
+- Actively developed and maintained (note: at the moment **backwards-incompatible changes are to be expected**)
 
 ## Usage
 ```objective-c
