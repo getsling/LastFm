@@ -178,9 +178,11 @@
 
         // Check for NSURLConnection errors
         if (error) {
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                failureHandler(error);
-            }];
+            if (failureHandler) {
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    failureHandler(error);
+                }];
+            }
             return;
         }
 
@@ -188,21 +190,25 @@
 
         // Check for XML parsing errors
         if (error) {
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                failureHandler(error);
-            }];
+            if (failureHandler) {
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    failureHandler(error);
+                }];
+            }
             return;
         }
 
         // Check for Last.fm errors
         if (![[[document rootElement] objectAtXPath:@"./@status"] isEqualToString:@"ok"]) {
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                NSError *lastfmError = [[NSError alloc] initWithDomain:LastFmServiceErrorDomain
-                                                   code:[[[document rootElement] objectAtXPath:@"./error/@code"] intValue]
-                                               userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[[document rootElement] objectAtXPath:@"./error"], NSLocalizedDescriptionKey, method, @"method", nil]];
+            if (failureHandler) {
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    NSError *lastfmError = [[NSError alloc] initWithDomain:LastFmServiceErrorDomain
+                                                                      code:[[[document rootElement] objectAtXPath:@"./error/@code"] intValue]
+                                                                  userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[[document rootElement] objectAtXPath:@"./error"], NSLocalizedDescriptionKey, method, @"method", nil]];
 
-                failureHandler(lastfmError);
-            }];
+                    failureHandler(lastfmError);
+                }];
+            }
             return;
         }
 
