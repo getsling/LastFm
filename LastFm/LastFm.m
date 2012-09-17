@@ -47,6 +47,8 @@
 
 @interface LastFm ()
 @property (nonatomic, strong) NSOperationQueue *queue;
+@property (nonatomic, strong) NSNumberFormatter *numberFormatter;
+@property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @end
 
 
@@ -65,6 +67,10 @@
         self.apiKey = @"";
         self.apiSecret = @"";
         self.queue = [[NSOperationQueue alloc] init];
+        self.numberFormatter = [[NSNumberFormatter alloc] init];
+        self.dateFormatter = [[NSDateFormatter alloc] init];
+        [self.dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
+        [self.dateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss"];
     }
     return self;
 }
@@ -89,6 +95,37 @@
         return s;
     }
     return unencodedString;
+}
+
+- (id)transformValue:(id)value intoClass:(NSString *)targetClass {
+    if ([value isKindOfClass:NSClassFromString(targetClass)]) {
+        return value;
+    }
+
+    if ([targetClass isEqualToString:@"NSNumber"]) {
+        if ([value isKindOfClass:[NSString class]] && [value length]) {
+            return [self.numberFormatter numberFromString:value];
+        }
+        return @0;
+    }
+
+    if ([targetClass isEqualToString:@"NSURL"]) {
+        return [NSURL URLWithString:value];
+    }
+
+    if ([targetClass isEqualToString:@"NSDate"]) {
+        return [self.dateFormatter dateFromString:value];
+    }
+
+    if ([targetClass isEqualToString:@"NSArray"]) {
+        if ([value isKindOfClass:[NSString class]] && [value length]) {
+            return [NSArray arrayWithObject:value];
+        }
+        return [NSArray array];
+    }
+
+    NSLog(@"Invalid targetClass (%@)", targetClass);
+    return value;
 }
 
 - (void)performApiCallForMethod:(NSString*)method
@@ -174,18 +211,14 @@
             NSMutableDictionary *result = [NSMutableDictionary dictionary];
 
             for (NSString *key in mappingObject) {
-                NSString *xpath = [mappingObject objectForKey:key];
-                [result setObject:[node objectAtXPath:xpath] forKey:key];
-            }
-
-            // If the string "startDate" exists, then convert it into an NSDate, saved as "startNSDate"
-            if ([result objectForKey:@"startDate"]) {
-                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
-                [formatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss"]; //"Fri, 21 Jan 2011 21:00:00"
-
-                NSDate *date = [formatter dateFromString:[result objectForKey:@"startDate"]];
-                [result setObject:date forKey:@"startNSDate"];
+                NSArray *mappingArray = [mappingObject objectForKey:key];
+                NSString *xpath = [mappingArray objectAtIndex:0];
+                NSString *targetClass = [mappingArray objectAtIndex:1];
+                NSString *value = [node objectAtXPath:xpath];
+                id correctValue = [self transformValue:value intoClass:targetClass];
+                if (correctValue != nil) {
+                    [result setObject:correctValue forKey:key];
+                }
             }
 
             [returnArray addObject:result];
@@ -216,14 +249,15 @@
 
 - (void)getInfoForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"bio": @"./bio/content",
-        @"summary": @"./bio/summary",
-        @"name": @"./name",
-        @"url": @"./url",
-        @"image": @"./image[@size=\"large\"]",
-        @"listeners": @"./stats/listeners",
-        @"playcount": @"./stats/playcount",
-        @"userplaycount": @"./stats/userplaycount"
+        @"bio": @[@"./bio/content", @"NSString"],
+        @"summary": @[@"./bio/summary", @"NSString"],
+        @"name": @[@"./name", @"NSString"],
+        @"url": @[@"./url", @"NSURL"],
+        @"image": @[@"./image[@size=\"large\"]", @"NSURL"],
+        @"listeners": @[@"./stats/listeners", @"NSNumber"],
+        @"playcount": @[@"./stats/playcount", @"NSNumber"],
+        @"userplaycount": @[@"./stats/userplaycount", @"NSNumber"],
+        @"tags": @[@"./tags/tag/name", @"NSArray"]
     };
 
     [self performApiCallForMethod:@"artist.getInfo"
@@ -237,17 +271,17 @@
 
 - (void)getEventsForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"title": @"./title",
-        @"headliner": @"./artists/headliner",
-        @"attendance": @"./attendance",
-        @"description": @"./description",
-        @"startDate": @"./startDate",
-        @"url": @"./url",
-        @"image": @"./image[@size=\"large\"]",
-        @"venue": @"./venue/name",
-        @"city": @"./venue/location/city",
-        @"country": @"./venue/location/country",
-        @"venue_url": @"./venue/website"
+        @"title": @[@"./title", @"NSString"],
+        @"headliner": @[@"./artists/headliner", @"NSString"],
+        @"attendance": @[@"./attendance", @"NSNumber"],
+        @"description": @[@"./description", @"NSString"],
+        @"startDate": @[@"./startDate", @"NSDate"],
+        @"url": @[@"./url", @"NSURL"],
+        @"image": @[@"./image[@size=\"large\"]", @"NSURL"],
+        @"venue": @[@"./venue/name", @"NSString"],
+        @"city": @[@"./venue/location/city", @"NSString"],
+        @"country": @[@"./venue/location/country", @"NSString"],
+        @"venue_url": @[@"./venue/website", @"NSURL"]
     };
 
     [self performApiCallForMethod:@"artist.getEvents"
@@ -261,11 +295,11 @@
 
 - (void)getTopAlbumsForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"artist": @"./artist/name",
-        @"title": @"./name",
-        @"playcount": @"./playcount",
-        @"url": @"./url",
-        @"image": @"./image[@size=\"large\"]"
+        @"artist": @[@"./artist/name", @"NSString"],
+        @"title": @[@"./name", @"NSString"],
+        @"playcount": @[@"./playcount", @"NSNumber"],
+        @"url": @[@"./url", @"NSURL"],
+        @"image": @[@"./image[@size=\"large\"]", @"NSURL"]
     };
 
     [self performApiCallForMethod:@"artist.getTopAlbums"
@@ -279,9 +313,9 @@
 
 - (void)getTopTracksForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"name": @"./name",
-        @"playcount": @"./playcount",
-        @"image": @"./image[@size=\"large\"]"
+        @"name": @[@"./name", @"NSString"],
+        @"playcount": @[@"./playcount", @"NSNumber"],
+        @"image": @[@"./image[@size=\"large\"]", @"NSURL"]
     };
 
     [self performApiCallForMethod:@"artist.getTopTracks"
@@ -295,16 +329,16 @@
 
 - (void)getImagesForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"format": @"format",
-        @"original": @"./sizes/size[@name=\"original\"]",
-        @"extralarge": @"./sizes/size[@name=\"extralarge\"]",
-        @"large": @"./sizes/size[@name=\"large\"]",
-        @"largesquare": @"./sizes/size[@name=\"largesquare\"]",
-        @"medium": @"./sizes/size[@name=\"medium\"]",
-        @"small": @"./sizes/size[@name=\"small\"]",
-        @"title": @"title",
-        @"utl": @"url",
-        @"tags": @"./tags/tag/name"
+        @"format": @[@"format", @"NSString"],
+        @"original": @[@"./sizes/size[@name=\"original\"]", @"NSURL"],
+        @"extralarge": @[@"./sizes/size[@name=\"extralarge\"]", @"NSURL"],
+        @"large": @[@"./sizes/size[@name=\"large\"]", @"NSURL"],
+        @"largesquare": @[@"./sizes/size[@name=\"largesquare\"]", @"NSURL"],
+        @"medium": @[@"./sizes/size[@name=\"medium\"]", @"NSURL"],
+        @"small": @[@"./sizes/size[@name=\"small\"]", @"NSURL"],
+        @"title": @[@"title", @"NSString"],
+        @"url": @[@"url", @"NSURL"],
+        @"tags": @[@"./tags/tag/name", @"NSArray"]
     };
 
     [self performApiCallForMethod:@"artist.getImages"
@@ -319,9 +353,9 @@
 
 - (void)getSimilarArtistsTo:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"name": @"./name",
-        @"match": @"./match",
-        @"image": @"./image[@size=\"large\"]"
+        @"name": @[@"./name", @"NSString"],
+        @"match": @[@"./match", @"NSNumber"],
+        @"image": @[@"./image[@size=\"large\"]", @"NSURL"]
     };
 
     [self performApiCallForMethod:@"artist.getSimilar"
@@ -337,15 +371,15 @@
 
 - (void)getInfoForAlbum:(NSString *)album artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"artist": @"./artist",
-        @"name": @"./name",
-        @"listeners": @"./listeners",
-        @"playcount": @"./playcount",
-        @"url": @"./url",
-        @"image": @"./image[@size=\"large\"]",
-        @"releasedate": @"./releasedate",
-        @"tags": @"./toptags/tag/name",
-        @"userplaycount": @"./userplaycount"
+        @"artist": @[@"./artist", @"NSString"],
+        @"name": @[@"./name", @"NSString"],
+        @"listeners": @[@"./listeners", @"NSNumber"],
+        @"playcount": @[@"./playcount", @"NSNumber"],
+        @"url": @[@"./url", @"NSURL"],
+        @"image": @[@"./image[@size=\"large\"]", @"NSURL"],
+        @"releasedate": @[@"./releasedate", @"NSString"],
+        @"tags": @[@"./toptags/tag/name", @"NSArray"],
+        @"userplaycount": @[@"./userplaycount", @"NSNumber"]
     };
 
     [self performApiCallForMethod:@"album.getInfo"
@@ -359,11 +393,11 @@
 
 - (void)getTracksForAlbum:(NSString *)album artist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"rank": @"@rank",
-        @"artist": @"./artist/name",
-        @"name": @"./name",
-        @"duration": @"./duration",
-        @"url": @"./url"
+        @"rank": @[@"@rank", @"NSNumber"],
+        @"artist": @[@"./artist/name", @"NSString"],
+        @"name": @[@"./name", @"NSString"],
+        @"duration": @[@"./duration", @"NSNumber"],
+        @"url": @[@"./url", @"NSURL"]
     };
 
     [self performApiCallForMethod:@"album.getInfo"
@@ -379,17 +413,17 @@
 
 - (void)getInfoForTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"name": @"./name",
-        @"listeners": @"./listeners",
-        @"playcount": @"./playcount",
-        @"tags": @"./toptags/tag/name",
-        @"artist": @"./artist/name",
-        @"album": @"./album/title",
-        @"image": @"./album/image[@size=\"large\"]",
-        @"wiki": @"./wiki/summary",
-        @"duration": @"./duration",
-        @"userplaycount": @"./userplaycount",
-        @"userloved": @"./userloved"
+        @"name": @[@"./name", @"NSString"],
+        @"listeners": @[@"./listeners", @"NSNumber"],
+        @"playcount": @[@"./playcount", @"NSNumber"],
+        @"tags": @[@"./toptags/tag/name", @"NSArray"],
+        @"artist": @[@"./artist/name", @"NSString"],
+        @"album": @[@"./album/title", @"NSString"],
+        @"image": @[@"./album/image[@size=\"large\"]", @"NSURL"],
+        @"wiki": @[@"./wiki/summary", @"NSString"],
+        @"duration": @[@"./duration", @"NSNumber"],
+        @"userplaycount": @[@"./userplaycount", @"NSNumber"],
+        @"userloved": @[@"./userloved", @"NSNumber"]
     };
 
     [self performApiCallForMethod:@"track.getInfo"
@@ -403,16 +437,17 @@
 
 - (void)getInfoForTrack:(NSString *)musicBrainId successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"name": @"./name",
-        @"listeners": @"./listeners",
-        @"playcount": @"./playcount",
-        @"userplaycount": @"./userplaycount",
-        @"tags": @"./toptags/tag/name",
-        @"artist": @"./artist/name",
-        @"album": @"./album/title",
-        @"image": @"./album/image[@size=\"large\"]",
-        @"wiki": @"./wiki/summary",
-        @"duration": @"./duration"
+        @"name": @[@"./name", @"NSString"],
+        @"listeners": @[@"./listeners", @"NSNumber"],
+        @"playcount": @[@"./playcount", @"NSNumber"],
+        @"tags": @[@"./toptags/tag/name", @"NSArray"],
+        @"artist": @[@"./artist/name", @"NSString"],
+        @"album": @[@"./album/title", @"NSString"],
+        @"image": @[@"./album/image[@size=\"large\"]", @"NSURL"],
+        @"wiki": @[@"./wiki/summary", @"NSString"],
+        @"duration": @[@"./duration", @"NSNumber"],
+        @"userplaycount": @[@"./userplaycount", @"NSNumber"],
+        @"userloved": @[@"./userloved", @"NSNumber"]
     };
 
     [self performApiCallForMethod:@"track.getInfo"
@@ -430,8 +465,8 @@
     NSString *authToken = [self md5sumFromString:[NSString stringWithFormat:@"%@%@", [username lowercaseString], [self md5sumFromString:password]]];
 
     NSDictionary *mappingObject = @{
-        @"key": @"./key",
-        @"subscriber": @"./subscriber"
+        @"key": @[@"./key", @"NSString"],
+        @"subscriber": @[@"./subscriber", @"NSNumber"]
     };
 
     [self performApiCallForMethod:@"auth.getMobileSession"
@@ -445,13 +480,13 @@
 
 - (void)getSessionInfoWithSuccessHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"subscriber": @"./session/subscriber",
-        @"country": @"./country",
-        @"radio_enabled": @"./radioPermission/user[@type=\"you\"]/radio",
-        @"trial_enabled": @"./radioPermission/user[@type=\"you\"]/freetrial",
-        @"trial_expired": @"./radioPermission/user[@type=\"you\"]/trial/expired",
-        @"trial_playsleft": @"./radioPermission/user[@type=\"you\"]/trial/playsleft",
-        @"trial_playselapsed": @"./radioPermission/user[@type=\"you\"]/trial/playselapsed"
+        @"subscriber": @[@"./session/subscriber", @"NSNumber"],
+        @"country": @[@"./country", @"NSString"],
+        @"radio_enabled": @[@"./radioPermission/user[@type=\"you\"]/radio", @"NSNumber"],
+        @"trial_enabled": @[@"./radioPermission/user[@type=\"you\"]/freetrial", @"NSNumber"],
+        @"trial_expired": @[@"./radioPermission/user[@type=\"you\"]/trial/expired", @"NSNumber"],
+        @"trial_playsleft": @[@"./radioPermission/user[@type=\"you\"]/trial/playsleft", @"NSNumber"],
+        @"trial_playselapsed": @[@"./radioPermission/user[@type=\"you\"]/trial/playselapsed", @"NSNumber"]
     };
 
     [self performApiCallForMethod:@"auth.getSessionInfo"
@@ -465,14 +500,14 @@
 
 - (void)getInfoForUserOrNil:(NSString *)username successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"name": @"./realname",
-        @"username": @"./name",
-        @"gender": @"./gender",
-        @"age": @"./age",
-        @"playcount": @"./playcount",
-        @"country": @"./country",
-        @"image": @"./image[@size=\"large\"]",
-        @"url": @"./url"
+        @"name": @[@"./realname", @"NSString"],
+        @"username": @[@"./name", @"NSString"],
+        @"gender": @[@"./gender", @"NSString"],
+        @"age": @[@"./age", @"NSNumber"],
+        @"playcount": @[@"./playcount", @"NSNumber"],
+        @"country": @[@"./country", @"NSString"],
+        @"image": @[@"./image[@size=\"large\"]", @"NSURL"],
+        @"url": @[@"./url", @"NSURL"]
     };
 
     NSDictionary *params = @{};
@@ -528,11 +563,11 @@
 
 - (void)getTopTracksWithLimit:(NSInteger)limit page:(NSInteger)page successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"name": @"./name",
-        @"playcount": @"./playcount",
-        @"listeners": @"./listeners",
-        @"image": @"./image[@size=\"large\"]",
-        @"artist": @"./artist/name"
+        @"name": @[@"./name", @"NSString"],
+        @"playcount": @[@"./playcount", @"NSNumber"],
+        @"listeners": @[@"./listeners", @"NSNumber"],
+        @"image": @[@"./image[@size=\"large\"]", @"NSURL"],
+        @"artist": @[@"./artist/name", @"NSString"]
     };
 
     [self performApiCallForMethod:@"chart.getTopTracks"
@@ -546,10 +581,10 @@
 
 - (void)getHypedTracksWithLimit:(NSInteger)limit page:(NSInteger)page successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"name": @"./name",
-        @"image": @"./image[@size=\"large\"]",
-        @"artist": @"./artist/name",
-        @"percentagechange": @"./percentagechange"
+        @"name": @[@"./name", @"NSString"],
+        @"image": @[@"./image[@size=\"large\"]", @"NSURL"],
+        @"artist": @[@"./artist/name", @"NSString"],
+        @"percentagechange": @[@"./percentagechange", @"NSNumber"]
     };
 
     [self performApiCallForMethod:@"chart.getHypedTracks"
