@@ -238,14 +238,16 @@
             [returnArray addObject:result];
         }
 
-        if (returnArray && returnArray.count && successHandler) {
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                if (returnDictionary) {
-                    successHandler([returnArray objectAtIndex:0]);
-                } else {
-                    successHandler(returnArray);
-                }
-            }];
+        if (returnArray && returnArray.count) {
+            if (successHandler) {
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    if (returnDictionary) {
+                        successHandler([returnArray objectAtIndex:0]);
+                    } else {
+                        successHandler(returnArray);
+                    }
+                }];
+            }
         } else {
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 if (failureHandler) {
