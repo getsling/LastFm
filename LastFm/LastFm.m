@@ -131,6 +131,11 @@
     return value;
 }
 
+- (NSString *)forceString:(NSString *)value {
+    if (!value) return @"";
+    return value;
+}
+
 - (void)performApiCallForMethod:(NSString*)method
                      withParams:(NSDictionary *)params
                       rootXpath:(NSString *)rootXpath
@@ -270,7 +275,7 @@
     };
 
     [self performApiCallForMethod:@"artist.getInfo"
-                       withParams:@{ @"artist": artist }
+                       withParams:@{ @"artist": [self forceString:artist] }
                         rootXpath:@"./artist"
                  returnDictionary:YES
                     mappingObject:mappingObject
@@ -294,7 +299,7 @@
     };
 
     [self performApiCallForMethod:@"artist.getEvents"
-                       withParams:@{ @"artist": artist }
+                       withParams:@{ @"artist": [self forceString:artist] }
                         rootXpath:@"./events/event"
                  returnDictionary:NO
                     mappingObject:mappingObject
@@ -312,7 +317,7 @@
     };
 
     [self performApiCallForMethod:@"artist.getTopAlbums"
-                       withParams:@{ @"artist": artist, @"limit": @"500" }
+                       withParams:@{ @"artist": [self forceString:artist], @"limit": @"500" }
                         rootXpath:@"./topalbums/album"
                  returnDictionary:NO
                     mappingObject:mappingObject
@@ -328,7 +333,7 @@
     };
 
     [self performApiCallForMethod:@"artist.getTopTracks"
-                       withParams:@{ @"artist": artist, @"limit": @"500" }
+                       withParams:@{ @"artist": [self forceString:artist], @"limit": @"500" }
                         rootXpath:@"./toptracks/track"
                  returnDictionary:NO
                     mappingObject:mappingObject
@@ -351,7 +356,7 @@
     };
 
     [self performApiCallForMethod:@"artist.getImages"
-                       withParams:@{ @"artist": artist, @"limit": @"500" }
+                       withParams:@{ @"artist": [self forceString:artist], @"limit": @"500" }
                         rootXpath:@"./images/image"
                  returnDictionary:NO
                     mappingObject:mappingObject
@@ -368,7 +373,7 @@
     };
 
     [self performApiCallForMethod:@"artist.getSimilar"
-                       withParams:@{ @"artist": artist, @"limit": @"500" }
+                       withParams:@{ @"artist": [self forceString:artist], @"limit": @"500" }
                         rootXpath:@"./similarartists/artist"
                  returnDictionary:NO
                     mappingObject:mappingObject
@@ -392,7 +397,7 @@
     };
 
     [self performApiCallForMethod:@"album.getInfo"
-                       withParams:@{ @"artist": artist, @"album": album }
+                       withParams:@{ @"artist": [self forceString:artist], @"album": [self forceString:album] }
                         rootXpath:@"./album"
                  returnDictionary:YES
                     mappingObject:mappingObject
@@ -410,7 +415,7 @@
     };
 
     [self performApiCallForMethod:@"album.getInfo"
-                       withParams:@{ @"artist": artist, @"album": album }
+                       withParams:@{ @"artist": [self forceString:artist], @"album": [self forceString:album] }
                         rootXpath:@"./album/tracks/track"
                  returnDictionary:NO
                     mappingObject:mappingObject
@@ -436,7 +441,7 @@
     };
 
     [self performApiCallForMethod:@"track.getInfo"
-                       withParams:@{ @"track": title, @"artist": artist }
+                       withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
                         rootXpath:@"./track"
                  returnDictionary:YES
                     mappingObject:mappingObject
@@ -460,7 +465,7 @@
     };
 
     [self performApiCallForMethod:@"track.getInfo"
-                       withParams:@{ @"mbid": musicBrainId }
+                       withParams:@{ @"mbid": [self forceString:musicBrainId] }
                         rootXpath:@"./track"
                  returnDictionary:YES
                     mappingObject:mappingObject
@@ -470,7 +475,7 @@
 
 - (void)loveTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     [self performApiCallForMethod:@"track.love"
-                       withParams:@{ @"track": title, @"artist": artist }
+                       withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
                         rootXpath:@"."
                  returnDictionary:YES
                     mappingObject:@{}
@@ -480,7 +485,7 @@
 
 - (void)unloveTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     [self performApiCallForMethod:@"track.unlove"
-                       withParams:@{ @"track": title, @"artist": artist }
+                       withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
                         rootXpath:@"."
                  returnDictionary:YES
                     mappingObject:@{}
@@ -490,7 +495,7 @@
 
 - (void)banTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     [self performApiCallForMethod:@"track.ban"
-                       withParams:@{ @"track": title, @"artist": artist }
+                       withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
                         rootXpath:@"."
                  returnDictionary:YES
                     mappingObject:@{}
@@ -500,7 +505,7 @@
 
 - (void)unbanTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     [self performApiCallForMethod:@"track.unban"
-                       withParams:@{ @"track": title, @"artist": artist }
+                       withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
                         rootXpath:@"."
                  returnDictionary:YES
                     mappingObject:@{}
@@ -518,7 +523,7 @@
     };
 
     [self performApiCallForMethod:@"track.getBuylinks"
-                       withParams:@{ @"track": title, @"artist": artist, @"country": country }
+                       withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist], @"country": [self forceString:country] }
                         rootXpath:@"./affiliations/downloads/affiliation"
                  returnDictionary:NO
                     mappingObject:mappingObject
@@ -529,6 +534,8 @@
 #pragma mark User methods
 
 - (void)getSessionForUser:(NSString *)username password:(NSString *)password successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    username = [self forceString:username];
+    password = [self forceString:password];
     NSString *authToken = [self md5sumFromString:[NSString stringWithFormat:@"%@%@", [username lowercaseString], [self md5sumFromString:password]]];
 
     NSDictionary *mappingObject = @{
@@ -581,7 +588,7 @@
 
     NSDictionary *params = @{};
     if (username) {
-        params = @{ @"user": username };
+        params = @{ @"user": [self forceString:username] };
     }
 
     [self performApiCallForMethod:@"user.getInfo"
@@ -595,9 +602,9 @@
 
 - (void)sendNowPlayingTrack:(NSString *)track byArtist:(NSString *)artist onAlbum:(NSString *)album withDuration:(NSTimeInterval)duration successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *params = @{
-        @"track": track,
-        @"artist": artist,
-        @"album": album,
+        @"track": [self forceString:track],
+        @"artist": [self forceString:artist],
+        @"album": [self forceString:album],
         @"duration": @(duration)
     };
 
@@ -612,9 +619,9 @@
 
 - (void)sendScrobbledTrack:(NSString *)track byArtist:(NSString *)artist onAlbum:(NSString *)album withDuration:(NSTimeInterval)duration atTimestamp:(NSTimeInterval)timestamp successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *params = @{
-        @"track": track,
-        @"artist": artist,
-        @"album": album,
+        @"track": [self forceString:track],
+        @"artist": [self forceString:artist],
+        @"album": [self forceString:album],
         @"duration": @(duration),
         @"timestamp": @(timestamp)
     };
