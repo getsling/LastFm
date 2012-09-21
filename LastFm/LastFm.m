@@ -258,19 +258,19 @@
 
 - (void)getInfoForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"bio": @[@"./bio/content", @"NSString"],
-        @"summary": @[@"./bio/summary", @"NSString"],
-        @"name": @[@"./name", @"NSString"],
-        @"url": @[@"./url", @"NSURL"],
-        @"image": @[@"./image[@size=\"large\"]", @"NSURL"],
-        @"listeners": @[@"./stats/listeners", @"NSNumber"],
-        @"playcount": @[@"./stats/playcount", @"NSNumber"],
-        @"userplaycount": @[@"./stats/userplaycount", @"NSNumber"],
-        @"tags": @[@"./tags/tag/name", @"NSArray"]
+        @"bio": @[ @"./bio/content", @"NSString" ],
+        @"summary": @[ @"./bio/summary", @"NSString" ],
+        @"name": @[ @"./name", @"NSString" ],
+        @"url": @[ @"./url", @"NSURL" ],
+        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
+        @"listeners": @[ @"./stats/listeners", @"NSNumber" ],
+        @"playcount": @[ @"./stats/playcount", @"NSNumber" ],
+        @"userplaycount": @[ @"./stats/userplaycount", @"NSNumber" ],
+        @"tags": @[ @"./tags/tag/name", @"NSArray" ]
     };
 
     [self performApiCallForMethod:@"artist.getInfo"
-                       withParams:@{@"artist": artist}
+                       withParams:@{ @"artist": artist }
                         rootXpath:@"./artist"
                  returnDictionary:YES
                     mappingObject:mappingObject
@@ -280,21 +280,21 @@
 
 - (void)getEventsForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"title": @[@"./title", @"NSString"],
-        @"headliner": @[@"./artists/headliner", @"NSString"],
-        @"attendance": @[@"./attendance", @"NSNumber"],
-        @"description": @[@"./description", @"NSString"],
-        @"startDate": @[@"./startDate", @"NSDate"],
-        @"url": @[@"./url", @"NSURL"],
-        @"image": @[@"./image[@size=\"large\"]", @"NSURL"],
-        @"venue": @[@"./venue/name", @"NSString"],
-        @"city": @[@"./venue/location/city", @"NSString"],
-        @"country": @[@"./venue/location/country", @"NSString"],
-        @"venue_url": @[@"./venue/website", @"NSURL"]
+        @"title": @[ @"./title", @"NSString" ],
+        @"headliner": @[ @"./artists/headliner", @"NSString" ],
+        @"attendance": @[ @"./attendance", @"NSNumber" ],
+        @"description": @[ @"./description", @"NSString" ],
+        @"startDate": @[ @"./startDate", @"NSDate" ],
+        @"url": @[ @"./url", @"NSURL" ],
+        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
+        @"venue": @[ @"./venue/name", @"NSString" ],
+        @"city": @[ @"./venue/location/city", @"NSString" ],
+        @"country": @[ @"./venue/location/country", @"NSString" ],
+        @"venue_url": @[ @"./venue/website", @"NSURL" ]
     };
 
     [self performApiCallForMethod:@"artist.getEvents"
-                       withParams:@{@"artist": artist}
+                       withParams:@{ @"artist": artist }
                         rootXpath:@"./events/event"
                  returnDictionary:NO
                     mappingObject:mappingObject
@@ -304,15 +304,15 @@
 
 - (void)getTopAlbumsForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"artist": @[@"./artist/name", @"NSString"],
-        @"title": @[@"./name", @"NSString"],
-        @"playcount": @[@"./playcount", @"NSNumber"],
-        @"url": @[@"./url", @"NSURL"],
-        @"image": @[@"./image[@size=\"large\"]", @"NSURL"]
+        @"artist": @[ @"./artist/name", @"NSString" ],
+        @"title": @[ @"./name", @"NSString" ],
+        @"playcount": @[ @"./playcount", @"NSNumber" ],
+        @"url": @[ @"./url", @"NSURL" ],
+        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ]
     };
 
     [self performApiCallForMethod:@"artist.getTopAlbums"
-                       withParams:@{@"artist": artist, @"limit": @"500"}
+                       withParams:@{ @"artist": artist, @"limit": @"500" }
                         rootXpath:@"./topalbums/album"
                  returnDictionary:NO
                     mappingObject:mappingObject
@@ -322,13 +322,13 @@
 
 - (void)getTopTracksForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"name": @[@"./name", @"NSString"],
-        @"playcount": @[@"./playcount", @"NSNumber"],
-        @"image": @[@"./image[@size=\"large\"]", @"NSURL"]
+        @"name": @[ @"./name", @"NSString" ],
+        @"playcount": @[ @"./playcount", @"NSNumber" ],
+        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ]
     };
 
     [self performApiCallForMethod:@"artist.getTopTracks"
-                       withParams:@{@"artist": artist, @"limit": @"500"}
+                       withParams:@{ @"artist": artist, @"limit": @"500" }
                         rootXpath:@"./toptracks/track"
                  returnDictionary:NO
                     mappingObject:mappingObject
@@ -338,20 +338,20 @@
 
 - (void)getImagesForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"format": @[@"format", @"NSString"],
-        @"original": @[@"./sizes/size[@name=\"original\"]", @"NSURL"],
-        @"extralarge": @[@"./sizes/size[@name=\"extralarge\"]", @"NSURL"],
-        @"large": @[@"./sizes/size[@name=\"large\"]", @"NSURL"],
-        @"largesquare": @[@"./sizes/size[@name=\"largesquare\"]", @"NSURL"],
-        @"medium": @[@"./sizes/size[@name=\"medium\"]", @"NSURL"],
-        @"small": @[@"./sizes/size[@name=\"small\"]", @"NSURL"],
-        @"title": @[@"title", @"NSString"],
-        @"url": @[@"url", @"NSURL"],
-        @"tags": @[@"./tags/tag/name", @"NSArray"]
+        @"format": @[ @"format", @"NSString"],
+        @"original": @[ @"./sizes/size[@name=\"original\"]", @"NSURL" ],
+        @"extralarge": @[ @"./sizes/size[@name=\"extralarge\"]", @"NSURL" ],
+        @"large": @[ @"./sizes/size[@name=\"large\"]", @"NSURL" ],
+        @"largesquare": @[ @"./sizes/size[@name=\"largesquare\"]", @"NSURL" ],
+        @"medium": @[ @"./sizes/size[@name=\"medium\"]", @"NSURL" ],
+        @"small": @[ @"./sizes/size[@name=\"small\"]", @"NSURL" ],
+        @"title": @[ @"title", @"NSString" ],
+        @"url": @[ @"url", @"NSURL" ],
+        @"tags": @[ @"./tags/tag/name", @"NSArray" ]
     };
 
     [self performApiCallForMethod:@"artist.getImages"
-                       withParams:@{@"artist": artist, @"limit": @"500"}
+                       withParams:@{ @"artist": artist, @"limit": @"500" }
                         rootXpath:@"./images/image"
                  returnDictionary:NO
                     mappingObject:mappingObject
@@ -362,13 +362,13 @@
 
 - (void)getSimilarArtistsTo:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"name": @[@"./name", @"NSString"],
-        @"match": @[@"./match", @"NSNumber"],
-        @"image": @[@"./image[@size=\"large\"]", @"NSURL"]
+        @"name": @[ @"./name", @"NSString" ],
+        @"match": @[ @"./match", @"NSNumber" ],
+        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ]
     };
 
     [self performApiCallForMethod:@"artist.getSimilar"
-                       withParams:@{@"artist": artist, @"limit": @"500"}
+                       withParams:@{ @"artist": artist, @"limit": @"500" }
                         rootXpath:@"./similarartists/artist"
                  returnDictionary:NO
                     mappingObject:mappingObject
@@ -380,19 +380,19 @@
 
 - (void)getInfoForAlbum:(NSString *)album artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"artist": @[@"./artist", @"NSString"],
-        @"name": @[@"./name", @"NSString"],
-        @"listeners": @[@"./listeners", @"NSNumber"],
-        @"playcount": @[@"./playcount", @"NSNumber"],
-        @"url": @[@"./url", @"NSURL"],
-        @"image": @[@"./image[@size=\"large\"]", @"NSURL"],
-        @"releasedate": @[@"./releasedate", @"NSString"],
-        @"tags": @[@"./toptags/tag/name", @"NSArray"],
-        @"userplaycount": @[@"./userplaycount", @"NSNumber"]
+        @"artist": @[ @"./artist", @"NSString" ],
+        @"name": @[ @"./name", @"NSString" ],
+        @"listeners": @[ @"./listeners", @"NSNumber" ],
+        @"playcount": @[ @"./playcount", @"NSNumber" ],
+        @"url": @[ @"./url", @"NSURL" ],
+        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
+        @"releasedate": @[ @"./releasedate", @"NSString" ],
+        @"tags": @[ @"./toptags/tag/name", @"NSArray" ],
+        @"userplaycount": @[ @"./userplaycount", @"NSNumber" ]
     };
 
     [self performApiCallForMethod:@"album.getInfo"
-                       withParams:@{@"artist": artist, @"album": album}
+                       withParams:@{ @"artist": artist, @"album": album }
                         rootXpath:@"./album"
                  returnDictionary:YES
                     mappingObject:mappingObject
@@ -402,15 +402,15 @@
 
 - (void)getTracksForAlbum:(NSString *)album artist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"rank": @[@"@rank", @"NSNumber"],
-        @"artist": @[@"./artist/name", @"NSString"],
-        @"name": @[@"./name", @"NSString"],
-        @"duration": @[@"./duration", @"NSNumber"],
-        @"url": @[@"./url", @"NSURL"]
+        @"rank": @[ @"@rank", @"NSNumber" ],
+        @"artist": @[ @"./artist/name", @"NSString" ],
+        @"name": @[ @"./name", @"NSString" ],
+        @"duration": @[ @"./duration", @"NSNumber" ],
+        @"url": @[ @"./url", @"NSURL" ]
     };
 
     [self performApiCallForMethod:@"album.getInfo"
-                       withParams:@{@"artist": artist, @"album": album}
+                       withParams:@{ @"artist": artist, @"album": album }
                         rootXpath:@"./album/tracks/track"
                  returnDictionary:NO
                     mappingObject:mappingObject
@@ -422,21 +422,21 @@
 
 - (void)getInfoForTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"name": @[@"./name", @"NSString"],
-        @"listeners": @[@"./listeners", @"NSNumber"],
-        @"playcount": @[@"./playcount", @"NSNumber"],
-        @"tags": @[@"./toptags/tag/name", @"NSArray"],
-        @"artist": @[@"./artist/name", @"NSString"],
-        @"album": @[@"./album/title", @"NSString"],
-        @"image": @[@"./album/image[@size=\"large\"]", @"NSURL"],
-        @"wiki": @[@"./wiki/summary", @"NSString"],
-        @"duration": @[@"./duration", @"NSNumber"],
-        @"userplaycount": @[@"./userplaycount", @"NSNumber"],
-        @"userloved": @[@"./userloved", @"NSNumber"]
+        @"name": @[ @"./name", @"NSString" ],
+        @"listeners": @[ @"./listeners", @"NSNumber" ],
+        @"playcount": @[ @"./playcount", @"NSNumber" ],
+        @"tags": @[ @"./toptags/tag/name", @"NSArray" ],
+        @"artist": @[ @"./artist/name", @"NSString" ],
+        @"album": @[ @"./album/title", @"NSString" ],
+        @"image": @[ @"./album/image[@size=\"large\"]", @"NSURL" ],
+        @"wiki": @[ @"./wiki/summary", @"NSString" ],
+        @"duration": @[ @"./duration", @"NSNumber" ],
+        @"userplaycount": @[ @"./userplaycount", @"NSNumber" ],
+        @"userloved": @[ @"./userloved", @"NSNumber" ]
     };
 
     [self performApiCallForMethod:@"track.getInfo"
-                       withParams:@{@"track": title, @"artist": artist}
+                       withParams:@{ @"track": title, @"artist": artist }
                         rootXpath:@"./track"
                  returnDictionary:YES
                     mappingObject:mappingObject
@@ -446,23 +446,81 @@
 
 - (void)getInfoForTrack:(NSString *)musicBrainId successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"name": @[@"./name", @"NSString"],
-        @"listeners": @[@"./listeners", @"NSNumber"],
-        @"playcount": @[@"./playcount", @"NSNumber"],
-        @"tags": @[@"./toptags/tag/name", @"NSArray"],
-        @"artist": @[@"./artist/name", @"NSString"],
-        @"album": @[@"./album/title", @"NSString"],
-        @"image": @[@"./album/image[@size=\"large\"]", @"NSURL"],
-        @"wiki": @[@"./wiki/summary", @"NSString"],
-        @"duration": @[@"./duration", @"NSNumber"],
-        @"userplaycount": @[@"./userplaycount", @"NSNumber"],
-        @"userloved": @[@"./userloved", @"NSNumber"]
+        @"name": @[ @"./name", @"NSString" ],
+        @"listeners": @[ @"./listeners", @"NSNumber" ],
+        @"playcount": @[ @"./playcount", @"NSNumber" ],
+        @"tags": @[ @"./toptags/tag/name", @"NSArray" ],
+        @"artist": @[ @"./artist/name", @"NSString" ],
+        @"album": @[ @"./album/title", @"NSString" ],
+        @"image": @[ @"./album/image[@size=\"large\"]", @"NSURL" ],
+        @"wiki": @[ @"./wiki/summary", @"NSString" ],
+        @"duration": @[ @"./duration", @"NSNumber" ],
+        @"userplaycount": @[ @"./userplaycount", @"NSNumber" ],
+        @"userloved": @[ @"./userloved", @"NSNumber" ]
     };
 
     [self performApiCallForMethod:@"track.getInfo"
-                       withParams:@{@"mbid": musicBrainId}
+                       withParams:@{ @"mbid": musicBrainId }
                         rootXpath:@"./track"
                  returnDictionary:YES
+                    mappingObject:mappingObject
+                   successHandler:successHandler
+                   failureHandler:failureHandler];
+}
+
+- (void)loveTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    [self performApiCallForMethod:@"track.love"
+                       withParams:@{ @"track": title, @"artist": artist }
+                        rootXpath:@"."
+                 returnDictionary:YES
+                    mappingObject:@{}
+                   successHandler:successHandler
+                   failureHandler:failureHandler];
+}
+
+- (void)unloveTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    [self performApiCallForMethod:@"track.unlove"
+                       withParams:@{ @"track": title, @"artist": artist }
+                        rootXpath:@"."
+                 returnDictionary:YES
+                    mappingObject:@{}
+                   successHandler:successHandler
+                   failureHandler:failureHandler];
+}
+
+- (void)banTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    [self performApiCallForMethod:@"track.ban"
+                       withParams:@{ @"track": title, @"artist": artist }
+                        rootXpath:@"."
+                 returnDictionary:YES
+                    mappingObject:@{}
+                   successHandler:successHandler
+                   failureHandler:failureHandler];
+}
+
+- (void)unbanTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    [self performApiCallForMethod:@"track.unban"
+                       withParams:@{ @"track": title, @"artist": artist }
+                        rootXpath:@"."
+                 returnDictionary:YES
+                    mappingObject:@{}
+                   successHandler:successHandler
+                   failureHandler:failureHandler];
+}
+
+- (void)getBuyLinksForTrack:(NSString *)title artist:(NSString *)artist country:(NSString *)country successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"url": @[ @"./buyLink", @"NSURL" ],
+        @"price": @[ @"./price/amount", @"NSNumber" ],
+        @"currency": @[ @"./price/currency", @"NSString" ],
+        @"name": @[ @"./supplierName", @"NSString" ],
+        @"icon": @[ @"./supplierIcon", @"NSURL" ]
+    };
+
+    [self performApiCallForMethod:@"track.getBuylinks"
+                       withParams:@{ @"track": title, @"artist": artist, @"country": country }
+                        rootXpath:@"./affiliations/downloads/affiliation"
+                 returnDictionary:NO
                     mappingObject:mappingObject
                    successHandler:successHandler
                    failureHandler:failureHandler];
@@ -474,13 +532,13 @@
     NSString *authToken = [self md5sumFromString:[NSString stringWithFormat:@"%@%@", [username lowercaseString], [self md5sumFromString:password]]];
 
     NSDictionary *mappingObject = @{
-        @"name": @[@"./name", @"NSString"],
-        @"key": @[@"./key", @"NSString"],
-        @"subscriber": @[@"./subscriber", @"NSNumber"]
+        @"name": @[ @"./name", @"NSString" ],
+        @"key": @[ @"./key", @"NSString" ],
+        @"subscriber": @[ @"./subscriber", @"NSNumber" ]
     };
 
     [self performApiCallForMethod:@"auth.getMobileSession"
-                       withParams:@{@"username": [username lowercaseString], @"authToken": authToken}
+                       withParams:@{ @"username": [username lowercaseString], @"authToken": authToken }
                         rootXpath:@"./session"
                  returnDictionary:YES
                     mappingObject:mappingObject
@@ -490,14 +548,14 @@
 
 - (void)getSessionInfoWithSuccessHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"name": @[@"./session/name", @"NSString"],
-        @"subscriber": @[@"./session/subscriber", @"NSNumber"],
-        @"country": @[@"./country", @"NSString"],
-        @"radio_enabled": @[@"./radioPermission/user[@type=\"you\"]/radio", @"NSNumber"],
-        @"trial_enabled": @[@"./radioPermission/user[@type=\"you\"]/freetrial", @"NSNumber"],
-        @"trial_expired": @[@"./radioPermission/user[@type=\"you\"]/trial/expired", @"NSNumber"],
-        @"trial_playsleft": @[@"./radioPermission/user[@type=\"you\"]/trial/playsleft", @"NSNumber"],
-        @"trial_playselapsed": @[@"./radioPermission/user[@type=\"you\"]/trial/playselapsed", @"NSNumber"]
+        @"name": @[ @"./session/name", @"NSString" ],
+        @"subscriber": @[ @"./session/subscriber", @"NSNumber" ],
+        @"country": @[ @"./country", @"NSString" ],
+        @"radio_enabled": @[ @"./radioPermission/user[@type=\"you\"]/radio", @"NSNumber" ],
+        @"trial_enabled": @[ @"./radioPermission/user[@type=\"you\"]/freetrial", @"NSNumber" ],
+        @"trial_expired": @[ @"./radioPermission/user[@type=\"you\"]/trial/expired", @"NSNumber" ],
+        @"trial_playsleft": @[ @"./radioPermission/user[@type=\"you\"]/trial/playsleft", @"NSNumber" ],
+        @"trial_playselapsed": @[ @"./radioPermission/user[@type=\"you\"]/trial/playselapsed", @"NSNumber" ]
     };
 
     [self performApiCallForMethod:@"auth.getSessionInfo"
@@ -511,19 +569,19 @@
 
 - (void)getInfoForUserOrNil:(NSString *)username successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"name": @[@"./realname", @"NSString"],
-        @"username": @[@"./name", @"NSString"],
-        @"gender": @[@"./gender", @"NSString"],
-        @"age": @[@"./age", @"NSNumber"],
-        @"playcount": @[@"./playcount", @"NSNumber"],
-        @"country": @[@"./country", @"NSString"],
-        @"image": @[@"./image[@size=\"large\"]", @"NSURL"],
-        @"url": @[@"./url", @"NSURL"]
+        @"name": @[ @"./realname", @"NSString" ],
+        @"username": @[ @"./name", @"NSString" ],
+        @"gender": @[ @"./gender", @"NSString" ],
+        @"age": @[ @"./age", @"NSNumber" ],
+        @"playcount": @[ @"./playcount", @"NSNumber" ],
+        @"country": @[ @"./country", @"NSString" ],
+        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
+        @"url": @[ @"./url", @"NSURL" ]
     };
 
     NSDictionary *params = @{};
     if (username) {
-        params = @{@"user": username};
+        params = @{ @"user": username };
     }
 
     [self performApiCallForMethod:@"user.getInfo"
@@ -574,15 +632,15 @@
 
 - (void)getTopTracksWithLimit:(NSInteger)limit page:(NSInteger)page successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"name": @[@"./name", @"NSString"],
-        @"playcount": @[@"./playcount", @"NSNumber"],
-        @"listeners": @[@"./listeners", @"NSNumber"],
-        @"image": @[@"./image[@size=\"large\"]", @"NSURL"],
-        @"artist": @[@"./artist/name", @"NSString"]
+        @"name": @[ @"./name", @"NSString" ],
+        @"playcount": @[ @"./playcount", @"NSNumber" ],
+        @"listeners": @[ @"./listeners", @"NSNumber" ],
+        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
+        @"artist": @[ @"./artist/name", @"NSString" ]
     };
 
     [self performApiCallForMethod:@"chart.getTopTracks"
-                       withParams:@{@"limit": @(limit), @"page": @(page)}
+                       withParams:@{ @"limit": @(limit), @"page": @(page) }
                         rootXpath:@"./tracks/track"
                  returnDictionary:NO
                     mappingObject:mappingObject
@@ -592,14 +650,14 @@
 
 - (void)getHypedTracksWithLimit:(NSInteger)limit page:(NSInteger)page successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
-        @"name": @[@"./name", @"NSString"],
-        @"image": @[@"./image[@size=\"large\"]", @"NSURL"],
-        @"artist": @[@"./artist/name", @"NSString"],
-        @"percentagechange": @[@"./percentagechange", @"NSNumber"]
+        @"name": @[ @"./name", @"NSString" ],
+        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
+        @"artist": @[ @"./artist/name", @"NSString" ],
+        @"percentagechange": @[ @"./percentagechange", @"NSNumber" ]
     };
 
     [self performApiCallForMethod:@"chart.getHypedTracks"
-                       withParams:@{@"limit": @(limit), @"page": @(page)}
+                       withParams:@{ @"limit": @(limit), @"page": @(page) }
                         rootXpath:@"./tracks/track"
                  returnDictionary:NO
                     mappingObject:mappingObject
