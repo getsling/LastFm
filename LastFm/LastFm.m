@@ -238,7 +238,7 @@
             [returnArray addObject:result];
         }
 
-        if (returnArray && returnArray.count) {
+        if (returnArray && returnArray.count && successHandler) {
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 if (returnDictionary) {
                     successHandler([returnArray objectAtIndex:0]);
