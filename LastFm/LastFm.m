@@ -425,6 +425,24 @@
                    failureHandler:failureHandler];
 }
 
+- (void)getBuyLinksForAlbum:(NSString *)album artist:(NSString *)artist country:(NSString *)country successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"url": @[ @"./buyLink", @"NSURL" ],
+        @"price": @[ @"./price/amount", @"NSNumber" ],
+        @"currency": @[ @"./price/currency", @"NSString" ],
+        @"name": @[ @"./supplierName", @"NSString" ],
+        @"icon": @[ @"./supplierIcon", @"NSURL" ]
+    };
+
+    [self performApiCallForMethod:@"album.getBuylinks"
+                       withParams:@{ @"artist": [self forceString:artist], @"album": [self forceString:album], @"country": [self forceString:country] }
+                        rootXpath:@"./affiliations/downloads/affiliation"
+                 returnDictionary:NO
+                    mappingObject:mappingObject
+                   successHandler:successHandler
+                   failureHandler:failureHandler];
+}
+
 #pragma mark Track methods
 
 - (void)getInfoForTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
@@ -633,6 +651,28 @@
                         rootXpath:@"."
                  returnDictionary:YES
                     mappingObject:@{}
+                   successHandler:successHandler
+                   failureHandler:failureHandler];
+}
+
+- (void)getNewReleasesForUserBasedOnRecommendations:(BOOL)basedOnRecommendations successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"name": @[ @"./name", @"NSString" ],
+        @"artist": @[ @"./artist/name", @"NSString" ],
+        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
+        @"releasedate": @[ @"@releasedate", @"NSString" ]
+    };
+
+    NSDictionary *params = @{
+        @"user": [self forceString:[self username]],
+        @"userec": @(basedOnRecommendations)
+    };
+
+    [self performApiCallForMethod:@"user.getNewReleases"
+                       withParams:params
+                        rootXpath:@"./albums/album"
+                 returnDictionary:NO
+                    mappingObject:mappingObject
                    successHandler:successHandler
                    failureHandler:failureHandler];
 }

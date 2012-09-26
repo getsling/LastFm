@@ -1,0 +1,13 @@
+0.3.0 - September 26
+- Feature: added getNewReleasesForUserBasedOnRecommendations and getBuyLinksForAlbum
+- Feature: added a changelog
+
+0.2.1 - September 21
+- Bugfix: having no successHandler should never crash the code
+
+0.2.0 - September 21
+- Feature: added a bunch of track methods: loveTrack, unloveTrack, banTrack, unbanTrack, getBuyLinksForTrack
+- Bugfix: passing in nil instead of a string argument won't result in a crash
+
+0.0.1 - September 17
+- First public release on CocoaPods.
