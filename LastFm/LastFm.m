@@ -677,6 +677,11 @@
                    failureHandler:failureHandler];
 }
 
+- (void)logout {
+    self.session = nil;
+    self.username = nil;
+}
+
 #pragma mark Chart methods
 
 - (void)getTopTracksWithLimit:(NSInteger)limit page:(NSInteger)page successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
