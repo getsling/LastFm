@@ -21,13 +21,15 @@
 		0A49B90B15E267E0006ED696 /* DDXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49B90215E267E0006ED696 /* DDXMLDocument.m */; };
 		0A49B90C15E267E0006ED696 /* DDXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49B90415E267E0006ED696 /* DDXMLElement.m */; };
 		0A49B90D15E267E0006ED696 /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49B90615E267E0006ED696 /* DDXMLNode.m */; };
+		0AB06E32161DF5AA00149057 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB06E30161DF5AA00149057 /* Icon.png */; };
+		0AB06E33161DF5AA00149057 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB06E31161DF5AA00149057 /* Icon@2x.png */; };
 		0ABB9D18160766D200503C5B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0ABB9D17160766D200503C5B /* README.md */; };
 		0AC05DA91613089000D49E39 /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = 0AC05DA71613089000D49E39 /* AUTHORS */; };
 		0AC05DAA1613089000D49E39 /* CHANGELOG in Resources */ = {isa = PBXBuildFile; fileRef = 0AC05DA81613089000D49E39 /* CHANGELOG */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0A49B8CB15E26300006ED696 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A49B8CB15E26300006ED696 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Example.app; path = "LastFm Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A49B8CF15E26300006ED696 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0A49B8D115E26300006ED696 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0A49B8D315E26300006ED696 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -54,6 +56,8 @@
 		0A49B90515E267E0006ED696 /* DDXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLNode.h; sourceTree = "<group>"; };
 		0A49B90615E267E0006ED696 /* DDXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDXMLNode.m; sourceTree = "<group>"; };
 		0A49B90815E267E0006ED696 /* DDXMLPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLPrivate.h; sourceTree = "<group>"; };
+		0AB06E30161DF5AA00149057 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		0AB06E31161DF5AA00149057 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		0ABB9D17160766D200503C5B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		0AC05DA71613089000D49E39 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
 		0AC05DA81613089000D49E39 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG; sourceTree = "<group>"; };
@@ -121,6 +125,8 @@
 		0A49B8D615E26300006ED696 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0AB06E30161DF5AA00149057 /* Icon.png */,
+				0AB06E31161DF5AA00149057 /* Icon@2x.png */,
 				0A49B8D715E26300006ED696 /* Example-Info.plist */,
 				0A49B8D815E26300006ED696 /* InfoPlist.strings */,
 				0A49B8DB15E26300006ED696 /* main.m */,
@@ -237,6 +243,8 @@
 				0ABB9D18160766D200503C5B /* README.md in Resources */,
 				0AC05DA91613089000D49E39 /* AUTHORS in Resources */,
 				0AC05DAA1613089000D49E39 /* CHANGELOG in Resources */,
+				0AB06E32161DF5AA00149057 /* Icon.png in Resources */,
+				0AB06E33161DF5AA00149057 /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
