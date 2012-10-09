@@ -1,5 +1,6 @@
 0.4.0 - Octover 9, 2012
 - Feature: added getTopTagsForAlbum
+- Feature: added logout method
 
 0.3.0 - September 26, 2012
 - Feature: added getNewReleasesForUserBasedOnRecommendations and getBuyLinksForAlbum
