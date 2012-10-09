@@ -443,6 +443,22 @@
                    failureHandler:failureHandler];
 }
 
+- (void)getTopTagsForAlbum:(NSString *)album artist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"name": @[ @"./name", @"NSString" ],
+        @"count": @[ @"./count", @"NSInteger" ],
+        @"url": @[ @"./url", @"NSString" ]
+    };
+    
+    [self performApiCallForMethod:@"album.getTopTags"
+                       withParams:@{ @"artist": [self forceString:artist], @"album": [self forceString:album] }
+                        rootXpath:@"./toptags/tag"
+                 returnDictionary:NO
+                    mappingObject:mappingObject
+                   successHandler:successHandler
+                   failureHandler:failureHandler];
+}
+
 #pragma mark Track methods
 
 - (void)getInfoForTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
