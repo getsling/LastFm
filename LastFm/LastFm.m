@@ -446,7 +446,7 @@
 - (void)getTopTagsForAlbum:(NSString *)album artist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
         @"name": @[ @"./name", @"NSString" ],
-        @"count": @[ @"./count", @"NSInteger" ],
+        @"count": @[ @"./count", @"NSNumber" ],
         @"url": @[ @"./url", @"NSString" ]
     };
     
