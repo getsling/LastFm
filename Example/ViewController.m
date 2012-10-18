@@ -22,7 +22,6 @@
 
 
 @implementation ViewController
-@synthesize logoutButton = _logoutButton;
 
 - (void)viewDidLoad {
     [super viewDidLoad];

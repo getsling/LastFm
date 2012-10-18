@@ -169,12 +169,29 @@
         // We even need to *send* all the params in a sorted fashion
         NSMutableArray *sortedParamsArray = [NSMutableArray array];
         for (NSString *key in sortedParamKeys) {
-            [sortedParamsArray addObject:[NSString stringWithFormat:@"&%@=%@", [self urlEscapeString:key], [self urlEscapeString:[newParams objectForKey:key]]]];
+            [sortedParamsArray addObject:[NSString stringWithFormat:@"%@=%@", [self urlEscapeString:key], [self urlEscapeString:[newParams objectForKey:key]]]];
         }
 
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:API_URL]];
-        [request setHTTPMethod:@"POST"];
-        [request setHTTPBody:[[NSString stringWithFormat:@"%@&api_sig=%@", [sortedParamsArray componentsJoinedByString:@"&"], [self md5sumFromString:signature]] dataUsingEncoding:NSUTF8StringEncoding]];
+        // Do we need to POST or GET?
+        BOOL doPost = YES;
+        NSArray *methodParts = [method componentsSeparatedByString:@"."];
+        if ([methodParts count] > 1) {
+            NSString *secondPart = [methodParts objectAtIndex:1];
+            if ([secondPart hasPrefix:@"get"]) {
+                doPost = NO;
+            }
+        }
+
+        NSMutableURLRequest *request;
+        if (doPost) {
+            request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:API_URL]];
+            [request setHTTPMethod:@"POST"];
+            [request setHTTPBody:[[NSString stringWithFormat:@"%@&api_sig=%@", [sortedParamsArray componentsJoinedByString:@"&"], [self md5sumFromString:signature]] dataUsingEncoding:NSUTF8StringEncoding]];
+        } else {
+            NSString *paramsString = [NSString stringWithFormat:@"%@&api_sig=%@", [sortedParamsArray componentsJoinedByString:@"&"], [self md5sumFromString:signature]];
+            NSString *urlString = [NSString stringWithFormat:@"%@?%@", API_URL, paramsString];
+            request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+        }
 
         NSURLResponse *response;
         NSError *error;
@@ -449,7 +466,7 @@
         @"count": @[ @"./count", @"NSNumber" ],
         @"url": @[ @"./url", @"NSString" ]
     };
-    
+
     [self performApiCallForMethod:@"album.getTopTags"
                        withParams:@{ @"artist": [self forceString:artist], @"album": [self forceString:album] }
                         rootXpath:@"./toptags/tag"
@@ -687,6 +704,22 @@
     [self performApiCallForMethod:@"user.getNewReleases"
                        withParams:params
                         rootXpath:@"./albums/album"
+                 returnDictionary:NO
+                    mappingObject:mappingObject
+                   successHandler:successHandler
+                   failureHandler:failureHandler];
+}
+
+- (void)getRecommendedAlbumsWithLimit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"name": @[ @"./name", @"NSString" ],
+        @"artist": @[ @"./artist/name", @"NSString" ],
+        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ]
+    };
+
+    [self performApiCallForMethod:@"user.getRecommendedAlbums"
+                       withParams:@{ @"limit": @(limit) }
+                        rootXpath:@"./recommendations/album"
                  returnDictionary:NO
                     mappingObject:mappingObject
                    successHandler:successHandler

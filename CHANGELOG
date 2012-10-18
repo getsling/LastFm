@@ -1,3 +1,7 @@
+0.5.0 - Octover 18, 2012
+- Feature: added getRecommendedAlbumsWithLimit
+- Change: now using GET request for all x.getX API methods, enabling HTTP caching
+
 0.4.0 - Octover 9, 2012
 - Feature: added getTopTagsForAlbum
 - Feature: added logout method
