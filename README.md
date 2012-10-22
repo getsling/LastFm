@@ -52,6 +52,16 @@ You can install LastFm with [CocoaPods](http://cocoapods.org). You can also get 
 * You will need your own API key by registering at http://www.last.fm/api.
 * [KissXML](https://github.com/robbiehanson/KissXML)
 
+### Caching
+If you want all GET requests to be cached as aggressively as possible, install [SDURLCache](https://github.com/rs/SDURLCache/) (or steipete's [ARC fork](https://github.com/steipete/SDURLCache/)). Then, add the following code to your app delegate's `application:didFinishLaunchingWithOptions:` method:
+
+```objective-c
+SDURLCache *URLCache = [[SDURLCache alloc] initWithMemoryCapacity:10 * 1024 * 1024
+                                                     diskCapacity:50 * 1024 * 1024
+                                                         diskPath:[SDURLCache defaultCachePath]];
+[NSURLCache setSharedURLCache:URLCache];
+````
+
 
 ## Issues and questions
 Have a bug? Please [create an issue on GitHub](https://github.com/gangverk/LastFm/issues)!
