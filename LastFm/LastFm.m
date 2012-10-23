@@ -371,7 +371,8 @@
         @"small": @[ @"./sizes/size[@name=\"small\"]", @"NSURL" ],
         @"title": @[ @"title", @"NSString" ],
         @"url": @[ @"url", @"NSURL" ],
-        @"tags": @[ @"./tags/tag/name", @"NSArray" ]
+        @"tags": @[ @"./tags/tag/name", @"NSArray" ],
+        @"owner": @[ @"./owner/name", @"NSString" ]
     };
 
     [self performApiCallForMethod:@"artist.getImages"
