@@ -48,6 +48,7 @@ typedef void (^LastFmReturnBlockWithError)(NSError *error);
 @property (strong, nonatomic) NSString *apiSecret;
 
 + (LastFm *)sharedInstance;
+- (NSString *)forceString:(NSString *)value;
 - (void)performApiCallForMethod:(NSString*)method withParams:(NSDictionary *)params rootXpath:(NSString *)rootXpath returnDictionary:(BOOL)returnDictionary mappingObject:(NSDictionary *)mappingObject successHandler:(LastFmReturnBlockWithObject)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
 
 #pragma mark Artist methods
