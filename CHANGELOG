@@ -1,19 +1,25 @@
-0.5.0 - Octover 18, 2012
-- Feature: added getRecommendedAlbumsWithLimit
-- Change: now using GET request for all x.getX API methods, enabling HTTP caching
+0.5.2 - October 23, 2012
+- Added "owner" to the result of getImagesForArtist
 
-0.4.0 - Octover 9, 2012
-- Feature: added getTopTagsForAlbum
-- Feature: added logout method
+0.5.1 - October 23, 2012
+- Made forceString: a public method, necessary for subclasses and categories
+
+0.5.0 - October 18, 2012
+- Added getRecommendedAlbumsWithLimit
+- Now using GET request for all x.getX API methods, enabling HTTP caching
+
+0.4.0 - October 9, 2012
+- Added getTopTagsForAlbum
+- Added logout method
 
 0.3.0 - September 26, 2012
-- Feature: added getNewReleasesForUserBasedOnRecommendations and getBuyLinksForAlbum
+- Added getNewReleasesForUserBasedOnRecommendations and getBuyLinksForAlbum
 
 0.2.1 - September 21, 2012
 - Bugfix: having no successHandler should never crash the code
 
 0.2.0 - September 21, 2012
-- Feature: added a bunch of track methods: loveTrack, unloveTrack, banTrack, unbanTrack, getBuyLinksForTrack
+- Added a bunch of track methods: loveTrack, unloveTrack, banTrack, unbanTrack, getBuyLinksForTrack
 - Bugfix: passing in nil instead of a string argument won't result in a crash
 
 0.0.1 - September 17, 2012
