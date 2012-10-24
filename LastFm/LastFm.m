@@ -92,6 +92,7 @@
         CFStringRef originalStringRef = (__bridge_retained CFStringRef)unencodedString;
         NSString *s = (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,originalStringRef, NULL, NULL,kCFStringEncodingUTF8);
         CFRelease(originalStringRef);
+        s = [s stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
         return s;
     }
     return unencodedString;
