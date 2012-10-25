@@ -1,3 +1,6 @@
+0.5.5 - October 25, 2012
+- Fixed urlEscapeString related crash (using released strings)
+
 0.5.4 - October 24, 2012
 - Fixed urlEscapeString so it handles artist/songs with %, (, ), +, etc in their name
 

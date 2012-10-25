@@ -89,13 +89,10 @@
 
 - (NSString*)urlEscapeString:(id)unencodedString {
     if ([unencodedString isKindOfClass:[NSString class]]) {
-        unencodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-            NULL,
-            (__bridge CFStringRef) unencodedString,
-            NULL,
-            (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-            kCFStringEncodingUTF8)
-        );
+        CFStringRef originalStringRef = (__bridge_retained CFStringRef)unencodedString;
+        NSString *s = (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, originalStringRef, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8);
+        CFRelease(originalStringRef);
+        return s;
     }
     return unencodedString;
 }
