@@ -1,3 +1,6 @@
+0.5.6 - October 26, 2012
+- Added a _params dictionary to the result
+
 0.5.5 - October 25, 2012
 - Fixed urlEscapeString related crash (using released strings)
 

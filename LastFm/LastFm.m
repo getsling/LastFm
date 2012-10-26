@@ -89,9 +89,13 @@
 
 - (NSString*)urlEscapeString:(id)unencodedString {
     if ([unencodedString isKindOfClass:[NSString class]]) {
-        CFStringRef originalStringRef = (__bridge_retained CFStringRef)unencodedString;
-        NSString *s = (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, originalStringRef, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8);
-        CFRelease(originalStringRef);
+        NSString *s = (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(
+            NULL,
+            (__bridge CFStringRef)unencodedString,
+            NULL,
+            (CFStringRef)@"!*'();:@&=+$,/?%#[]", 
+            kCFStringEncodingUTF8
+        );
         return s;
     }
     return unencodedString;
@@ -240,6 +244,7 @@
         for (DDXMLNode *node in output) {
             // Convert this node to a dictionary using the mapping object (keys and xpaths)
             NSMutableDictionary *result = [NSMutableDictionary dictionary];
+            [result setObject:newParams forKey:@"_params"];
 
             for (NSString *key in mappingObject) {
                 NSArray *mappingArray = [mappingObject objectForKey:key];

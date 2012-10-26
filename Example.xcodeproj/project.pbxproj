@@ -21,6 +21,7 @@
 		0A49B90B15E267E0006ED696 /* DDXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49B90215E267E0006ED696 /* DDXMLDocument.m */; };
 		0A49B90C15E267E0006ED696 /* DDXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49B90415E267E0006ED696 /* DDXMLElement.m */; };
 		0A49B90D15E267E0006ED696 /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49B90615E267E0006ED696 /* DDXMLNode.m */; };
+		0A71AADA163AFA1A00FE5E9F /* LastFm.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 0A71AAD9163AFA1A00FE5E9F /* LastFm.podspec */; };
 		0AB06E32161DF5AA00149057 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB06E30161DF5AA00149057 /* Icon.png */; };
 		0AB06E33161DF5AA00149057 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB06E31161DF5AA00149057 /* Icon@2x.png */; };
 		0ABB9D18160766D200503C5B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0ABB9D17160766D200503C5B /* README.md */; };
@@ -56,6 +57,7 @@
 		0A49B90515E267E0006ED696 /* DDXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLNode.h; sourceTree = "<group>"; };
 		0A49B90615E267E0006ED696 /* DDXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDXMLNode.m; sourceTree = "<group>"; };
 		0A49B90815E267E0006ED696 /* DDXMLPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLPrivate.h; sourceTree = "<group>"; };
+		0A71AAD9163AFA1A00FE5E9F /* LastFm.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LastFm.podspec; sourceTree = "<group>"; };
 		0AB06E30161DF5AA00149057 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		0AB06E31161DF5AA00149057 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		0ABB9D17160766D200503C5B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				0ABB9D17160766D200503C5B /* README.md */,
 				0AC05DA71613089000D49E39 /* AUTHORS */,
 				0AC05DA81613089000D49E39 /* CHANGELOG */,
+				0A71AAD9163AFA1A00FE5E9F /* LastFm.podspec */,
 			);
 			sourceTree = "<group>";
 		};
@@ -245,6 +248,7 @@
 				0AC05DAA1613089000D49E39 /* CHANGELOG in Resources */,
 				0AB06E32161DF5AA00149057 /* Icon.png in Resources */,
 				0AB06E33161DF5AA00149057 /* Icon@2x.png in Resources */,
+				0A71AADA163AFA1A00FE5E9F /* LastFm.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
