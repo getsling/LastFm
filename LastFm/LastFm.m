@@ -67,12 +67,18 @@
         self.apiKey = @"";
         self.apiSecret = @"";
         self.queue = [[NSOperationQueue alloc] init];
+        self.maxConcurrentOperationCount = 4;
         self.numberFormatter = [[NSNumberFormatter alloc] init];
         self.dateFormatter = [[NSDateFormatter alloc] init];
         [self.dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
         [self.dateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss"];
     }
     return self;
+}
+
+- (void)setMaxConcurrentOperationCount:(NSInteger)maxConcurrentOperationCount {
+    _maxConcurrentOperationCount = maxConcurrentOperationCount;
+    self.queue.maxConcurrentOperationCount = _maxConcurrentOperationCount;
 }
 
 #pragma mark - Private methods
