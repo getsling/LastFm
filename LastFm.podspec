@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/gangverk/LastFm"
   s.license      = 'MIT'
   s.author       = { "Kevin Renskers" => "info@mixedcase.nl" }
-  s.source       = { :git => "https://github.com/gangverk/LastFm.git", :tag => "0.5.7" }
+  s.source       = { :git => "https://github.com/gangverk/LastFm.git", :tag => s.version.to_s }
   s.ios.deployment_target = '4.0'
   s.osx.deployment_target = '10.6'
   s.source_files = 'LastFm/*.{h,m}'
