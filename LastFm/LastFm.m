@@ -670,7 +670,7 @@
         @"track": [self forceString:track],
         @"artist": [self forceString:artist],
         @"album": [self forceString:album],
-        @"duration": @(duration)
+        @"duration": @((int)duration)
     };
 
     [self performApiCallForMethod:@"track.updateNowPlaying"
@@ -687,8 +687,8 @@
         @"track": [self forceString:track],
         @"artist": [self forceString:artist],
         @"album": [self forceString:album],
-        @"duration": @(duration),
-        @"timestamp": @(timestamp)
+        @"duration": @((int)duration),
+        @"timestamp": @((int)timestamp)
     };
 
     [self performApiCallForMethod:@"track.scrobble"
