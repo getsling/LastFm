@@ -15,7 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *artistLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scrobblesLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UIButton *button;
 @property (strong, nonatomic) NSURL *url;
 @end
 
@@ -23,8 +22,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     self.title = self.artist;
-
-    self.button.enabled = NO;
 
     [[LastFm sharedInstance] getInfoForArtist:self.artist successHandler:^(NSDictionary *result) {
         [self.webView loadHTMLString:[result objectForKey:@"bio"] baseURL:nil];
@@ -35,11 +32,6 @@
         if (image) {
             [self.imageView setImageWithURL:image placeholderImage:[UIImage imageNamed:@"Icon"]];
         }
-
-        self.url = [result objectForKey:@"url"];
-        if (self.url) {
-            self.button.enabled = YES;
-        }
     } failureHandler:nil];
 }
 
@@ -48,12 +40,7 @@
     [self setArtistLabel:nil];
     [self setScrobblesLabel:nil];
     [self setImageView:nil];
-    [self setButton:nil];
     [super viewDidUnload];
-}
-
-- (IBAction)openUrlButtonPressed {
-    NSLog(@"url: %@", [self.url absoluteString]);
 }
 
 @end
