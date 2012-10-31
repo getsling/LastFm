@@ -10,6 +10,7 @@
 #import "LastFm.h"
 #import "UIImageView+WebCache.h"
 #import "ArtistCell.h"
+#import "DetailViewController.h"
 
 @interface ViewController () <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UIView *loginFormView;
@@ -35,6 +36,10 @@
         [self.loginButton setTitle:@"Login"];
         [self.loginButton setAction:@selector(showLoginForm)];
     }];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
 - (void)viewDidUnload {
@@ -133,8 +138,9 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(ArtistCell *)sender {
+    DetailViewController *detailViewController = (DetailViewController *)segue.destinationViewController;
+    detailViewController.artist = sender.textLabel.text;
 }
 
 @end

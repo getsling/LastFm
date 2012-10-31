@@ -23,6 +23,7 @@
 		0AF8B65C1641377300D088C3 /* ExampleCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF8B64F1641377300D088C3 /* ExampleCache.m */; };
 		0AF8B65D1641377300D088C3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF8B6511641377300D088C3 /* ViewController.m */; };
 		0AF8B67616413D4A00D088C3 /* ArtistCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF8B67516413D4A00D088C3 /* ArtistCell.m */; };
+		0AF8B685164146DD00D088C3 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF8B684164146DD00D088C3 /* DetailViewController.m */; };
 		B4B51A22ED77427BB064BA60 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23C823114A694F31BABC4125 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,8 @@
 		0AF8B6511641377300D088C3 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = SOURCE_ROOT; };
 		0AF8B67416413D4A00D088C3 /* ArtistCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtistCell.h; sourceTree = SOURCE_ROOT; };
 		0AF8B67516413D4A00D088C3 /* ArtistCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtistCell.m; sourceTree = SOURCE_ROOT; };
+		0AF8B683164146DD00D088C3 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = SOURCE_ROOT; };
+		0AF8B684164146DD00D088C3 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = SOURCE_ROOT; };
 		23C823114A694F31BABC4125 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C992E282485C4261B0CFA3FE /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -115,6 +118,8 @@
 				0AF8B64F1641377300D088C3 /* ExampleCache.m */,
 				0AF8B6501641377300D088C3 /* ViewController.h */,
 				0AF8B6511641377300D088C3 /* ViewController.m */,
+				0AF8B683164146DD00D088C3 /* DetailViewController.h */,
+				0AF8B684164146DD00D088C3 /* DetailViewController.m */,
 				0AF8B67416413D4A00D088C3 /* ArtistCell.h */,
 				0AF8B67516413D4A00D088C3 /* ArtistCell.m */,
 			);
@@ -253,6 +258,7 @@
 				0AF8B65C1641377300D088C3 /* ExampleCache.m in Sources */,
 				0AF8B65D1641377300D088C3 /* ViewController.m in Sources */,
 				0AF8B67616413D4A00D088C3 /* ArtistCell.m in Sources */,
+				0AF8B685164146DD00D088C3 /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
