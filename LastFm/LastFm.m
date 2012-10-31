@@ -146,7 +146,7 @@
     return value;
 }
 
-- (void)performApiCallForMethod:(NSString*)method
+- (NSOperation *)performApiCallForMethod:(NSString*)method
                      withParams:(NSDictionary *)params
                       rootXpath:(NSString *)rootXpath
                returnDictionary:(BOOL)returnDictionary
@@ -154,32 +154,69 @@
                  successHandler:(LastFmReturnBlockWithObject)successHandler
                  failureHandler:(LastFmReturnBlockWithError)failureHandler {
 
+    NSMutableDictionary *newParams = [params mutableCopy];
+    [newParams setObject:method forKey:@"method"];
+    [newParams setObject:self.apiKey forKey:@"api_key"];
+
+    if (self.session) {
+        [newParams setObject:self.session forKey:@"sk"];
+    }
+
+    if (self.username && ![params objectForKey:@"username"]) {
+        [newParams setObject:self.username forKey:@"username"];
+    }
+
+    // Create signature by sorting all the parameters
+    NSArray *sortedParamKeys = [[newParams allKeys] sortedArrayUsingSelector:@selector(compare:)];
+    NSMutableString *signature = [[NSMutableString alloc] init];
+    for (NSString *key in sortedParamKeys) {
+        [signature appendString:[NSString stringWithFormat:@"%@%@", key, [newParams objectForKey:key]]];
+    }
+    [signature appendString:self.apiSecret];
+
+    // Check if we have the object in cache
+    NSString *cacheKey = [self md5sumFromString:signature];
+    if ([self.cacheDelegate respondsToSelector:@selector(cachedArrayForKey:)]) {
+        NSArray *cachedArray = [self.cacheDelegate cachedArrayForKey:cacheKey];
+        if (cachedArray && cachedArray.count) {
+            id returnObject;
+            if (returnDictionary) {
+                returnObject = [cachedArray objectAtIndex:0];
+            } else {
+                returnObject = cachedArray;
+            }
+            if (successHandler) {
+                successHandler(returnObject);
+            }
+            return nil;
+        }
+    }
+
+    // We need to send all the params in a sorted fashion
+    NSMutableArray *sortedParamsArray = [NSMutableArray array];
+    for (NSString *key in sortedParamKeys) {
+        [sortedParamsArray addObject:[NSString stringWithFormat:@"%@=%@", [self urlEscapeString:key], [self urlEscapeString:[newParams objectForKey:key]]]];
+    }
+
+    return [self _performApiCallForMethod:method signature:cacheKey withSortedParamsArray:sortedParamsArray andOriginalParams:newParams rootXpath:rootXpath returnDictionary:returnDictionary mappingObject:mappingObject successHandler:successHandler failureHandler:failureHandler];
+}
+
+- (NSOperation *)_performApiCallForMethod:(NSString*)method
+                                signature:(NSString *)signature
+                    withSortedParamsArray:(NSArray *)sortedParamsArray
+                        andOriginalParams:(NSDictionary *)originalParams
+                                rootXpath:(NSString *)rootXpath
+                         returnDictionary:(BOOL)returnDictionary
+                            mappingObject:(NSDictionary *)mappingObject
+                           successHandler:(LastFmReturnBlockWithObject)successHandler
+                           failureHandler:(LastFmReturnBlockWithError)failureHandler {
+
     NSBlockOperation *op = [[NSBlockOperation alloc] init];
+    __weak typeof(op) weakOp = op;
+
     [op addExecutionBlock:^{
-        NSMutableDictionary *newParams = [params mutableCopy];
-        [newParams setObject:method forKey:@"method"];
-        [newParams setObject:self.apiKey forKey:@"api_key"];
-
-        if (self.session) {
-            [newParams setObject:self.session forKey:@"sk"];
-        }
-
-        if (self.username && ![params objectForKey:@"username"]) {
-            [newParams setObject:self.username forKey:@"username"];
-        }
-
-        // Create signature. This is annoying, we need to sort all the params
-        NSArray *sortedParamKeys = [[newParams allKeys] sortedArrayUsingSelector:@selector(compare:)];
-        NSMutableString *signature = [[NSMutableString alloc] init];
-        for (NSString *key in sortedParamKeys) {
-            [signature appendString:[NSString stringWithFormat:@"%@%@", key, [newParams objectForKey:key]]];
-        }
-        [signature appendString:self.apiSecret];
-
-        // We even need to *send* all the params in a sorted fashion
-        NSMutableArray *sortedParamsArray = [NSMutableArray array];
-        for (NSString *key in sortedParamKeys) {
-            [sortedParamsArray addObject:[NSString stringWithFormat:@"%@=%@", [self urlEscapeString:key], [self urlEscapeString:[newParams objectForKey:key]]]];
+        if ([weakOp isCancelled]) {
+            return;
         }
 
         // Do we need to POST or GET?
@@ -196,9 +233,9 @@
         if (doPost) {
             request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:API_URL]];
             [request setHTTPMethod:@"POST"];
-            [request setHTTPBody:[[NSString stringWithFormat:@"%@&api_sig=%@", [sortedParamsArray componentsJoinedByString:@"&"], [self md5sumFromString:signature]] dataUsingEncoding:NSUTF8StringEncoding]];
+            [request setHTTPBody:[[NSString stringWithFormat:@"%@&api_sig=%@", [sortedParamsArray componentsJoinedByString:@"&"], signature] dataUsingEncoding:NSUTF8StringEncoding]];
         } else {
-            NSString *paramsString = [NSString stringWithFormat:@"%@&api_sig=%@", [sortedParamsArray componentsJoinedByString:@"&"], [self md5sumFromString:signature]];
+            NSString *paramsString = [NSString stringWithFormat:@"%@&api_sig=%@", [sortedParamsArray componentsJoinedByString:@"&"], signature];
             NSString *urlString = [NSString stringWithFormat:@"%@?%@", API_URL, paramsString];
             request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
         }
@@ -207,6 +244,9 @@
         NSError *error;
 
         NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        if ([weakOp isCancelled]) {
+            return;
+        }
 
         // Check for NSURLConnection errors
         if (error) {
@@ -248,9 +288,13 @@
         NSMutableArray *returnArray = [NSMutableArray array];
 
         for (DDXMLNode *node in output) {
+            if ([weakOp isCancelled]) {
+                return;
+            }
+
             // Convert this node to a dictionary using the mapping object (keys and xpaths)
             NSMutableDictionary *result = [NSMutableDictionary dictionary];
-            [result setObject:newParams forKey:@"_params"];
+            [result setObject:originalParams forKey:@"_params"];
 
             for (NSString *key in mappingObject) {
                 NSArray *mappingArray = [mappingObject objectForKey:key];
@@ -267,6 +311,10 @@
         }
 
         if (returnArray && returnArray.count) {
+            if (!doPost && [self.cacheDelegate respondsToSelector:@selector(cacheArray:forKey:)]) {
+                [self.cacheDelegate cacheArray:returnArray forKey:signature];
+            }
+
             if (successHandler) {
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                     if (returnDictionary) {
@@ -284,14 +332,15 @@
             }];
         }
     }];
-
+    
     [self.queue addOperation:op];
+    return op;
 }
 
 #pragma mark -
 #pragma mark Artist methods
 
-- (void)getInfoForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+- (NSOperation *)getInfoForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
         @"bio": @[ @"./bio/content", @"NSString" ],
         @"summary": @[ @"./bio/summary", @"NSString" ],
@@ -304,7 +353,7 @@
         @"tags": @[ @"./tags/tag/name", @"NSArray" ]
     };
 
-    [self performApiCallForMethod:@"artist.getInfo"
+    return [self performApiCallForMethod:@"artist.getInfo"
                        withParams:@{ @"artist": [self forceString:artist] }
                         rootXpath:@"./artist"
                  returnDictionary:YES

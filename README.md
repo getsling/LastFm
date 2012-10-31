@@ -6,8 +6,9 @@ Loosely based on LastFMService from the [official Last.fm iPhone app](https://gi
 - Block based for easier usage
 - Only one dependency ([KissXML](https://github.com/robbiehanson/KissXML))
 - Returns values in the correct data type (NSDate, NSURL, NSNumber, etc)
-- Actively developed and maintained (note: at the moment **backwards-incompatible changes are to be expected**)
-
+- Hook in your own caching methods (NSCache, Core Data)
+- Cancelable operations, perfect for when cells are scrolled off screen and you don't need to make the API calls after all
+- Actively developed and maintained
 
 ## Usage
 ```objective-c
@@ -44,15 +45,25 @@ Save the username and session you get with `getSessionForUser:password:successHa
 See the included iOS project for examples on login, logout, getting artist info and more.
 
 
+## Example app
+There's an extensive example app available which handles login, logout, getting lots of artists in a tableview and showing their details, caching, canceling API calls, and much more.
+
+To install the example app, you need to use [CocoaPods](http://cocoapods.org) or install the following dependencies yourself:
+
+* SDWebCache
+* SDURLCache
+* KissXML
+
+
 ## Installation
 You can install LastFm with [CocoaPods](http://cocoapods.org). You can also get the code and drag the LastFm subfolder into your Xcode project.
 
 ### Requirements
-* LastFm is built using ARC and modern Objective-C syntax. You will need Xcode 4.4 or higher to use it in your project.
+* LastFm is built using ARC and modern Objective-C syntax. You will need iOS 4 and Xcode 4.4 or higher to use it in your project.
 * You will need your own API key by registering at http://www.last.fm/api.
 * [KissXML](https://github.com/robbiehanson/KissXML)
 
-### Caching
+### HTTP Caching
 If you want all GET requests to be cached as aggressively as possible, install [SDURLCache](https://github.com/rs/SDURLCache/) (or steipete's [ARC fork](https://github.com/steipete/SDURLCache/)). Then, add the following code to your app delegate's `application:didFinishLaunchingWithOptions:` method:
 
 ```objective-c

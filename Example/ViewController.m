@@ -8,16 +8,16 @@
 
 #import "ViewController.h"
 #import "LastFm.h"
+#import "UIImageView+WebCache.h"
+#import "ArtistCell.h"
 
-@interface ViewController () <UITextFieldDelegate>
+@interface ViewController () <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UIView *loginFormView;
-@property (weak, nonatomic) IBOutlet UIView *logoutFormView;
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
-@property (weak, nonatomic) IBOutlet UIView *popupView;
-@property (weak, nonatomic) IBOutlet UITextView *textView;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (weak, nonatomic) IBOutlet UIButton *logoutButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *loginButton;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) NSArray *artists;
 @end
 
 
@@ -28,29 +28,34 @@
 
     // Check if we're logged in with a valid session
     [[LastFm sharedInstance] getSessionInfoWithSuccessHandler:^(NSDictionary *result) {
-        // Yes, show logout form
-        [self.logoutButton setTitle:[NSString stringWithFormat:@"Logout %@", [result objectForKey:@"name"]] forState:UIControlStateNormal];
-        self.logoutFormView.hidden = NO;
+        [self.loginButton setTitle:[NSString stringWithFormat:@"Logout %@", [result objectForKey:@"name"]]];
+        [self.loginButton setAction:@selector(logout)];
     } failureHandler:^(NSError *error) {
         // No, show login form
-        self.loginFormView.hidden = NO;
+        [self.loginButton setTitle:@"Login"];
+        [self.loginButton setAction:@selector(showLoginForm)];
     }];
 }
 
 - (void)viewDidUnload {
     [self setLoginFormView:nil];
-    [self setLogoutFormView:nil];
     [self setUsernameField:nil];
     [self setPasswordField:nil];
-    [self setPopupView:nil];
-    [self setTextView:nil];
-    [self setActivityIndicator:nil];
-    [self setLogoutButton:nil];
+    [self setLoginButton:nil];
+    [self setTableView:nil];
     [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
+
+- (void)showLoginForm {
+    self.loginFormView.hidden = NO;
+}
+
+- (IBAction)hideLoginForm {
+    self.loginFormView.hidden = YES;
 }
 
 - (IBAction)loginButtonPressed {
@@ -68,18 +73,18 @@
         [self.passwordField resignFirstResponder];
 
         // Show the logout button
-        [self.logoutButton setTitle:[NSString stringWithFormat:@"Logout %@", [result objectForKey:@"name"]] forState:UIControlStateNormal];
+        [self.loginButton setTitle:[NSString stringWithFormat:@"Logout %@", [result objectForKey:@"name"]]];
+        [self.loginButton setAction:@selector(logout)];
         self.loginFormView.hidden = YES;
-        self.logoutFormView.hidden = NO;
     } failureHandler:^(NSError *error) {
         NSLog(@"Failure: %@", [error localizedDescription]);
     }];
 }
 
-- (IBAction)logoutButtonPressed {
-    self.loginFormView.hidden = NO;
-    self.logoutFormView.hidden = YES;
-    [LastFm sharedInstance].session = nil;
+- (void)logout {
+    [self.loginButton setTitle:@"Login"];
+    [self.loginButton setAction:@selector(showLoginForm)];
+    [[LastFm sharedInstance] logout];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:SESSION_KEY];
 }
 
@@ -94,22 +99,42 @@
     return YES;
 }
 
-- (IBAction)artistButtonPressed {
-    self.popupView.hidden = NO;
-    [self.activityIndicator startAnimating];
+#pragma mark - Table
 
-    [[LastFm sharedInstance] getInfoForArtist:@"Pink Floyd" successHandler:^(NSDictionary *result) {
-        NSLog(@"result: %@", result);
-        [self.activityIndicator stopAnimating];
-        self.textView.text = [result objectForKey:@"bio"];
-    } failureHandler:^(NSError *error) {
-        [self.activityIndicator stopAnimating];
-        self.textView.text = [NSString stringWithFormat:@"Error: %@", [error localizedDescription]];
-    }];
+- (NSArray *)artists {
+    if (!_artists) {
+        _artists = @[
+            @"Beatles", @"Air", @"Pink Floyd", @"Rammstein", @"Bloodhound Gang",
+            @"Ancien Régime", @"Genius/GZA ", @"Belle & Sebastian", @"Björk",
+            @"Ugress", @"ADELE", @"The Asteroids Galaxy Tour", @"Bar 9",
+            @"Baskerville", @"Beastie Boys", @"Bee Gees", @"Bit Shifter",
+            @"Bomfunk MC's", @"C-Mon & Kypski", @"The Cardigans", @"Carly Commando",
+            @"Caro Emerald", @"Coldplay", @"Coolio", @"Cypress Hill",
+            @"David Bowie", @"Deadmau5", @"Dukes of Stratosphear", @"[dunkelbunt]",
+            @"Eminem", @"Enigma",
+        ];
+    }
+    return _artists;
 }
 
-- (IBAction)closePopupButtonPressed {
-    self.popupView.hidden = YES;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.artists.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellIdentifier = @"ArtistCell";
+    ArtistCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    NSString *artist = [self.artists objectAtIndex:indexPath.row];
+    cell.textLabel.text = artist;
+    cell.detailTextLabel.text = @"loading...";
+
+    [cell loadLastFmDataForArtist:artist];
+
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

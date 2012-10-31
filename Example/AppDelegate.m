@@ -9,15 +9,31 @@
 #import "AppDelegate.h"
 #import "LastFm.h"
 #import "ViewController.h"
+#import "ExampleCache.h"
+#import "SDURLCache.h"
+
+@interface AppDelegate ()
+@property (strong, nonatomic) ExampleCache *exampleCache;
+@end
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Set the Last.fm session info
+    // Setup NSURLCache
+    SDURLCache *URLCache = [[SDURLCache alloc] initWithMemoryCapacity:10 * 1024 * 1024
+                                                         diskCapacity:50 * 1024 * 1024
+                                                             diskPath:[SDURLCache defaultCachePath]];
+    [NSURLCache setSharedURLCache:URLCache];
+
+    self.exampleCache = [[ExampleCache alloc] init];
+
+    // Setup the Last.fm SDK
     [LastFm sharedInstance].apiKey = @"349b1b1344545e7c7832d0c2a91f44fe";
     [LastFm sharedInstance].apiSecret = @"d2a6f3aa73d473d989118e9430a36608";
     [LastFm sharedInstance].session = [[NSUserDefaults standardUserDefaults] stringForKey:SESSION_KEY];
     [LastFm sharedInstance].username = [[NSUserDefaults standardUserDefaults] stringForKey:USERNAME_KEY];
+    [LastFm sharedInstance].cacheDelegate = self.exampleCache;
+
     return YES;
 }
 							

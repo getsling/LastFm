@@ -40,21 +40,27 @@ typedef void (^LastFmReturnBlockWithDictionary)(NSDictionary *result);
 typedef void (^LastFmReturnBlockWithArray)(NSArray *result);
 typedef void (^LastFmReturnBlockWithError)(NSError *error);
 
+@protocol LastFmCache <NSObject>
+- (NSArray *)cachedArrayForKey:(NSString *)key;
+- (void)cacheArray:(NSArray *)array forKey:(NSString *)key;
+@end
+
 @interface LastFm : NSObject
 
 @property (strong, nonatomic) NSString *session;
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *apiKey;
 @property (strong, nonatomic) NSString *apiSecret;
+@property (weak, nonatomic) id <LastFmCache> cacheDelegate;
 @property (nonatomic) NSInteger maxConcurrentOperationCount;
 
 + (LastFm *)sharedInstance;
 - (NSString *)forceString:(NSString *)value;
-- (void)performApiCallForMethod:(NSString*)method withParams:(NSDictionary *)params rootXpath:(NSString *)rootXpath returnDictionary:(BOOL)returnDictionary mappingObject:(NSDictionary *)mappingObject successHandler:(LastFmReturnBlockWithObject)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
+- (NSOperation *)performApiCallForMethod:(NSString*)method withParams:(NSDictionary *)params rootXpath:(NSString *)rootXpath returnDictionary:(BOOL)returnDictionary mappingObject:(NSDictionary *)mappingObject successHandler:(LastFmReturnBlockWithObject)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
 
 #pragma mark Artist methods
 
-- (void)getInfoForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
+- (NSOperation *)getInfoForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
 - (void)getEventsForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
 - (void)getTopAlbumsForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
 - (void)getTopTracksForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
