@@ -18,11 +18,15 @@
 
 - (void)loadLastFmDataForArtist:(NSString *)artist {
     self.operation = [[LastFm sharedInstance] getInfoForArtist:artist successHandler:^(NSDictionary *result) {
-        NSURL *image = [result objectForKey:@"image"];
-        if (image) {
-            [self.imageView setImageWithURL:image placeholderImage:[UIImage imageNamed:@"Icon"]];
+        // This check is necessary because the successHandler might be called when the cell is
+        // already being reused for another artist!
+        if ([artist isEqualToString:[[result objectForKey:@"_params"] objectForKey:@"artist"]]) {
+            NSURL *image = [result objectForKey:@"image"];
+            if (image) {
+                [self.imageView setImageWithURL:image placeholderImage:[UIImage imageNamed:@"Icon"]];
+            }
+            self.detailTextLabel.text = [NSString stringWithFormat:@"%@ scrobbles", [result objectForKey:@"playcount"]];
         }
-        self.detailTextLabel.text = [NSString stringWithFormat:@"%@ scrobbles", [result objectForKey:@"playcount"]];
     } failureHandler:nil];
 }
 
