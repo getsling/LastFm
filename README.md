@@ -45,7 +45,7 @@ Save the username and session you get with `getSessionForUser:password:successHa
 See the included iOS project for examples on login, logout, getting artist info and more.
 
 
-## Example app
+### Example app
 There's an extensive example app available which handles login, logout, getting lots of artists in a tableview and showing their details, caching, canceling API calls, and much more.
 
 To install the example app, you need to use [CocoaPods](http://cocoapods.org) or install the following dependencies yourself:
@@ -56,22 +56,16 @@ To install the example app, you need to use [CocoaPods](http://cocoapods.org) or
 
 
 ## Installation
-You can install LastFm with [CocoaPods](http://cocoapods.org). You can also get the code and drag the LastFm subfolder into your Xcode project.
+You can install LastFm with [CocoaPods](http://cocoapods.org). Just add the following line to your Podfile, and run `pod install`;
+
+    pod 'LastFm'
+
+You can also simply clone the repository and drag the LastFm subfolder into your Xcode project. Be sure to install KissXML yourself.
 
 ### Requirements
 * LastFm is built using ARC and modern Objective-C syntax. You will need iOS 4 and Xcode 4.4 or higher to use it in your project.
 * You will need your own API key by registering at http://www.last.fm/api.
 * [KissXML](https://github.com/robbiehanson/KissXML)
-
-### HTTP Caching
-If you want all GET requests to be cached as aggressively as possible, install [SDURLCache](https://github.com/rs/SDURLCache/) (or steipete's [ARC fork](https://github.com/steipete/SDURLCache/)). Then, add the following code to your app delegate's `application:didFinishLaunchingWithOptions:` method:
-
-```objective-c
-SDURLCache *URLCache = [[SDURLCache alloc] initWithMemoryCapacity:10 * 1024 * 1024
-                                                     diskCapacity:50 * 1024 * 1024
-                                                         diskPath:[SDURLCache defaultCachePath]];
-[NSURLCache setSharedURLCache:URLCache];
-````
 
 
 ## Issues and questions
