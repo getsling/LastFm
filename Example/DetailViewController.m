@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UILabel *artistLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scrobblesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *personalScrobblesLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) NSURL *url;
 @end
@@ -23,10 +24,17 @@
 - (void)viewWillAppear:(BOOL)animated {
     self.title = self.artist;
 
+    self.scrobblesLabel.text = @"";
+    self.personalScrobblesLabel.text = @"";
+
     [[LastFm sharedInstance] getInfoForArtist:self.artist successHandler:^(NSDictionary *result) {
         [self.webView loadHTMLString:[result objectForKey:@"bio"] baseURL:nil];
         self.artistLabel.text = [result objectForKey:@"name"];
-        self.scrobblesLabel.text = [NSString stringWithFormat:@"%@ scrobbles", [result objectForKey:@"playcount"]];
+        self.scrobblesLabel.text = [NSString stringWithFormat:@"%@ global scrobbles", [result objectForKey:@"playcount"]];
+
+        if ([LastFm sharedInstance].session) {
+            self.personalScrobblesLabel.text = [NSString stringWithFormat:@"%@ personal scrobbles", [result objectForKey:@"userplaycount"]];
+        }
 
         NSURL *image = [result objectForKey:@"image"];
         if (image) {
@@ -40,6 +48,7 @@
     [self setArtistLabel:nil];
     [self setScrobblesLabel:nil];
     [self setImageView:nil];
+    [self setPersonalScrobblesLabel:nil];
     [super viewDidUnload];
 }
 

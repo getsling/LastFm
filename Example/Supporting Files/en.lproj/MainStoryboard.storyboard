@@ -163,7 +163,14 @@
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ADi-dF-ACc">
                                 <rect key="frame" x="115" y="36" width="185" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nLn-Si-FBk">
+                                <rect key="frame" x="115" y="52" width="185" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -174,6 +181,7 @@
                     <connections>
                         <outlet property="artistLabel" destination="Fzv-eT-Ods" id="an5-c3-XTp"/>
                         <outlet property="imageView" destination="wYm-mo-xPv" id="sh8-od-m9g"/>
+                        <outlet property="personalScrobblesLabel" destination="nLn-Si-FBk" id="ngr-Mq-WPu"/>
                         <outlet property="scrobblesLabel" destination="ADi-dF-ACc" id="cMN-uE-EZX"/>
                         <outlet property="webView" destination="zwa-Sv-qKP" id="WkO-ib-jbG"/>
                     </connections>
@@ -211,6 +219,7 @@
             <relationships>
                 <relationship kind="outlet" name="artistLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="personalScrobblesLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="scrobblesLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
             </relationships>

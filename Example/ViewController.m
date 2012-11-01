@@ -109,7 +109,7 @@
 - (NSArray *)artists {
     if (!_artists) {
         _artists = @[
-            @"Beatles", @"Air", @"Pink Floyd", @"Rammstein", @"Bloodhound Gang",
+            @"The Beatles", @"Air", @"Pink Floyd", @"Rammstein", @"Bloodhound Gang",
             @"Ancien Régime", @"Genius/GZA ", @"Belle & Sebastian", @"Björk",
             @"Ugress", @"ADELE", @"The Asteroids Galaxy Tour", @"Bar 9",
             @"Baskerville", @"Beastie Boys", @"Bee Gees", @"Bit Shifter",
