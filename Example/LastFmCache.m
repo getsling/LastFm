@@ -59,14 +59,12 @@
     // Get from memory
     NSArray *result = [self.cache objectForKey:key];
     if (result) {
-        DLog(@"Memory cache hit");
         return result;
     }
 
     // Get from disk
     NSData *data = [[EGOCache currentCache] dataForKey:key];
     if (data) {
-        DLog(@"Disk cache hit");
         // Save in memory
         result = [NSKeyedUnarchiver unarchiveObjectWithData:data];
         [self.cache setObject:result forKey:key];
