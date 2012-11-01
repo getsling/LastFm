@@ -23,10 +23,20 @@
 }
 
 - (NSArray *)cachedArrayForKey:(NSString *)key {
+    // Extremely simple example. EGOCache would be something like this:
+    // NSData *data = [[EGOCache currentCache] dataForKey:key];
+    // if (data) {
+    //     return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    // }
+    // return nil;
     return [self.cache objectForKey:key];
 }
 
-- (void)cacheArray:(NSArray *)array forKey:(NSString *)key {
+- (void)cacheArray:(NSArray *)array forKey:(NSString *)key maxAge:(NSTimeInterval)maxAge {
+    // Extremely simple example, only caches to memory.
+    // EGOCache would be better:
+    // NSData *data = [NSKeyedArchiver archivedDataWithRootObject:array];
+    // [[EGOCache currentCache] setData:data forKey:key withTimeoutInterval:maxAge];
     [self.cache setObject:array forKey:key];
 }
 

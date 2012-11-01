@@ -20,10 +20,11 @@
 		0AF8B6591641377300D088C3 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF8B6471641377300D088C3 /* Icon@2x.png */; };
 		0AF8B65A1641377300D088C3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF8B6481641377300D088C3 /* main.m */; };
 		0AF8B65B1641377300D088C3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF8B64A1641377300D088C3 /* AppDelegate.m */; };
-		0AF8B65C1641377300D088C3 /* ExampleCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF8B64F1641377300D088C3 /* ExampleCache.m */; };
 		0AF8B65D1641377300D088C3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF8B6511641377300D088C3 /* ViewController.m */; };
 		0AF8B67616413D4A00D088C3 /* ArtistCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF8B67516413D4A00D088C3 /* ArtistCell.m */; };
 		0AF8B685164146DD00D088C3 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF8B684164146DD00D088C3 /* DetailViewController.m */; };
+		0AF8B6AE164279E800D088C3 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 0AF8B6AD164279E800D088C3 /* Podfile */; };
+		0AF8B6BB1642823500D088C3 /* ExampleCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF8B6BA1642823500D088C3 /* ExampleCache.m */; };
 		B4B51A22ED77427BB064BA60 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23C823114A694F31BABC4125 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -51,14 +52,15 @@
 		0AF8B6481641377300D088C3 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0AF8B6491641377300D088C3 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		0AF8B64A1641377300D088C3 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = SOURCE_ROOT; };
-		0AF8B64E1641377300D088C3 /* ExampleCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleCache.h; sourceTree = SOURCE_ROOT; };
-		0AF8B64F1641377300D088C3 /* ExampleCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleCache.m; sourceTree = SOURCE_ROOT; };
 		0AF8B6501641377300D088C3 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = SOURCE_ROOT; };
 		0AF8B6511641377300D088C3 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = SOURCE_ROOT; };
 		0AF8B67416413D4A00D088C3 /* ArtistCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtistCell.h; sourceTree = SOURCE_ROOT; };
 		0AF8B67516413D4A00D088C3 /* ArtistCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtistCell.m; sourceTree = SOURCE_ROOT; };
 		0AF8B683164146DD00D088C3 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = SOURCE_ROOT; };
 		0AF8B684164146DD00D088C3 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = SOURCE_ROOT; };
+		0AF8B6AD164279E800D088C3 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		0AF8B6B91642823500D088C3 /* ExampleCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleCache.h; sourceTree = SOURCE_ROOT; };
+		0AF8B6BA1642823500D088C3 /* ExampleCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleCache.m; sourceTree = SOURCE_ROOT; };
 		23C823114A694F31BABC4125 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C992E282485C4261B0CFA3FE /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -86,6 +88,7 @@
 				0A49B8CE15E26300006ED696 /* Frameworks */,
 				0A49B8CC15E26300006ED696 /* Products */,
 				C992E282485C4261B0CFA3FE /* Pods.xcconfig */,
+				0AF8B6AD164279E800D088C3 /* Podfile */,
 			);
 			sourceTree = "<group>";
 		};
@@ -114,14 +117,14 @@
 				0AF8B63C1641377300D088C3 /* Supporting Files */,
 				0AF8B6491641377300D088C3 /* AppDelegate.h */,
 				0AF8B64A1641377300D088C3 /* AppDelegate.m */,
-				0AF8B64E1641377300D088C3 /* ExampleCache.h */,
-				0AF8B64F1641377300D088C3 /* ExampleCache.m */,
 				0AF8B6501641377300D088C3 /* ViewController.h */,
 				0AF8B6511641377300D088C3 /* ViewController.m */,
 				0AF8B683164146DD00D088C3 /* DetailViewController.h */,
 				0AF8B684164146DD00D088C3 /* DetailViewController.m */,
 				0AF8B67416413D4A00D088C3 /* ArtistCell.h */,
 				0AF8B67516413D4A00D088C3 /* ArtistCell.m */,
+				0AF8B6B91642823500D088C3 /* ExampleCache.h */,
+				0AF8B6BA1642823500D088C3 /* ExampleCache.m */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 				0AF8B6561641377300D088C3 /* MainStoryboard.storyboard in Resources */,
 				0AF8B6581641377300D088C3 /* Icon.png in Resources */,
 				0AF8B6591641377300D088C3 /* Icon@2x.png in Resources */,
+				0AF8B6AE164279E800D088C3 /* Podfile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,10 +259,10 @@
 				0AF8B62D1641362300D088C3 /* LastFm.m in Sources */,
 				0AF8B65A1641377300D088C3 /* main.m in Sources */,
 				0AF8B65B1641377300D088C3 /* AppDelegate.m in Sources */,
-				0AF8B65C1641377300D088C3 /* ExampleCache.m in Sources */,
 				0AF8B65D1641377300D088C3 /* ViewController.m in Sources */,
 				0AF8B67616413D4A00D088C3 /* ArtistCell.m in Sources */,
 				0AF8B685164146DD00D088C3 /* DetailViewController.m in Sources */,
+				0AF8B6BB1642823500D088C3 /* ExampleCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

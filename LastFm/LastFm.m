@@ -240,13 +240,16 @@
             request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
         }
 
-        NSURLResponse *response;
+        NSHTTPURLResponse *response;
         NSError *error;
 
         NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
         if ([weakOp isCancelled]) {
             return;
         }
+
+        NSNumber *maxAgeNumber = [response.allHeaderFields objectForKey:@"Access-Control-Max-Age"];
+        NSTimeInterval maxAge = [maxAgeNumber integerValue];
 
         // Check for NSURLConnection errors
         if (error) {
@@ -312,8 +315,8 @@
 
         if (returnArray && returnArray.count) {
             // Add to cache
-            if (!doPost && [self.cacheDelegate respondsToSelector:@selector(cacheArray:forKey:)]) {
-                [self.cacheDelegate cacheArray:returnArray forKey:signature];
+            if (!doPost && [self.cacheDelegate respondsToSelector:@selector(cacheArray:forKey:maxAge:)]) {
+                [self.cacheDelegate cacheArray:returnArray forKey:signature maxAge:maxAge];
             }
 
             if (successHandler) {
