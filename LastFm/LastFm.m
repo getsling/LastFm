@@ -212,7 +212,7 @@
                            failureHandler:(LastFmReturnBlockWithError)failureHandler {
 
     NSBlockOperation *op = [[NSBlockOperation alloc] init];
-    __weak typeof(op) weakOp = op;
+    __unsafe_unretained typeof(op) weakOp = op;
 
     [op addExecutionBlock:^{
         if ([weakOp isCancelled]) {
