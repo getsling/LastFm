@@ -6,7 +6,7 @@ Loosely based on LastFMService from the [official Last.fm iPhone app](https://gi
 - Block based for easier usage
 - Only one dependency ([KissXML](https://github.com/robbiehanson/KissXML))
 - Returns values in the correct data type (NSDate, NSURL, NSNumber, etc)
-- Hook in your own caching methods (NSCache, Core Data)
+- Hook in your own caching methods (NSCache, Core Data, SYCache, EGOCache, ...)
 - Cancelable operations, perfect for when cells are scrolled off screen and you don't need to make the API calls after all
 - Actively developed and maintained
 
@@ -50,9 +50,9 @@ There's an extensive example app available which handles login, logout, getting 
 
 To install the example app, you need to use [CocoaPods](http://cocoapods.org) or install the following dependencies yourself:
 
-* SDWebCache
-* SDURLCache
-* KissXML
+* SDWebCache (for caching artist images on disk)
+* SDURLCache (for caching HTTP calls on disk)
+* KissXML (Last.fm SDK's only dependency)
 
 
 ## Installation
