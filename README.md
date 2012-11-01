@@ -56,7 +56,7 @@ To install the example app, you need to use [CocoaPods](http://cocoapods.org) or
 
 
 ## Installation
-You can install LastFm with [CocoaPods](http://cocoapods.org). Just add the following line to your Podfile, and run `pod install`;
+You can install LastFm with [CocoaPods](http://cocoapods.org). Just add the following line to your Podfile, and run `pod install`:
 
     pod 'LastFm'
 
