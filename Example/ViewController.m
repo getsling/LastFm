@@ -129,10 +129,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"ArtistCell";
     ArtistCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    NSString *artist = [self.artists objectAtIndex:indexPath.row];
-    cell.textLabel.text = artist;
-    cell.detailTextLabel.text = @"loading...";
 
+    NSString *artist = [self.artists objectAtIndex:indexPath.row];
     [cell loadLastFmDataForArtist:artist];
 
     return cell;

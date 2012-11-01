@@ -172,9 +172,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0A49B8CA15E26300006ED696 /* LastFm Example */ = {
+		0A49B8CA15E26300006ED696 /* Last.fm */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0A49B8E915E26300006ED696 /* Build configuration list for PBXNativeTarget "LastFm Example" */;
+			buildConfigurationList = 0A49B8E915E26300006ED696 /* Build configuration list for PBXNativeTarget "Last.fm" */;
 			buildPhases = (
 				0A49B8C715E26300006ED696 /* Sources */,
 				0A49B8C815E26300006ED696 /* Frameworks */,
@@ -185,7 +185,7 @@
 			);
 			dependencies = (
 			);
-			name = "LastFm Example";
+			name = Last.fm;
 			productName = Example;
 			productReference = 0A49B8CB15E26300006ED696 /* LastFm Example.app */;
 			productType = "com.apple.product-type.application";
@@ -211,7 +211,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0A49B8CA15E26300006ED696 /* LastFm Example */,
+				0A49B8CA15E26300006ED696 /* Last.fm */,
 			);
 		};
 /* End PBXProject section */
@@ -371,7 +371,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0A49B8E915E26300006ED696 /* Build configuration list for PBXNativeTarget "LastFm Example" */ = {
+		0A49B8E915E26300006ED696 /* Build configuration list for PBXNativeTarget "Last.fm" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0A49B8EA15E26300006ED696 /* Debug */,

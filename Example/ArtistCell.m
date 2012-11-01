@@ -17,6 +17,9 @@
 @implementation ArtistCell
 
 - (void)loadLastFmDataForArtist:(NSString *)artist {
+    self.textLabel.text = artist;
+    self.detailTextLabel.text = @"loading...";
+
     self.operation = [[LastFm sharedInstance] getInfoForArtist:artist successHandler:^(NSDictionary *result) {
         // This check is necessary because the successHandler might be called when the cell is
         // already being reused for another artist!

@@ -54,6 +54,8 @@ To install the example app, you need to use [CocoaPods](http://cocoapods.org) or
 * SDURLCache (for caching HTTP calls on disk)
 * KissXML (Last.fm SDK's only dependency)
 
+_The example app only works in iOS 5 and higher due to the usage of storyboards. The SDK itself works in iOS 4 and higher._
+
 
 ## Installation
 You can install LastFm with [CocoaPods](http://cocoapods.org). Just add the following line to your Podfile, and run `pod install`:
