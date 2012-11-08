@@ -41,8 +41,10 @@ typedef void (^LastFmReturnBlockWithArray)(NSArray *result);
 typedef void (^LastFmReturnBlockWithError)(NSError *error);
 
 @protocol LastFmCache <NSObject>
+@optional
 - (NSArray *)cachedArrayForKey:(NSString *)key;
 - (void)cacheArray:(NSArray *)array forKey:(NSString *)key maxAge:(NSTimeInterval)maxAge;
+- (void)cacheArray:(NSArray *)array requestParams:(NSDictionary *)params forKey:(NSString *)key maxAge:(NSTimeInterval)maxAge;
 @end
 
 @interface LastFm : NSObject

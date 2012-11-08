@@ -1,3 +1,6 @@
+0.9.1 - November 8, 2012
+- New cache delegate method: - (void)cacheArray:(NSArray *)array requestParams:(NSDictionary *)params forKey:(NSString *)key maxAge:(NSTimeInterval)maxAge;
+
 0.9 - November 1, 2012
 - New LastFmCache protocol, allowing you to use your own caching backend (NSCache, Core Data, EGOCache, SYCache, ...)
 - API calls now return a NSOperation which can be cancelled (see the example app for UITableViewCell example)

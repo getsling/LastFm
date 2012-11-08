@@ -176,7 +176,7 @@
 
     // Check if we have the object in cache
     NSString *cacheKey = [self md5sumFromString:signature];
-    if ([self.cacheDelegate respondsToSelector:@selector(cachedArrayForKey:)]) {
+    if (self.cacheDelegate && [self.cacheDelegate respondsToSelector:@selector(cachedArrayForKey:)]) {
         NSArray *cachedArray = [self.cacheDelegate cachedArrayForKey:cacheKey];
         if (cachedArray && cachedArray.count) {
             id returnObject;
@@ -315,7 +315,11 @@
 
         if (returnArray && returnArray.count) {
             // Add to cache
-            if (!doPost && [self.cacheDelegate respondsToSelector:@selector(cacheArray:forKey:maxAge:)]) {
+            if (!doPost && self.cacheDelegate && [self.cacheDelegate respondsToSelector:@selector(cacheArray:requestParams:forKey:maxAge:)]) {
+                [self.cacheDelegate cacheArray:returnArray requestParams:originalParams forKey:signature maxAge:maxAge];
+            }
+
+            if (!doPost && self.cacheDelegate && [self.cacheDelegate respondsToSelector:@selector(cacheArray:forKey:maxAge:)]) {
                 [self.cacheDelegate cacheArray:returnArray forKey:signature maxAge:maxAge];
             }
 
