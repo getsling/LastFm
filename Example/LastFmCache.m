@@ -63,7 +63,7 @@
     }
 
     // Get from disk
-    NSData *data = [[EGOCache currentCache] dataForKey:key];
+    NSData *data = [[EGOCache globalCache] dataForKey:key];
     if (data) {
         // Save in memory
         result = [NSKeyedUnarchiver unarchiveObjectWithData:data];
@@ -80,7 +80,7 @@
 
     // Also save to disk
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:array];
-    [[EGOCache currentCache] setData:data forKey:key withTimeoutInterval:maxAge];
+    [[EGOCache globalCache] setData:data forKey:key withTimeoutInterval:maxAge];
 }
 
 @end

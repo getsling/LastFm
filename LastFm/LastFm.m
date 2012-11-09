@@ -147,12 +147,31 @@
 }
 
 - (NSOperation *)performApiCallForMethod:(NSString*)method
-                     withParams:(NSDictionary *)params
-                      rootXpath:(NSString *)rootXpath
-               returnDictionary:(BOOL)returnDictionary
-                  mappingObject:(NSDictionary *)mappingObject
-                 successHandler:(LastFmReturnBlockWithObject)successHandler
-                 failureHandler:(LastFmReturnBlockWithError)failureHandler {
+                              withParams:(NSDictionary *)params
+                               rootXpath:(NSString *)rootXpath
+                        returnDictionary:(BOOL)returnDictionary
+                           mappingObject:(NSDictionary *)mappingObject
+                          successHandler:(LastFmReturnBlockWithObject)successHandler
+                          failureHandler:(LastFmReturnBlockWithError)failureHandler {
+
+    return [self performApiCallForMethod:method
+                                useCache:YES
+                              withParams:params
+                               rootXpath:rootXpath
+                        returnDictionary:returnDictionary
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
+}
+
+- (NSOperation *)performApiCallForMethod:(NSString*)method
+                                useCache:(BOOL)useCache
+                              withParams:(NSDictionary *)params
+                               rootXpath:(NSString *)rootXpath
+                        returnDictionary:(BOOL)returnDictionary
+                           mappingObject:(NSDictionary *)mappingObject
+                          successHandler:(LastFmReturnBlockWithObject)successHandler
+                          failureHandler:(LastFmReturnBlockWithError)failureHandler {
 
     NSMutableDictionary *newParams = [params mutableCopy];
     [newParams setObject:method forKey:@"method"];
@@ -176,7 +195,7 @@
 
     // Check if we have the object in cache
     NSString *cacheKey = [self md5sumFromString:signature];
-    if (self.cacheDelegate && [self.cacheDelegate respondsToSelector:@selector(cachedArrayForKey:)]) {
+    if (useCache && self.cacheDelegate && [self.cacheDelegate respondsToSelector:@selector(cachedArrayForKey:)]) {
         NSArray *cachedArray = [self.cacheDelegate cachedArrayForKey:cacheKey];
         if (cachedArray && cachedArray.count) {
             id returnObject;

@@ -1,3 +1,6 @@
+0.9.2 - November 9, 2012
+- New performApiCallForMethod that can ignore cache
+
 0.9.1 - November 8, 2012
 - New cache delegate method: - (void)cacheArray:(NSArray *)array requestParams:(NSDictionary *)params forKey:(NSString *)key maxAge:(NSTimeInterval)maxAge;
 
