@@ -47,8 +47,6 @@
 
 @interface LastFm ()
 @property (nonatomic, strong) NSOperationQueue *queue;
-@property (nonatomic, strong) NSNumberFormatter *numberFormatter;
-@property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @end
 
 
@@ -68,10 +66,6 @@
         self.apiSecret = @"";
         self.queue = [[NSOperationQueue alloc] init];
         self.maxConcurrentOperationCount = 4;
-        self.numberFormatter = [[NSNumberFormatter alloc] init];
-        self.dateFormatter = [[NSDateFormatter alloc] init];
-        [self.dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
-        [self.dateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss"];
     }
     return self;
 }
@@ -79,6 +73,28 @@
 - (void)setMaxConcurrentOperationCount:(NSInteger)maxConcurrentOperationCount {
     _maxConcurrentOperationCount = maxConcurrentOperationCount;
     self.queue.maxConcurrentOperationCount = _maxConcurrentOperationCount;
+}
+
++ (NSDateFormatter *)dateFormatter {
+    NSMutableDictionary *dictionary = [[NSThread currentThread] threadDictionary];
+    NSDateFormatter *formatter = [dictionary objectForKey:@"LFMDateFormatter"];
+    if (!formatter) {
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
+        [formatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss"];
+        [dictionary setObject:formatter forKey:@"LFMDateFormatter"];
+    }
+    return formatter;
+}
+
++ (NSNumberFormatter *)numberFormatter {
+    NSMutableDictionary *dictionary = [[NSThread currentThread] threadDictionary];
+    NSNumberFormatter *formatter = [dictionary objectForKey:@"LFMNumberFormatter"];
+    if (!formatter) {
+        formatter = [[NSNumberFormatter alloc] init];
+        [dictionary setObject:formatter forKey:@"LFMNumberFormatter"];
+    }
+    return formatter;
 }
 
 #pragma mark - Private methods
@@ -114,7 +130,7 @@
 
     if ([targetClass isEqualToString:@"NSNumber"]) {
         if ([value isKindOfClass:[NSString class]] && [value length]) {
-            return [self.numberFormatter numberFromString:value];
+            return [[LastFm numberFormatter] numberFromString:value];
         }
         return @0;
     }
@@ -127,7 +143,7 @@
     }
 
     if ([targetClass isEqualToString:@"NSDate"]) {
-        return [self.dateFormatter dateFromString:value];
+        return [[LastFm dateFormatter] dateFromString:value];
     }
 
     if ([targetClass isEqualToString:@"NSArray"]) {

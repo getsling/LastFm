@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "LastFm"
-  s.version      = "0.9.2"
+  s.version      = "0.9.3"
   s.summary      = "Block based Last.fm SDK for iOS and Mac OS X."
   s.homepage     = "https://github.com/gangverk/LastFm"
   s.license      = 'MIT'
