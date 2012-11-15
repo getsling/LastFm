@@ -1,3 +1,6 @@
+0.10.0 - November 15, 2012
+- auth.getMobileSession and auth.getSessionInfo don't use cache
+
 0.9.3 - November 14, 2012
 - NSDateFormatter and NSNumberFormatter are now used in a thread safe manner.
 
