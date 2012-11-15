@@ -405,7 +405,7 @@
                    failureHandler:failureHandler];
 }
 
-- (NSOperation *)getEventsForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+- (NSOperation *)getEventsForArtist:(NSString *)artist limitOrNil:(NSNumber *)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
         @"title": @[ @"./title", @"NSString" ],
         @"headliner": @[ @"./artists/headliner", @"NSString" ],
@@ -420,13 +420,20 @@
         @"venue_url": @[ @"./venue/website", @"NSURL" ]
     };
 
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:[self forceString:artist] forKey:@"artist"];
+
+    if (limit && limit > 0) {
+        [params setObject:limit forKey:@"limit"];
+    }
+
     return [self performApiCallForMethod:@"artist.getEvents"
-                       withParams:@{ @"artist": [self forceString:artist] }
-                        rootXpath:@"./events/event"
-                 returnDictionary:NO
-                    mappingObject:mappingObject
-                   successHandler:successHandler
-                   failureHandler:failureHandler];
+                              withParams:params
+                               rootXpath:@"./events/event"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (NSOperation *)getTopAlbumsForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
