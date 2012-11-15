@@ -567,7 +567,7 @@
     NSDictionary *mappingObject = @{
         @"name": @[ @"./name", @"NSString" ],
         @"count": @[ @"./count", @"NSNumber" ],
-        @"url": @[ @"./url", @"NSString" ]
+        @"url": @[ @"./url", @"NSURL" ]
     };
 
     return [self performApiCallForMethod:@"album.getTopTags"
@@ -593,7 +593,8 @@
         @"wiki": @[ @"./wiki/summary", @"NSString" ],
         @"duration": @[ @"./duration", @"NSNumber" ],
         @"userplaycount": @[ @"./userplaycount", @"NSNumber" ],
-        @"userloved": @[ @"./userloved", @"NSNumber" ]
+        @"userloved": @[ @"./userloved", @"NSNumber" ],
+        @"url": @[ @"./url", @"NSURL" ]
     };
 
     return [self performApiCallForMethod:@"track.getInfo"
@@ -617,7 +618,8 @@
         @"wiki": @[ @"./wiki/summary", @"NSString" ],
         @"duration": @[ @"./duration", @"NSNumber" ],
         @"userplaycount": @[ @"./userplaycount", @"NSNumber" ],
-        @"userloved": @[ @"./userloved", @"NSNumber" ]
+        @"userloved": @[ @"./userloved", @"NSNumber" ],
+        @"url": @[ @"./url", @"NSURL" ]
     };
 
     return [self performApiCallForMethod:@"track.getInfo"

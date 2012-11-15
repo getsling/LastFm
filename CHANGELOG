@@ -1,3 +1,6 @@
+0.10.1 - November 15, 2012
+- getInfoForTrack now returns url as well
+
 0.10.0 - November 15, 2012
 - auth.getMobileSession and auth.getSessionInfo don't use cache
 
