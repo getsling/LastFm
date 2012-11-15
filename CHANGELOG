@@ -1,3 +1,12 @@
+0.9.5 - November 15, 2012
+- Renamed the limit parameter of the getEventsForArtist method.
+
+0.9.4 - November 15, 2012
+- Changed the signature of the getEventsForArtist method to include a limit parameter.
+
+0.9.3 - November 14, 2012
+- NSDateFormatter and NSNumberFormatter are now used in a thread safe manner.
+
 0.9.2 - November 9, 2012
 - New performApiCallForMethod that can ignore cache
 

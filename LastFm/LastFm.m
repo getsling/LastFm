@@ -405,7 +405,7 @@
                    failureHandler:failureHandler];
 }
 
-- (NSOperation *)getEventsForArtist:(NSString *)artist limitOrNil:(NSNumber *)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+- (NSOperation *)getEventsForArtist:(NSString *)artist limit:(NSNumber *)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
         @"title": @[ @"./title", @"NSString" ],
         @"headliner": @[ @"./artists/headliner", @"NSString" ],
