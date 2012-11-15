@@ -397,12 +397,12 @@
     };
 
     return [self performApiCallForMethod:@"artist.getInfo"
-                       withParams:@{ @"artist": [self forceString:artist] }
-                        rootXpath:@"./artist"
-                 returnDictionary:YES
-                    mappingObject:mappingObject
-                   successHandler:successHandler
-                   failureHandler:failureHandler];
+                              withParams:@{ @"artist": [self forceString:artist] }
+                               rootXpath:@"./artist"
+                        returnDictionary:YES
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (NSOperation *)getEventsForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
@@ -421,12 +421,12 @@
     };
 
     return [self performApiCallForMethod:@"artist.getEvents"
-                       withParams:@{ @"artist": [self forceString:artist] }
-                        rootXpath:@"./events/event"
-                 returnDictionary:NO
-                    mappingObject:mappingObject
-                   successHandler:successHandler
-                   failureHandler:failureHandler];
+                              withParams:@{ @"artist": [self forceString:artist] }
+                               rootXpath:@"./events/event"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (NSOperation *)getTopAlbumsForArtist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
@@ -479,13 +479,12 @@
     };
 
     return [self performApiCallForMethod:@"artist.getImages"
-                             withParams:@{ @"artist": [self forceString:artist], @"limit": @"500" }
-                              rootXpath:@"./images/image"
-                       returnDictionary:NO
-                          mappingObject:mappingObject
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
-
+                              withParams:@{ @"artist": [self forceString:artist], @"limit": @"500" }
+                               rootXpath:@"./images/image"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (NSOperation *)getSimilarArtistsTo:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
@@ -496,10 +495,10 @@
     };
 
     return [self performApiCallForMethod:@"artist.getSimilar"
-                             withParams:@{ @"artist": [self forceString:artist], @"limit": @"500" }
-                              rootXpath:@"./similarartists/artist"
-                       returnDictionary:NO
-                          mappingObject:mappingObject
+                              withParams:@{ @"artist": [self forceString:artist], @"limit": @"500" }
+                               rootXpath:@"./similarartists/artist"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
                          successHandler:successHandler
                          failureHandler:failureHandler];
 }
@@ -520,12 +519,12 @@
     };
 
     return [self performApiCallForMethod:@"album.getInfo"
-                             withParams:@{ @"artist": [self forceString:artist], @"album": [self forceString:album] }
-                              rootXpath:@"./album"
-                       returnDictionary:YES
-                          mappingObject:mappingObject
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
+                              withParams:@{ @"artist": [self forceString:artist], @"album": [self forceString:album] }
+                               rootXpath:@"./album"
+                        returnDictionary:YES
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (NSOperation *)getTracksForAlbum:(NSString *)album artist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
@@ -538,12 +537,12 @@
     };
 
     return [self performApiCallForMethod:@"album.getInfo"
-                             withParams:@{ @"artist": [self forceString:artist], @"album": [self forceString:album] }
-                              rootXpath:@"./album/tracks/track"
-                       returnDictionary:NO
-                          mappingObject:mappingObject
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
+                              withParams:@{ @"artist": [self forceString:artist], @"album": [self forceString:album] }
+                               rootXpath:@"./album/tracks/track"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (NSOperation *)getBuyLinksForAlbum:(NSString *)album artist:(NSString *)artist country:(NSString *)country successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
@@ -556,12 +555,12 @@
     };
 
     return [self performApiCallForMethod:@"album.getBuylinks"
-                             withParams:@{ @"artist": [self forceString:artist], @"album": [self forceString:album], @"country": [self forceString:country] }
-                              rootXpath:@"./affiliations/downloads/affiliation"
-                       returnDictionary:NO
-                          mappingObject:mappingObject
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
+                              withParams:@{ @"artist": [self forceString:artist], @"album": [self forceString:album], @"country": [self forceString:country] }
+                               rootXpath:@"./affiliations/downloads/affiliation"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (NSOperation *)getTopTagsForAlbum:(NSString *)album artist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
@@ -572,12 +571,12 @@
     };
 
     return [self performApiCallForMethod:@"album.getTopTags"
-                             withParams:@{ @"artist": [self forceString:artist], @"album": [self forceString:album] }
-                              rootXpath:@"./toptags/tag"
-                       returnDictionary:NO
-                          mappingObject:mappingObject
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
+                              withParams:@{ @"artist": [self forceString:artist], @"album": [self forceString:album] }
+                               rootXpath:@"./toptags/tag"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 #pragma mark Track methods
@@ -598,12 +597,12 @@
     };
 
     return [self performApiCallForMethod:@"track.getInfo"
-                             withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
-                              rootXpath:@"./track"
-                       returnDictionary:YES
-                          mappingObject:mappingObject
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
+                              withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
+                               rootXpath:@"./track"
+                        returnDictionary:YES
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (NSOperation *)getInfoForTrack:(NSString *)musicBrainId successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
@@ -632,42 +631,42 @@
 
 - (NSOperation *)loveTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     return [self performApiCallForMethod:@"track.love"
-                             withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
-                              rootXpath:@"."
-                       returnDictionary:YES
-                          mappingObject:@{}
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
+                              withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
+                               rootXpath:@"."
+                        returnDictionary:YES
+                           mappingObject:@{}
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (NSOperation *)unloveTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     return [self performApiCallForMethod:@"track.unlove"
-                             withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
-                              rootXpath:@"."
-                       returnDictionary:YES
-                          mappingObject:@{}
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
+                              withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
+                               rootXpath:@"."
+                        returnDictionary:YES
+                           mappingObject:@{}
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (NSOperation *)banTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     return [self performApiCallForMethod:@"track.ban"
-                             withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
-                              rootXpath:@"."
-                       returnDictionary:YES
-                          mappingObject:@{}
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
+                              withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
+                               rootXpath:@"."
+                        returnDictionary:YES
+                           mappingObject:@{}
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (NSOperation *)unbanTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     return [self performApiCallForMethod:@"track.unban"
-                             withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
-                              rootXpath:@"."
-                       returnDictionary:YES
-                          mappingObject:@{}
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
+                              withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
+                               rootXpath:@"."
+                        returnDictionary:YES
+                           mappingObject:@{}
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (NSOperation *)getBuyLinksForTrack:(NSString *)title artist:(NSString *)artist country:(NSString *)country successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
@@ -680,12 +679,12 @@
     };
 
     return [self performApiCallForMethod:@"track.getBuylinks"
-                             withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist], @"country": [self forceString:country] }
-                              rootXpath:@"./affiliations/downloads/affiliation"
-                       returnDictionary:NO
-                          mappingObject:mappingObject
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
+                              withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist], @"country": [self forceString:country] }
+                               rootXpath:@"./affiliations/downloads/affiliation"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 #pragma mark User methods
@@ -702,12 +701,13 @@
     };
 
     return [self performApiCallForMethod:@"auth.getMobileSession"
-                             withParams:@{ @"username": [username lowercaseString], @"authToken": authToken }
-                              rootXpath:@"./session"
-                       returnDictionary:YES
-                           mappingObject:mappingObject
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
+                                useCache:NO
+                              withParams:@{ @"username": [username lowercaseString], @"authToken": authToken }
+                               rootXpath:@"./session"
+                        returnDictionary:YES
+                            mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (NSOperation *)getSessionInfoWithSuccessHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
@@ -723,12 +723,13 @@
     };
 
     return [self performApiCallForMethod:@"auth.getSessionInfo"
-                             withParams:@{}
-                              rootXpath:@"./application"
-                       returnDictionary:YES
-                          mappingObject:mappingObject
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
+                                useCache:NO
+                              withParams:@{}
+                               rootXpath:@"./application"
+                        returnDictionary:YES
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (NSOperation *)getInfoForUserOrNil:(NSString *)username successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
@@ -749,12 +750,12 @@
     }
 
     return [self performApiCallForMethod:@"user.getInfo"
-                             withParams:params
-                              rootXpath:@"./user"
-                       returnDictionary:YES
-                          mappingObject:mappingObject
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
+                              withParams:params
+                               rootXpath:@"./user"
+                        returnDictionary:YES
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (NSOperation *)sendNowPlayingTrack:(NSString *)track byArtist:(NSString *)artist onAlbum:(NSString *)album withDuration:(NSTimeInterval)duration successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
@@ -766,12 +767,12 @@
     };
 
     return [self performApiCallForMethod:@"track.updateNowPlaying"
-                             withParams:params
-                              rootXpath:@"."
-                       returnDictionary:YES
-                          mappingObject:@{}
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
+                              withParams:params
+                               rootXpath:@"."
+                        returnDictionary:YES
+                           mappingObject:@{}
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (NSOperation *)sendScrobbledTrack:(NSString *)track byArtist:(NSString *)artist onAlbum:(NSString *)album withDuration:(NSTimeInterval)duration atTimestamp:(NSTimeInterval)timestamp successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
@@ -784,12 +785,12 @@
     };
 
     return [self performApiCallForMethod:@"track.scrobble"
-                             withParams:params
-                              rootXpath:@"."
-                       returnDictionary:YES
-                          mappingObject:@{}
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
+                              withParams:params
+                               rootXpath:@"."
+                        returnDictionary:YES
+                           mappingObject:@{}
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (NSOperation *)getNewReleasesForUserBasedOnRecommendations:(BOOL)basedOnRecommendations successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
@@ -806,12 +807,12 @@
     };
 
     return [self performApiCallForMethod:@"user.getNewReleases"
-                             withParams:params
-                              rootXpath:@"./albums/album"
-                       returnDictionary:NO
-                          mappingObject:mappingObject
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
+                              withParams:params
+                               rootXpath:@"./albums/album"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (NSOperation *)getRecommendedAlbumsWithLimit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
@@ -822,12 +823,12 @@
     };
 
     return [self performApiCallForMethod:@"user.getRecommendedAlbums"
-                             withParams:@{ @"limit": @(limit) }
-                              rootXpath:@"./recommendations/album"
-                       returnDictionary:NO
-                          mappingObject:mappingObject
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
+                              withParams:@{ @"limit": @(limit) }
+                               rootXpath:@"./recommendations/album"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (void)logout {
@@ -847,12 +848,12 @@
     };
 
     return [self performApiCallForMethod:@"chart.getTopTracks"
-                             withParams:@{ @"limit": @(limit), @"page": @(page) }
-                              rootXpath:@"./tracks/track"
-                       returnDictionary:NO
-                          mappingObject:mappingObject
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
+                              withParams:@{ @"limit": @(limit), @"page": @(page) }
+                               rootXpath:@"./tracks/track"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 - (NSOperation *)getHypedTracksWithLimit:(NSInteger)limit page:(NSInteger)page successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
@@ -864,12 +865,12 @@
     };
 
     return [self performApiCallForMethod:@"chart.getHypedTracks"
-                             withParams:@{ @"limit": @(limit), @"page": @(page) }
-                              rootXpath:@"./tracks/track"
-                       returnDictionary:NO
-                          mappingObject:mappingObject
-                         successHandler:successHandler
-                         failureHandler:failureHandler];
+                              withParams:@{ @"limit": @(limit), @"page": @(page) }
+                               rootXpath:@"./tracks/track"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 @end
