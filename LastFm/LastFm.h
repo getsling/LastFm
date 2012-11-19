@@ -54,7 +54,8 @@ typedef void (^LastFmReturnBlockWithError)(NSError *error);
 @property (strong, nonatomic) NSString *apiKey;
 @property (strong, nonatomic) NSString *apiSecret;
 @property (unsafe_unretained, nonatomic) id <LastFmCache> cacheDelegate;
-@property (nonatomic) NSInteger maxConcurrentOperationCount;
+@property (nonatomic) NSInteger maxConcurrentOperationCount; // default: 4
+@property (nonatomic) NSTimeInterval timeoutInterval;        // default: 10
 
 + (LastFm *)sharedInstance;
 - (NSString *)forceString:(NSString *)value;

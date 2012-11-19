@@ -66,6 +66,7 @@
         self.apiSecret = @"";
         self.queue = [[NSOperationQueue alloc] init];
         self.maxConcurrentOperationCount = 4;
+        self.timeoutInterval = 10;
     }
     return self;
 }
@@ -233,10 +234,11 @@
         [sortedParamsArray addObject:[NSString stringWithFormat:@"%@=%@", [self urlEscapeString:key], [self urlEscapeString:[newParams objectForKey:key]]]];
     }
 
-    return [self _performApiCallForMethod:method signature:cacheKey withSortedParamsArray:sortedParamsArray andOriginalParams:newParams rootXpath:rootXpath returnDictionary:returnDictionary mappingObject:mappingObject successHandler:successHandler failureHandler:failureHandler];
+    return [self _performApiCallForMethod:method useCache:useCache signature:cacheKey withSortedParamsArray:sortedParamsArray andOriginalParams:newParams rootXpath:rootXpath returnDictionary:returnDictionary mappingObject:mappingObject successHandler:successHandler failureHandler:failureHandler];
 }
 
 - (NSOperation *)_performApiCallForMethod:(NSString*)method
+                                 useCache:(BOOL)useCache
                                 signature:(NSString *)signature
                     withSortedParamsArray:(NSArray *)sortedParamsArray
                         andOriginalParams:(NSDictionary *)originalParams
@@ -267,12 +269,18 @@
         NSMutableURLRequest *request;
         if (doPost) {
             request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:API_URL]];
+            request.timeoutInterval = self.timeoutInterval;
             [request setHTTPMethod:@"POST"];
             [request setHTTPBody:[[NSString stringWithFormat:@"%@&api_sig=%@", [sortedParamsArray componentsJoinedByString:@"&"], signature] dataUsingEncoding:NSUTF8StringEncoding]];
         } else {
             NSString *paramsString = [NSString stringWithFormat:@"%@&api_sig=%@", [sortedParamsArray componentsJoinedByString:@"&"], signature];
             NSString *urlString = [NSString stringWithFormat:@"%@?%@", API_URL, paramsString];
-            request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+
+            NSURLRequestCachePolicy policy = NSURLRequestUseProtocolCachePolicy;
+            if (!useCache) {
+                policy = NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
+            }
+            request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString] cachePolicy:policy timeoutInterval:self.timeoutInterval];
         }
 
         NSHTTPURLResponse *response;
