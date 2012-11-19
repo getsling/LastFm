@@ -467,15 +467,28 @@
     NSDictionary *mappingObject = @{
         @"format": @[ @"format", @"NSString"],
         @"original": @[ @"./sizes/size[@name=\"original\"]", @"NSURL" ],
+        @"original_width": @[ @"./sizes/size[@name=\"original\"]/@width", @"NSNumber" ],
+        @"original_height": @[ @"./sizes/size[@name=\"original\"]/@height", @"NSNumber" ],
         @"extralarge": @[ @"./sizes/size[@name=\"extralarge\"]", @"NSURL" ],
+        @"extralarge_width": @[ @"./sizes/size[@name=\"extralarge\"]/@width", @"NSNumber" ],
+        @"extralarge_height": @[ @"./sizes/size[@name=\"extralarge\"]/@height", @"NSNumber" ],
         @"large": @[ @"./sizes/size[@name=\"large\"]", @"NSURL" ],
+        @"large_width": @[ @"./sizes/size[@name=\"large\"]/@width", @"NSNumber" ],
+        @"large_height": @[ @"./sizes/size[@name=\"large\"]/@height", @"NSNumber" ],
         @"largesquare": @[ @"./sizes/size[@name=\"largesquare\"]", @"NSURL" ],
+        @"largesquare_width": @[ @"./sizes/size[@name=\"largesquare\"]/@width", @"NSNumber" ],
+        @"largesquare_height": @[ @"./sizes/size[@name=\"largesquare\"]/@height", @"NSNumber" ],
         @"medium": @[ @"./sizes/size[@name=\"medium\"]", @"NSURL" ],
+        @"medium_width": @[ @"./sizes/size[@name=\"medium\"]/@width", @"NSNumber" ],
+        @"medium_height": @[ @"./sizes/size[@name=\"medium\"]/@height", @"NSNumber" ],
         @"small": @[ @"./sizes/size[@name=\"small\"]", @"NSURL" ],
+        @"small_width": @[ @"./sizes/size[@name=\"small\"]/@width", @"NSNumber" ],
+        @"small_height": @[ @"./sizes/size[@name=\"small\"]/@height", @"NSNumber" ],
         @"title": @[ @"title", @"NSString" ],
         @"url": @[ @"url", @"NSURL" ],
-        @"tags": @[ @"./tags/tag/name", @"NSArray" ],
-        @"owner": @[ @"./owner/name", @"NSString" ]
+        @"owner": @[ @"./owner/name", @"NSString" ],
+        @"thumbsup": @[ @"./votes/thumbsup", @"NSNumber" ],
+        @"thumbsdown": @[ @"./votes/thumbsdown", @"NSNumber" ]
     };
 
     return [self performApiCallForMethod:@"artist.getImages"
