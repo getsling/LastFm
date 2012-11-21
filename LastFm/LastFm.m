@@ -842,7 +842,8 @@
     NSDictionary *mappingObject = @{
         @"name": @[ @"./name", @"NSString" ],
         @"artist": @[ @"./artist/name", @"NSString" ],
-        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ]
+        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
+        @"context": @[ @"./context/artist/name", @"NSArray" ],
     };
 
     return [self performApiCallForMethod:@"user.getRecommendedAlbums"
