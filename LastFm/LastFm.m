@@ -712,6 +712,29 @@
 
 #pragma mark User methods
 
+// Please note: to use this method, your API key needs special permission
+- (NSOperation *)createUserWithUsername:(NSString *)username password:(NSString *)password email:(NSString *)email successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"name": @[ @"./name", @"NSString" ],
+        @"url": @[ @"./url", @"NSURL" ],
+    };
+
+    NSDictionary *params = @{
+        @"username": [self forceString:username],
+        @"password": [self forceString:password],
+        @"email": [self forceString:email],
+    };
+
+    return [self performApiCallForMethod:@"user.signUp"
+                                useCache:NO
+                              withParams:params
+                               rootXpath:@"./user"
+                        returnDictionary:YES
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
+}
+
 - (NSOperation *)getSessionForUser:(NSString *)username password:(NSString *)password successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     username = [self forceString:username];
     password = [self forceString:password];

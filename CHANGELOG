@@ -1,3 +1,6 @@
+1.1.0 - November 26, 2012
+- Added method for creating a new user
+
 1.0.0 - November 21, 2012
 - Version 1.0.0, deemed stable and ready for production
 - Added context to getRecommendedAlbumsWithLimit
