@@ -401,7 +401,8 @@
         @"listeners": @[ @"./stats/listeners", @"NSNumber" ],
         @"playcount": @[ @"./stats/playcount", @"NSNumber" ],
         @"userplaycount": @[ @"./stats/userplaycount", @"NSNumber" ],
-        @"tags": @[ @"./tags/tag/name", @"NSArray" ]
+        @"tags": @[ @"./tags/tag/name", @"NSArray" ],
+        @"ontour": @[ @"./ontour", @"NSNumber" ],
     };
 
     return [self performApiCallForMethod:@"artist.getInfo"
