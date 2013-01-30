@@ -230,7 +230,23 @@
         if (successHandler) {
             successHandler(returnObject);
         }
-        return nil;
+
+        if (self.cacheDelegate && [self.cacheDelegate respondsToSelector:@selector(cacheExpiredForKey:)]) {
+            BOOL expired = [self.cacheDelegate cacheExpiredForKey:cacheKey];
+            if (!expired) {
+                // Not expired? Then don't make the request to the server. Stop here.
+                return nil;
+            }
+        } if (self.cacheDelegate && [self.cacheDelegate respondsToSelector:@selector(cacheExpiredForKey:requestParams:)]) {
+            BOOL expired = [self.cacheDelegate cacheExpiredForKey:cacheKey requestParams:newParams];
+            if (!expired) {
+                // Not expired? Then don't make the request to the server. Stop here.
+                return nil;
+            }
+        } else {
+            // No expiration delegate methods? Stop here.
+            return nil;
+        }
     }
 
     // We need to send all the params in a sorted fashion
