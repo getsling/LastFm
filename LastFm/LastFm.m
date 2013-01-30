@@ -212,20 +212,25 @@
 
     // Check if we have the object in cache
     NSString *cacheKey = [self md5sumFromString:signature];
-    if (useCache && self.cacheDelegate && [self.cacheDelegate respondsToSelector:@selector(cachedArrayForKey:)]) {
-        NSArray *cachedArray = [self.cacheDelegate cachedArrayForKey:cacheKey];
-        if (cachedArray && cachedArray.count) {
-            id returnObject;
-            if (returnDictionary) {
-                returnObject = [cachedArray objectAtIndex:0];
-            } else {
-                returnObject = cachedArray;
-            }
-            if (successHandler) {
-                successHandler(returnObject);
-            }
-            return nil;
+    NSArray *cachedArray = nil;
+
+    if (useCache && self.cacheDelegate && [self.cacheDelegate respondsToSelector:@selector(cachedArrayForKey:requestParams:)]) {
+        cachedArray = [self.cacheDelegate cachedArrayForKey:cacheKey requestParams:newParams];
+    } else if (useCache && self.cacheDelegate && [self.cacheDelegate respondsToSelector:@selector(cachedArrayForKey:)]) {
+        cachedArray = [self.cacheDelegate cachedArrayForKey:cacheKey];
+    }
+
+    if (cachedArray && cachedArray.count) {
+        id returnObject;
+        if (returnDictionary) {
+            returnObject = [cachedArray objectAtIndex:0];
+        } else {
+            returnObject = cachedArray;
         }
+        if (successHandler) {
+            successHandler(returnObject);
+        }
+        return nil;
     }
 
     // We need to send all the params in a sorted fashion
