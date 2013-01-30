@@ -34,12 +34,19 @@
 
 
 /*
- * Better example: uses memory cache but falls back to disk cache
- * with the help of EGOCache.
+ * Better example: uses memory cache but falls back to rolling 
+ * disk cache with the help of GVCache.
+ *
+ * Rolling cache: cache will never be purged from disk after
+ * its expire time is reached. Instead, the cached version is 
+ * used AND a request to Last.fm is made, updating the cache
+ * in the process. This way, you will never hit the situation
+ * where you're offline and the cached is cleared because
+ * it's 24 hours old, leaving you with nothing.
  *
 
 #import "LastFmCache.h"
-#import "EGOCache.h"
+#import "GVCache.h"
 
 @interface LastFmCache ()
 @property (strong, nonatomic) NSCache *cache;
@@ -55,6 +62,16 @@
     return self;
 }
 
+- (BOOL)cacheExpiredForKey:(NSString *)key requestParams:(NSDictionary *)params {
+    NSTimeInterval age = [[GVCache globalCache] ageForKey:key];
+    NSTimeInterval maxAge = 10*60;//24*60*60;
+    if (age > maxAge) {
+        return YES;
+    }
+
+    return NO;
+}
+
 - (NSArray *)cachedArrayForKey:(NSString *)key {
     // Get from memory
     NSArray *result = [self.cache objectForKey:key];
@@ -63,7 +80,7 @@
     }
 
     // Get from disk
-    NSData *data = [[EGOCache globalCache] dataForKey:key];
+    NSData *data = [[GVCache globalCache] dataForKey:key];
     if (data) {
         // Save in memory
         result = [NSKeyedUnarchiver unarchiveObjectWithData:data];
@@ -78,9 +95,9 @@
     // Save in memory
     [self.cache setObject:array forKey:key];
 
-    // Also save to disk
+    // Also save to disk. Timeout is 10 years, never automatically remove stuff from cache.
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:array];
-    [[EGOCache globalCache] setData:data forKey:key withTimeoutInterval:maxAge];
+    [[GVCache globalCache] setData:data forKey:key withTimeoutInterval:60*60*24*365*10];
 }
 
 @end

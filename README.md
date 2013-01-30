@@ -6,7 +6,7 @@ Loosely based on LastFMService from the [old Last.fm iPhone app](https://github.
 - Block based for easier usage
 - Only one dependency ([KissXML](https://github.com/robbiehanson/KissXML))
 - Returns values in the correct data type (NSDate, NSURL, NSNumber, etc)
-- Hook in your own caching methods (NSCache, Core Data, SYCache, EGOCache, ...)
+- Hook in your own caching methods (GVCache, NSCache, Core Data, SYCache, EGOCache, ...)
 - Cancelable operations, perfect for when cells are scrolled off screen and you don't need to make the API calls after all
 - Actively developed and maintained (it's used in the official Last.fm Scrobbler app!)
 
