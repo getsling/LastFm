@@ -296,8 +296,13 @@
             return;
         }
 
-        NSNumber *maxAgeNumber = [response.allHeaderFields objectForKey:@"Access-Control-Max-Age"];
-        NSTimeInterval maxAge = [maxAgeNumber integerValue];
+        NSTimeInterval maxAge = 0;
+        if ([self.cacheDelegate respondsToSelector:@selector(maxAge)]) {
+            maxAge = [self.cacheDelegate maxAge];
+        } else {
+            NSNumber *maxAgeNumber = [response.allHeaderFields objectForKey:@"Access-Control-Max-Age"];
+            maxAge = [maxAgeNumber integerValue];
+        }
 
         // Check for NSURLConnection errors
         if (error) {
