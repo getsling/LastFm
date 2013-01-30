@@ -365,9 +365,7 @@
             // Add to cache
             if (!doPost && self.cacheDelegate && [self.cacheDelegate respondsToSelector:@selector(cacheArray:requestParams:forKey:maxAge:)]) {
                 [self.cacheDelegate cacheArray:returnArray requestParams:originalParams forKey:signature maxAge:maxAge];
-            }
-
-            if (!doPost && self.cacheDelegate && [self.cacheDelegate respondsToSelector:@selector(cacheArray:forKey:maxAge:)]) {
+            } else if (!doPost && self.cacheDelegate && [self.cacheDelegate respondsToSelector:@selector(cacheArray:forKey:maxAge:)]) {
                 [self.cacheDelegate cacheArray:returnArray forKey:signature maxAge:maxAge];
             }
 
