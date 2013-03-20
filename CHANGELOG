@@ -1,3 +1,6 @@
+1.4.1 - March 20, 2013
+- Add a mapping for the summary node in the getInfoForAlbum method
+
 1.4.0 - January 30, 2013
 - New cache delegate method: - (BOOL)cacheExpiredForKey:(NSString *)key;
 - To be used to implement "rolling cache"

@@ -556,7 +556,8 @@
         @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
         @"releasedate": @[ @"./releasedate", @"NSString" ],
         @"tags": @[ @"./toptags/tag/name", @"NSArray" ],
-        @"userplaycount": @[ @"./userplaycount", @"NSNumber" ]
+        @"userplaycount": @[ @"./userplaycount", @"NSNumber" ],
+        @"summary": @[ @"./wiki/summary", @"NSString" ]
     };
 
     return [self performApiCallForMethod:@"album.getInfo"
