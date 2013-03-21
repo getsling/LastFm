@@ -210,6 +210,12 @@
     }
     [signature appendString:self.apiSecret];
 
+    // Include the mapping object in the signature to ensure different methods
+    // using the same Last.Fm API endpoint get their own cache key.
+    for (NSString *key in [mappingObject allKeys]) {
+        [signature appendString:key];
+    }
+
     // Check if we have the object in cache
     NSString *cacheKey = [self md5sumFromString:signature];
     NSArray *cachedArray = nil;

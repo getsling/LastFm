@@ -1,3 +1,10 @@
+1.4.2 - March 21, 2013
+- Fix a bug where different methods calling the same Last.Fm API endpoint would
+  be returned the same result from the cache. This behaviour is incorrect as
+  each method maps the same HTTP response differently. Therefore, the mapping
+  object supplied by each method is used in the generation of the cache
+  signature to avoid this.
+
 1.4.1 - March 20, 2013
 - Add a mapping for the summary node in the getInfoForAlbum method
 
