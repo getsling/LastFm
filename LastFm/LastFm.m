@@ -579,7 +579,7 @@
     };
 
     return [self performApiCallForMethod:@"album.getInfo"
-                              withParams:@{ @"artist": [self forceString:artist], @"album": [self forceString:album] }
+                              withParams:@{ @"artist": [self forceString:artist], @"album": [self forceString:album], @"1": @"1" }
                                rootXpath:@"./album/tracks/track"
                         returnDictionary:NO
                            mappingObject:mappingObject

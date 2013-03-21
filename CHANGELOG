@@ -1,3 +1,6 @@
+1.4.2 - March 21, 2013
+- Add dummy parameter to getTracksForAlbum to give this method a different cache key from the getInfoForAlbum method
+
 1.4.1 - March 20, 2013
 - Add a mapping for the summary node in the getInfoForAlbum method
 
