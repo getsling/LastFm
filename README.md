@@ -51,7 +51,6 @@ There's an extensive example app available which handles login, logout, getting 
 To install the example app, you need to use [CocoaPods](http://cocoapods.org) or install the following dependencies yourself:
 
 * SDWebCache (for caching artist images on disk)
-* SDURLCache (for caching HTTP calls on disk)
 * KissXML (Last.fm SDK's only dependency)
 
 _The example app only works in iOS 5 and higher due to the usage of storyboards. The SDK itself works in iOS 4 and higher._

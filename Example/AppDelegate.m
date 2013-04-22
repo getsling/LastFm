@@ -10,7 +10,6 @@
 #import "LastFm.h"
 #import "ViewController.h"
 #import "LastFmCache.h"
-#import "SDURLCache.h"
 
 @interface AppDelegate ()
 @property (strong, nonatomic) LastFmCache *lastFmCache;
@@ -19,12 +18,6 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Setup NSURLCache
-    SDURLCache *URLCache = [[SDURLCache alloc] initWithMemoryCapacity:10 * 1024 * 1024
-                                                         diskCapacity:50 * 1024 * 1024
-                                                             diskPath:[SDURLCache defaultCachePath]];
-    [NSURLCache setSharedURLCache:URLCache];
-
     self.lastFmCache = [[LastFmCache alloc] init];
 
     // Setup the Last.fm SDK
