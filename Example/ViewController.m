@@ -39,6 +39,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
@@ -68,6 +69,7 @@
         // Save the session into NSUserDefaults. It is loaded on app start up in AppDelegate.
         [[NSUserDefaults standardUserDefaults] setObject:[result objectForKey:@"key"] forKey:SESSION_KEY];
         [[NSUserDefaults standardUserDefaults] setObject:[result objectForKey:@"name"] forKey:USERNAME_KEY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
 
         // Also set the session of the LastFm object
         [LastFm sharedInstance].session = [result objectForKey:@"key"];

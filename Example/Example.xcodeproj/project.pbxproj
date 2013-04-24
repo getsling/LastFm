@@ -29,7 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0A49B8CB15E26300006ED696 /* LastFm Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "LastFm Example.app"; path = Last.fm.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A49B8CB15E26300006ED696 /* Last.fm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Last.fm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A49B8CF15E26300006ED696 /* UIKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0A49B8D115E26300006ED696 /* Foundation.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0A49B8D315E26300006ED696 /* CoreGraphics.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -95,7 +95,7 @@
 		0A49B8CC15E26300006ED696 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0A49B8CB15E26300006ED696 /* LastFm Example.app */,
+				0A49B8CB15E26300006ED696 /* Last.fm.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -187,7 +187,7 @@
 			);
 			name = Last.fm;
 			productName = Example;
-			productReference = 0A49B8CB15E26300006ED696 /* LastFm Example.app */;
+			productReference = 0A49B8CB15E26300006ED696 /* Last.fm.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

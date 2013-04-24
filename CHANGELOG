@@ -1,3 +1,11 @@
+1.5.0 - april 24, 2013
+- Added four new methods:
+    - (NSOperation *)getTopArtistsForUserOrNil:(NSString *)username period:(LastFmPeriod)period limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
+    - (NSOperation *)getRecentTracksForUserOrNil:(NSString *)username limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
+    - (NSOperation *)getLovedTracksForUserOrNil:(NSString *)username limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
+    - (NSOperation *)getTopTracksForUserOrNil:(NSString *)username period:(LastFmPeriod)period limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
+- Simplified example app, removed SDURLCache dependancy
+
 1.4.2 - March 21, 2013
 - Add dummy parameter to getTracksForAlbum to give this method a different cache key from the getInfoForAlbum method
 
@@ -5,14 +13,16 @@
 - Add a mapping for the summary node in the getInfoForAlbum method
 
 1.4.0 - January 30, 2013
-- New cache delegate method: - (BOOL)cacheExpiredForKey:(NSString *)key;
+- New cache delegate method: 
+    - (BOOL)cacheExpiredForKey:(NSString *)key;
 - To be used to implement "rolling cache"
 
 1.3.1 - January 30, 2013
 - Only call one of the cacheArray methods, not both
 
 1.3.0 - January 30, 2013
-- New cache delegate method: - (NSArray *)cachedArrayForKey:(NSString *)key requestParams:(NSDictionary *)params;
+- New cache delegate method: 
+    - (NSArray *)cachedArrayForKey:(NSString *)key requestParams:(NSDictionary *)params;
 
 1.2.0 - November 28, 2012
 - getInfoForArtist now returns the new "ontour" value
@@ -44,7 +54,8 @@
 - New performApiCallForMethod that can ignore cache
 
 0.9.1 - November 8, 2012
-- New cache delegate method: - (void)cacheArray:(NSArray *)array requestParams:(NSDictionary *)params forKey:(NSString *)key maxAge:(NSTimeInterval)maxAge;
+- New cache delegate method: 
+    - (void)cacheArray:(NSArray *)array requestParams:(NSDictionary *)params forKey:(NSString *)key maxAge:(NSTimeInterval)maxAge;
 
 0.9 - November 1, 2012
 - New LastFmCache protocol, allowing you to use your own caching backend (NSCache, Core Data, EGOCache, SYCache, ...)
