@@ -573,29 +573,6 @@
                          failureHandler:failureHandler];
 }
 
-- (NSOperation *)getTopArtistsForUserOrNil:(NSString *)username period:(LastFmPeriod)period limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
-    NSDictionary *mappingObject = @{
-        @"name": @[ @"./name", @"NSString" ],
-        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
-        @"playcount": @[ @"./playcount", @"NSNumber" ],
-        @"url": @[ @"url", @"NSURL" ],
-    };
-
-    NSDictionary *params = @{
-        @"user": username ? [self forceString:username] : [self forceString:self.username],
-        @"period": [self period:period],
-        @"limit": @(limit),
-    };
-
-    return [self performApiCallForMethod:@"user.getTopArtists"
-                              withParams:params
-                               rootXpath:@"./topartists/artist"
-                        returnDictionary:NO
-                           mappingObject:mappingObject
-                          successHandler:successHandler
-                          failureHandler:failureHandler];
-}
-
 #pragma mark Album methods
 
 - (NSOperation *)getInfoForAlbum:(NSString *)album artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
@@ -783,79 +760,6 @@
                           failureHandler:failureHandler];
 }
 
-- (NSOperation *)getRecentTracksForUserOrNil:(NSString *)username limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
-    NSDictionary *mappingObject = @{
-        @"name": @[ @"./name", @"NSString" ],
-        @"artist": @[ @"./artist/name", @"NSString" ],
-        @"album": @[ @"./album/title", @"NSString" ],
-        @"image": @[ @"./album/image[@size=\"large\"]", @"NSURL" ],
-        @"url": @[ @"./url", @"NSURL" ],
-        @"date": @[ @"./date", @"NSDate" ],
-    };
-
-    NSDictionary *params = @{
-        @"user": username ? [self forceString:username] : [self forceString:self.username],
-        @"limit": @(limit),
-    };
-
-    return [self performApiCallForMethod:@"user.getRecentTracks"
-                              withParams:params
-                               rootXpath:@"./recenttracks/track"
-                        returnDictionary:NO
-                           mappingObject:mappingObject
-                          successHandler:successHandler
-                          failureHandler:failureHandler];
-}
-
-- (NSOperation *)getLovedTracksForUserOrNil:(NSString *)username limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
-    NSDictionary *mappingObject = @{
-        @"name": @[ @"./name", @"NSString" ],
-        @"artist": @[ @"./artist/name", @"NSString" ],
-        @"album": @[ @"./album/title", @"NSString" ],
-        @"image": @[ @"./album/image[@size=\"large\"]", @"NSURL" ],
-        @"url": @[ @"./url", @"NSURL" ],
-        @"date": @[ @"./date", @"NSDate" ],
-    };
-
-    NSDictionary *params = @{
-        @"user": username ? [self forceString:username] : [self forceString:self.username],
-        @"limit": @(limit),
-    };
-
-    return [self performApiCallForMethod:@"user.getLovedTracks"
-                              withParams:params
-                               rootXpath:@"./lovedtracks/track"
-                        returnDictionary:NO
-                           mappingObject:mappingObject
-                          successHandler:successHandler
-                          failureHandler:failureHandler];
-}
-
-- (NSOperation *)getTopTracksForUserOrNil:(NSString *)username period:(LastFmPeriod)period limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
-    NSDictionary *mappingObject = @{
-        @"name": @[ @"./name", @"NSString" ],
-        @"artist": @[ @"./artist/name", @"NSString" ],
-        @"album": @[ @"./album/title", @"NSString" ],
-        @"image": @[ @"./album/image[@size=\"large\"]", @"NSURL" ],
-        @"url": @[ @"./url", @"NSURL" ],
-        @"date": @[ @"./date", @"NSDate" ],
-    };
-
-    NSDictionary *params = @{
-        @"user": username ? [self forceString:username] : [self forceString:self.username],
-        @"period": [self period:period],
-        @"limit": @(limit),
-    };
-
-    return [self performApiCallForMethod:@"user.getTopTracks"
-                              withParams:params
-                               rootXpath:@"./toptracks/track"
-                        returnDictionary:NO
-                           mappingObject:mappingObject
-                          successHandler:successHandler
-                          failureHandler:failureHandler];
-}
-
 #pragma mark User methods
 
 // Please note: to use this method, your API key needs special permission
@@ -918,32 +822,6 @@
                                 useCache:NO
                               withParams:@{}
                                rootXpath:@"./application"
-                        returnDictionary:YES
-                           mappingObject:mappingObject
-                          successHandler:successHandler
-                          failureHandler:failureHandler];
-}
-
-- (NSOperation *)getInfoForUserOrNil:(NSString *)username successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
-    NSDictionary *mappingObject = @{
-        @"name": @[ @"./realname", @"NSString" ],
-        @"username": @[ @"./name", @"NSString" ],
-        @"gender": @[ @"./gender", @"NSString" ],
-        @"age": @[ @"./age", @"NSNumber" ],
-        @"playcount": @[ @"./playcount", @"NSNumber" ],
-        @"country": @[ @"./country", @"NSString" ],
-        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
-        @"url": @[ @"./url", @"NSURL" ]
-    };
-
-    NSDictionary *params = @{};
-    if (username) {
-        params = @{ @"user": [self forceString:username] };
-    }
-
-    return [self performApiCallForMethod:@"user.getInfo"
-                              withParams:params
-                               rootXpath:@"./user"
                         returnDictionary:YES
                            mappingObject:mappingObject
                           successHandler:successHandler
@@ -1027,6 +905,161 @@
 - (void)logout {
     self.session = nil;
     self.username = nil;
+}
+
+#pragma mark General User methods
+
+- (NSOperation *)getInfoForUserOrNil:(NSString *)username successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"name": @[ @"./realname", @"NSString" ],
+        @"username": @[ @"./name", @"NSString" ],
+        @"gender": @[ @"./gender", @"NSString" ],
+        @"age": @[ @"./age", @"NSNumber" ],
+        @"playcount": @[ @"./playcount", @"NSNumber" ],
+        @"country": @[ @"./country", @"NSString" ],
+        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
+        @"url": @[ @"./url", @"NSURL" ]
+    };
+
+    NSDictionary *params = @{};
+    if (username) {
+        params = @{ @"user": [self forceString:username] };
+    }
+
+    return [self performApiCallForMethod:@"user.getInfo"
+                              withParams:params
+                               rootXpath:@"./user"
+                        returnDictionary:YES
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
+}
+
+- (NSOperation *)getTopArtistsForUserOrNil:(NSString *)username period:(LastFmPeriod)period limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"name": @[ @"./name", @"NSString" ],
+        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
+        @"playcount": @[ @"./playcount", @"NSNumber" ],
+        @"url": @[ @"url", @"NSURL" ],
+    };
+
+    NSDictionary *params = @{
+        @"user": username ? [self forceString:username] : [self forceString:self.username],
+        @"period": [self period:period],
+        @"limit": @(limit),
+    };
+
+    return [self performApiCallForMethod:@"user.getTopArtists"
+                              withParams:params
+                               rootXpath:@"./topartists/artist"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
+}
+
+- (NSOperation *)getRecentTracksForUserOrNil:(NSString *)username limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"name": @[ @"./name", @"NSString" ],
+        @"artist": @[ @"./artist/name", @"NSString" ],
+        @"album": @[ @"./album/title", @"NSString" ],
+        @"image": @[ @"./album/image[@size=\"large\"]", @"NSURL" ],
+        @"url": @[ @"./url", @"NSURL" ],
+        @"date": @[ @"./date", @"NSDate" ],
+    };
+
+    NSDictionary *params = @{
+        @"user": username ? [self forceString:username] : [self forceString:self.username],
+        @"limit": @(limit),
+    };
+
+    return [self performApiCallForMethod:@"user.getRecentTracks"
+                              withParams:params
+                               rootXpath:@"./recenttracks/track"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
+}
+
+- (NSOperation *)getLovedTracksForUserOrNil:(NSString *)username limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"name": @[ @"./name", @"NSString" ],
+        @"artist": @[ @"./artist/name", @"NSString" ],
+        @"album": @[ @"./album/title", @"NSString" ],
+        @"image": @[ @"./album/image[@size=\"large\"]", @"NSURL" ],
+        @"url": @[ @"./url", @"NSURL" ],
+        @"date": @[ @"./date", @"NSDate" ],
+    };
+
+    NSDictionary *params = @{
+        @"user": username ? [self forceString:username] : [self forceString:self.username],
+        @"limit": @(limit),
+    };
+
+    return [self performApiCallForMethod:@"user.getLovedTracks"
+                              withParams:params
+                               rootXpath:@"./lovedtracks/track"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
+}
+
+- (NSOperation *)getTopTracksForUserOrNil:(NSString *)username period:(LastFmPeriod)period limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"name": @[ @"./name", @"NSString" ],
+        @"artist": @[ @"./artist/name", @"NSString" ],
+        @"album": @[ @"./album/title", @"NSString" ],
+        @"image": @[ @"./album/image[@size=\"large\"]", @"NSURL" ],
+        @"url": @[ @"./url", @"NSURL" ],
+        @"date": @[ @"./date", @"NSDate" ],
+    };
+
+    NSDictionary *params = @{
+        @"user": username ? [self forceString:username] : [self forceString:self.username],
+        @"period": [self period:period],
+        @"limit": @(limit),
+    };
+
+    return [self performApiCallForMethod:@"user.getTopTracks"
+                              withParams:params
+                               rootXpath:@"./toptracks/track"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
+}
+
+- (NSOperation *)getEventsForUserOrNil:(NSString *)username festivalsOnly:(BOOL)festivalsonly limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"title": @[ @"./title", @"NSString" ],
+        @"headliner": @[ @"./artists/headliner", @"NSString" ],
+        @"artists": @[ @"./artists/artist", @"NSArray" ],
+        @"attendance": @[ @"./attendance", @"NSNumber" ],
+        @"description": @[ @"./description", @"NSString" ],
+        @"startDate": @[ @"./startDate", @"NSDate" ],
+        @"url": @[ @"./url", @"NSURL" ],
+        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
+        @"venue": @[ @"./venue/name", @"NSString" ],
+        @"city": @[ @"./venue/location/city", @"NSString" ],
+        @"country": @[ @"./venue/location/country", @"NSString" ],
+        @"venue_url": @[ @"./venue/website", @"NSURL" ]
+    };
+
+    NSDictionary *params = @{
+        @"user": username ? [self forceString:username] : [self forceString:self.username],
+        @"festivalsonly": @(festivalsonly),
+        @"limit": @(limit),
+    };
+
+    return [self performApiCallForMethod:@"user.getEvents"
+                              withParams:params
+                               rootXpath:@"./events/event"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
 }
 
 #pragma mark Chart methods
