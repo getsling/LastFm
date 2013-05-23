@@ -955,9 +955,9 @@
 - (NSOperation *)getRecentTracksForUserOrNil:(NSString *)username limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
         @"name": @[ @"./name", @"NSString" ],
-        @"artist": @[ @"./artist/name", @"NSString" ],
-        @"album": @[ @"./album/title", @"NSString" ],
-        @"image": @[ @"./album/image[@size=\"large\"]", @"NSURL" ],
+        @"artist": @[ @"./artist", @"NSString" ],
+        @"album": @[ @"./album", @"NSString" ],
+        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
         @"url": @[ @"./url", @"NSURL" ],
         @"date": @[ @"./date", @"NSDate" ],
     };
@@ -980,8 +980,7 @@
     NSDictionary *mappingObject = @{
         @"name": @[ @"./name", @"NSString" ],
         @"artist": @[ @"./artist/name", @"NSString" ],
-        @"album": @[ @"./album/title", @"NSString" ],
-        @"image": @[ @"./album/image[@size=\"large\"]", @"NSURL" ],
+        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
         @"url": @[ @"./url", @"NSURL" ],
         @"date": @[ @"./date", @"NSDate" ],
     };
@@ -1004,10 +1003,8 @@
     NSDictionary *mappingObject = @{
         @"name": @[ @"./name", @"NSString" ],
         @"artist": @[ @"./artist/name", @"NSString" ],
-        @"album": @[ @"./album/title", @"NSString" ],
-        @"image": @[ @"./album/image[@size=\"large\"]", @"NSURL" ],
+        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
         @"url": @[ @"./url", @"NSURL" ],
-        @"date": @[ @"./date", @"NSDate" ],
     };
 
     NSDictionary *params = @{
