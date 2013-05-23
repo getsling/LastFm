@@ -64,7 +64,7 @@
 
 - (BOOL)cacheExpiredForKey:(NSString *)key requestParams:(NSDictionary *)params {
     NSTimeInterval age = [[GVCache globalCache] ageForKey:key];
-    NSTimeInterval maxAge = 10*60;//24*60*60;
+    NSTimeInterval maxAge = 24*60*60;
     if (age > maxAge) {
         return YES;
     }

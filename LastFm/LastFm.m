@@ -249,14 +249,14 @@
         cachedArray = [self.cacheDelegate cachedArrayForKey:cacheKey];
     }
 
-    if (cachedArray && cachedArray.count) {
-        id returnObject;
-        if (returnDictionary) {
-            returnObject = [cachedArray objectAtIndex:0];
-        } else {
-            returnObject = cachedArray;
-        }
+    if (cachedArray) {
         if (successHandler) {
+            id returnObject;
+            if (returnDictionary) {
+                returnObject = (cachedArray.count > 0 ? [cachedArray objectAtIndex:0] : @{});
+            } else {
+                returnObject = cachedArray;
+            }
             successHandler(returnObject);
         }
 
@@ -406,28 +406,22 @@
             [returnArray addObject:result];
         }
 
-        if (returnArray && returnArray.count) {
-            // Add to cache
-            if (!doPost && self.cacheDelegate && [self.cacheDelegate respondsToSelector:@selector(cacheArray:requestParams:forKey:maxAge:)]) {
-                [self.cacheDelegate cacheArray:returnArray requestParams:originalParams forKey:signature maxAge:maxAge];
-            } else if (!doPost && self.cacheDelegate && [self.cacheDelegate respondsToSelector:@selector(cacheArray:forKey:maxAge:)]) {
-                [self.cacheDelegate cacheArray:returnArray forKey:signature maxAge:maxAge];
-            }
+        // Add to cache
+        if (!doPost && self.cacheDelegate && [self.cacheDelegate respondsToSelector:@selector(cacheArray:requestParams:forKey:maxAge:)]) {
+            [self.cacheDelegate cacheArray:returnArray requestParams:originalParams forKey:signature maxAge:maxAge];
+        } else if (!doPost && self.cacheDelegate && [self.cacheDelegate respondsToSelector:@selector(cacheArray:forKey:maxAge:)]) {
+            [self.cacheDelegate cacheArray:returnArray forKey:signature maxAge:maxAge];
+        }
 
-            if (successHandler) {
-                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    if (returnDictionary) {
-                        successHandler([returnArray objectAtIndex:0]);
-                    } else {
-                        successHandler(returnArray);
-                    }
-                }];
-            }
-        } else {
+        if (successHandler) {
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                if (failureHandler) {
-                    failureHandler(error);
+                id returnObject;
+                if (returnDictionary) {
+                    returnObject = (returnArray.count > 0 ? [returnArray objectAtIndex:0] : @{});
+                } else {
+                    returnObject = returnArray;
                 }
+                successHandler(returnObject);
             }];
         }
     }];
