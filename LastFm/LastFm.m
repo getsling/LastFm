@@ -430,6 +430,12 @@
     return op;
 }
 
+- (BOOL)useCache {
+    BOOL useCache = !self.nextRequestIgnoresCache;
+    self.nextRequestIgnoresCache = NO;
+    return useCache;
+}
+
 #pragma mark -
 #pragma mark Artist methods
 
@@ -448,6 +454,7 @@
     };
 
     return [self performApiCallForMethod:@"artist.getInfo"
+                                useCache:[self useCache]
                               withParams:@{ @"artist": [self forceString:artist] }
                                rootXpath:@"./artist"
                         returnDictionary:YES
@@ -472,6 +479,7 @@
     };
 
     return [self performApiCallForMethod:@"artist.getEvents"
+                                useCache:[self useCache]
                               withParams:@{ @"artist": [self forceString:artist] }
                                rootXpath:@"./events/event"
                         returnDictionary:NO
@@ -490,6 +498,7 @@
     };
 
     return [self performApiCallForMethod:@"artist.getTopAlbums"
+                                useCache:[self useCache]
                              withParams:@{ @"artist": [self forceString:artist], @"limit": @"500" }
                               rootXpath:@"./topalbums/album"
                        returnDictionary:NO
@@ -506,6 +515,7 @@
     };
 
     return [self performApiCallForMethod:@"artist.getTopTracks"
+                                useCache:[self useCache]
                              withParams:@{ @"artist": [self forceString:artist], @"limit": @"500" }
                               rootXpath:@"./toptracks/track"
                        returnDictionary:NO
@@ -543,6 +553,7 @@
     };
 
     return [self performApiCallForMethod:@"artist.getImages"
+                                useCache:[self useCache]
                               withParams:@{ @"artist": [self forceString:artist], @"limit": @"500" }
                                rootXpath:@"./images/image"
                         returnDictionary:NO
@@ -559,6 +570,7 @@
     };
 
     return [self performApiCallForMethod:@"artist.getSimilar"
+                                useCache:[self useCache]
                               withParams:@{ @"artist": [self forceString:artist], @"limit": @"500" }
                                rootXpath:@"./similarartists/artist"
                         returnDictionary:NO
@@ -584,6 +596,7 @@
     };
 
     return [self performApiCallForMethod:@"album.getInfo"
+                                useCache:[self useCache]
                               withParams:@{ @"artist": [self forceString:artist], @"album": [self forceString:album] }
                                rootXpath:@"./album"
                         returnDictionary:YES
@@ -602,6 +615,7 @@
     };
 
     return [self performApiCallForMethod:@"album.getInfo"
+                                useCache:[self useCache]
                               withParams:@{ @"artist": [self forceString:artist], @"album": [self forceString:album], @"1": @"1" }
                                rootXpath:@"./album/tracks/track"
                         returnDictionary:NO
@@ -620,6 +634,7 @@
     };
 
     return [self performApiCallForMethod:@"album.getBuylinks"
+                                useCache:[self useCache]
                               withParams:@{ @"artist": [self forceString:artist], @"album": [self forceString:album], @"country": [self forceString:country] }
                                rootXpath:@"./affiliations/downloads/affiliation"
                         returnDictionary:NO
@@ -636,6 +651,7 @@
     };
 
     return [self performApiCallForMethod:@"album.getTopTags"
+                                useCache:[self useCache]
                               withParams:@{ @"artist": [self forceString:artist], @"album": [self forceString:album] }
                                rootXpath:@"./toptags/tag"
                         returnDictionary:NO
@@ -663,6 +679,7 @@
     };
 
     return [self performApiCallForMethod:@"track.getInfo"
+                                useCache:[self useCache]
                               withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
                                rootXpath:@"./track"
                         returnDictionary:YES
@@ -688,6 +705,7 @@
     };
 
     return [self performApiCallForMethod:@"track.getInfo"
+                                useCache:[self useCache]
                              withParams:@{ @"mbid": [self forceString:musicBrainId] }
                               rootXpath:@"./track"
                        returnDictionary:YES
@@ -698,6 +716,7 @@
 
 - (NSOperation *)loveTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     return [self performApiCallForMethod:@"track.love"
+                                useCache:[self useCache]
                               withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
                                rootXpath:@"."
                         returnDictionary:YES
@@ -708,6 +727,7 @@
 
 - (NSOperation *)unloveTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     return [self performApiCallForMethod:@"track.unlove"
+                                useCache:[self useCache]
                               withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
                                rootXpath:@"."
                         returnDictionary:YES
@@ -718,6 +738,7 @@
 
 - (NSOperation *)banTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     return [self performApiCallForMethod:@"track.ban"
+                                useCache:[self useCache]
                               withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
                                rootXpath:@"."
                         returnDictionary:YES
@@ -728,6 +749,7 @@
 
 - (NSOperation *)unbanTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     return [self performApiCallForMethod:@"track.unban"
+                                useCache:[self useCache]
                               withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
                                rootXpath:@"."
                         returnDictionary:YES
@@ -746,6 +768,7 @@
     };
 
     return [self performApiCallForMethod:@"track.getBuylinks"
+                                useCache:[self useCache]
                               withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist], @"country": [self forceString:country] }
                                rootXpath:@"./affiliations/downloads/affiliation"
                         returnDictionary:NO
@@ -831,6 +854,7 @@
     };
 
     return [self performApiCallForMethod:@"track.updateNowPlaying"
+                                useCache:[self useCache]
                               withParams:params
                                rootXpath:@"."
                         returnDictionary:YES
@@ -849,6 +873,7 @@
     };
 
     return [self performApiCallForMethod:@"track.scrobble"
+                                useCache:[self useCache]
                               withParams:params
                                rootXpath:@"."
                         returnDictionary:YES
@@ -871,6 +896,7 @@
     };
 
     return [self performApiCallForMethod:@"user.getNewReleases"
+                                useCache:[self useCache]
                               withParams:params
                                rootXpath:@"./albums/album"
                         returnDictionary:NO
@@ -888,6 +914,7 @@
     };
 
     return [self performApiCallForMethod:@"user.getRecommendedAlbums"
+                                useCache:[self useCache]
                               withParams:@{ @"limit": @(limit) }
                                rootXpath:@"./recommendations/album"
                         returnDictionary:NO
@@ -921,6 +948,7 @@
     }
 
     return [self performApiCallForMethod:@"user.getInfo"
+                                useCache:[self useCache]
                               withParams:params
                                rootXpath:@"./user"
                         returnDictionary:YES
@@ -944,6 +972,7 @@
     };
 
     return [self performApiCallForMethod:@"user.getTopArtists"
+                                useCache:[self useCache]
                               withParams:params
                                rootXpath:@"./topartists/artist"
                         returnDictionary:NO
@@ -968,6 +997,7 @@
     };
 
     return [self performApiCallForMethod:@"user.getRecentTracks"
+                                useCache:[self useCache]
                               withParams:params
                                rootXpath:@"./recenttracks/track"
                         returnDictionary:NO
@@ -991,6 +1021,7 @@
     };
 
     return [self performApiCallForMethod:@"user.getLovedTracks"
+                                useCache:[self useCache]
                               withParams:params
                                rootXpath:@"./lovedtracks/track"
                         returnDictionary:NO
@@ -1014,6 +1045,7 @@
     };
 
     return [self performApiCallForMethod:@"user.getTopTracks"
+                                useCache:[self useCache]
                               withParams:params
                                rootXpath:@"./toptracks/track"
                         returnDictionary:NO
@@ -1045,6 +1077,7 @@
     };
 
     return [self performApiCallForMethod:@"user.getEvents"
+                                useCache:[self useCache]
                               withParams:params
                                rootXpath:@"./events/event"
                         returnDictionary:NO
@@ -1065,6 +1098,7 @@
     };
 
     return [self performApiCallForMethod:@"chart.getTopTracks"
+                                useCache:[self useCache]
                               withParams:@{ @"limit": @(limit), @"page": @(page) }
                                rootXpath:@"./tracks/track"
                         returnDictionary:NO
@@ -1082,6 +1116,7 @@
     };
 
     return [self performApiCallForMethod:@"chart.getHypedTracks"
+                                useCache:[self useCache]
                               withParams:@{ @"limit": @(limit), @"page": @(page) }
                                rootXpath:@"./tracks/track"
                         returnDictionary:NO

@@ -1,3 +1,7 @@
+1.8.0 - May 23, 2013
+- Added a new property BOOL nextRequestIgnoresCache. Use this on the static 
+  instance to bypass the cache ONLY for the next request.
+
 1.7.1 - May 23, 2013
 - Fixed the mapping objects of the following methods (added in 1.6.0):
     - (NSOperation *)getRecentTracksForUserOrNil:(NSString *)username limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;

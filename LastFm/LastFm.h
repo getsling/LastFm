@@ -68,10 +68,11 @@ typedef void (^LastFmReturnBlockWithError)(NSError *error);
 @property (unsafe_unretained, nonatomic) id <LastFmCache> cacheDelegate;
 @property (nonatomic) NSInteger maxConcurrentOperationCount; // default: 4
 @property (nonatomic) NSTimeInterval timeoutInterval;        // default: 10
+@property (nonatomic) BOOL nextRequestIgnoresCache;
 
 + (LastFm *)sharedInstance;
 - (NSString *)forceString:(NSString *)value;
-- (NSOperation *)performApiCallForMethod:(NSString*)method withParams:(NSDictionary *)params rootXpath:(NSString *)rootXpath returnDictionary:(BOOL)returnDictionary mappingObject:(NSDictionary *)mappingObject successHandler:(LastFmReturnBlockWithObject)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
+- (NSOperation *)performApiCallForMethod:(NSString*)method withParams:(NSDictionary *)params rootXpath:(NSString *)rootXpath returnDictionary:(BOOL)returnDictionary mappingObject:(NSDictionary *)mappingObject successHandler:(LastFmReturnBlockWithObject)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler __attribute__((deprecated));
 - (NSOperation *)performApiCallForMethod:(NSString*)method useCache:(BOOL)useCache withParams:(NSDictionary *)params rootXpath:(NSString *)rootXpath returnDictionary:(BOOL)returnDictionary mappingObject:(NSDictionary *)mappingObject successHandler:(LastFmReturnBlockWithObject)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
 
 #pragma mark Artist methods
