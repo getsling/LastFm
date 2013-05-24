@@ -112,6 +112,18 @@
     return formatter;
 }
 
++ (NSDateFormatter *)alternativeDateFormatter3 {
+    NSMutableDictionary *dictionary = [[NSThread currentThread] threadDictionary];
+    NSDateFormatter *formatter = [dictionary objectForKey:@"LFMDateFormatterAlt3"];
+    if (!formatter) {
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
+        [formatter setDateFormat:@"yyyy-mm-dd HH:mm"];
+        [dictionary setObject:formatter forKey:@"LFMDateFormatterAlt3"];
+    }
+    return formatter;
+}
+
 + (NSNumberFormatter *)numberFormatter {
     NSMutableDictionary *dictionary = [[NSThread currentThread] threadDictionary];
     NSNumberFormatter *formatter = [dictionary objectForKey:@"LFMNumberFormatter"];
@@ -174,6 +186,9 @@
         }
         if (!date) {
             date = [[LastFm alternativeDateFormatter2] dateFromString:value];
+        }
+        if (!date) {
+            date = [[LastFm alternativeDateFormatter3] dateFromString:value];
         }
         return date;
     }
@@ -971,7 +986,8 @@
         @"playcount": @[ @"./playcount", @"NSNumber" ],
         @"country": @[ @"./country", @"NSString" ],
         @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
-        @"url": @[ @"./url", @"NSURL" ]
+        @"url": @[ @"./url", @"NSURL" ],
+        @"registered": @[ @"./registered", @"NSDate" ],
     };
 
     NSDictionary *params = @{};

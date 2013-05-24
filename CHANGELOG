@@ -1,3 +1,7 @@
+1.9.1 - May 24, 2013
+- Added "registered" node to getInfoForUserOrNil. This used a 4th date format, 
+  so a new date formatter was added as well.
+
 1.9.0 - May 24, 2013
 - Last.fm's API is returning dates in 3 different possible ways, which is quite annoying.
   LastFm now handles all three formats by using 3 date formatters, returning NSDate instead 
