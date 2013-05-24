@@ -1,3 +1,6 @@
+1.9.2 - May 24, 2013
+- Fix for the 4th date formatter
+
 1.9.1 - May 24, 2013
 - Added "registered" node to getInfoForUserOrNil. This used a 4th date format, 
   so a new date formatter was added as well.

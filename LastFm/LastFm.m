@@ -118,7 +118,7 @@
     if (!formatter) {
         formatter = [[NSDateFormatter alloc] init];
         [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
-        [formatter setDateFormat:@"yyyy-mm-dd HH:mm"];
+        [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
         [dictionary setObject:formatter forKey:@"LFMDateFormatterAlt3"];
     }
     return formatter;
