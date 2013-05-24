@@ -1,3 +1,11 @@
+1.9.0 - May 24, 2013
+- Last.fm's API is returning dates in 3 different possible ways, which is quite annoying.
+  LastFm now handles all three formats by using 3 date formatters, returning NSDate instead 
+  of NSString, like you would expect.
+  The getInfoForAlbum and getNewReleasesForUserBasedOnRecommendations methods still contain
+  the "releasedate" node which is of type NSString (for backwards compatibility), 
+  but now add a "date" node, which is of the proper NSDate format.
+
 1.8.0 - May 23, 2013
 - Added a new property BOOL nextRequestIgnoresCache. Use this on the static 
   instance to bypass the cache ONLY for the next request.

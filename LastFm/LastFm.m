@@ -88,6 +88,30 @@
     return formatter;
 }
 
++ (NSDateFormatter *)alternativeDateFormatter1 {
+    NSMutableDictionary *dictionary = [[NSThread currentThread] threadDictionary];
+    NSDateFormatter *formatter = [dictionary objectForKey:@"LFMDateFormatterAlt1"];
+    if (!formatter) {
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
+        [formatter setDateFormat:@"dd MMM yyyy, HH:mm"];
+        [dictionary setObject:formatter forKey:@"LFMDateFormatterAlt1"];
+    }
+    return formatter;
+}
+
++ (NSDateFormatter *)alternativeDateFormatter2 {
+    NSMutableDictionary *dictionary = [[NSThread currentThread] threadDictionary];
+    NSDateFormatter *formatter = [dictionary objectForKey:@"LFMDateFormatterAlt2"];
+    if (!formatter) {
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
+        [formatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss Z"];
+        [dictionary setObject:formatter forKey:@"LFMDateFormatterAlt2"];
+    }
+    return formatter;
+}
+
 + (NSNumberFormatter *)numberFormatter {
     NSMutableDictionary *dictionary = [[NSThread currentThread] threadDictionary];
     NSNumberFormatter *formatter = [dictionary objectForKey:@"LFMNumberFormatter"];
@@ -129,7 +153,6 @@
         return value;
     }
 
-    
     if ([targetClass isEqualToString:@"NSNumber"]) {
         if ([value isKindOfClass:[NSString class]] && [value length]) {
             return [[LastFm numberFormatter] numberFromString:value];
@@ -145,7 +168,14 @@
     }
 
     if ([targetClass isEqualToString:@"NSDate"]) {
-        return [[LastFm dateFormatter] dateFromString:value];
+        NSDate *date = [[LastFm dateFormatter] dateFromString:value];
+        if (!date) {
+            date = [[LastFm alternativeDateFormatter1] dateFromString:value];
+        }
+        if (!date) {
+            date = [[LastFm alternativeDateFormatter2] dateFromString:value];
+        }
+        return date;
     }
 
     if ([targetClass isEqualToString:@"NSArray"]) {
@@ -589,7 +619,8 @@
         @"playcount": @[ @"./playcount", @"NSNumber" ],
         @"url": @[ @"./url", @"NSURL" ],
         @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
-        @"releasedate": @[ @"./releasedate", @"NSString" ],
+        @"releasedate": @[ @"./releasedate", @"NSString" ], // deprecated
+        @"date": @[ @"./releasedate", @"NSDate" ],
         @"tags": @[ @"./toptags/tag/name", @"NSArray" ],
         @"userplaycount": @[ @"./userplaycount", @"NSNumber" ],
         @"summary": @[ @"./wiki/summary", @"NSString" ],
@@ -887,7 +918,8 @@
         @"name": @[ @"./name", @"NSString" ],
         @"artist": @[ @"./artist/name", @"NSString" ],
         @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
-        @"releasedate": @[ @"@releasedate", @"NSString" ]
+        @"releasedate": @[ @"@releasedate", @"NSString" ], // deprecated
+        @"date": @[ @"@releasedate", @"NSDate" ],
     };
 
     NSDictionary *params = @{
