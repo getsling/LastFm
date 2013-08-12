@@ -73,14 +73,6 @@ You can also simply clone the repository and drag the LastFm subfolder into your
 Have a bug? Please [create an issue on GitHub](https://github.com/gangverk/LastFm/issues)!
 
 
-## Contributing
-LastFm is an open source project and your contribution is very much appreciated.
-
-1. Check for [open issues](https://github.com/gangverk/LastFm/issues) or [open a fresh issue](https://github.com/gangverk/LastFm/issues/new) to start a discussion around a feature idea or a bug.
-2. Fork the [repository on Github](https://github.com/gangverk/LastFm) and make your changes on the **develop** branch (or branch off of it).
-3. Make sure to add yourself to AUTHORS and send a pull request.
-
-
 ## Apps using LastFm
 * Last.fm Scrobbler
 * MetroLyrics
