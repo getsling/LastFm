@@ -1,3 +1,6 @@
+1.10.0 - August 13, 2013
+- Fix the Podspec so it’s compatible with Cocoapods 0.21.0 and up.
+
 1.9.2 - May 24, 2013
 - Fix for the 4th date formatter
 
