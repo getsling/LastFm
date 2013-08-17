@@ -823,6 +823,25 @@
                           failureHandler:failureHandler];
 }
 
+- (NSOperation *)getSimilarToTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+                                    @"rank": @[ @"@rank", @"NSNumber" ],
+                                    @"artist": @[ @"./artist/name", @"NSString" ],
+                                    @"name": @[ @"./name", @"NSString" ],
+                                    @"duration": @[ @"./duration", @"NSNumber" ],
+                                    @"url": @[ @"./url", @"NSURL" ],
+                                    };
+    return [self performApiCallForMethod:@"track.getsimilar"
+                                useCache:[self useCache]
+                              withParams:@{ @"track": [self forceString:title], @"artist": [self forceString:artist] }
+                               rootXpath:@"./similartracks/track"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
+
+}
+
 #pragma mark User methods
 
 // Please note: to use this method, your API key needs special permission
