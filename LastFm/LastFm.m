@@ -823,7 +823,7 @@
                           failureHandler:failureHandler];
 }
 
-- (NSOperation *)getSimilarToTrack:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+- (NSOperation *)getSimilarTracksTo:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
                                     @"rank": @[ @"@rank", @"NSNumber" ],
                                     @"artist": @[ @"./artist/name", @"NSString" ],
