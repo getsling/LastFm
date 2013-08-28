@@ -35,7 +35,7 @@
 
 /*
  * Better example: uses memory cache but falls back to rolling 
- * disk cache with the help of GVCache.
+ * disk cache with the help of EGOCache.
  *
  * Rolling cache: cache will never be purged from disk after
  * its expire time is reached. Instead, the cached version is 
@@ -46,7 +46,7 @@
  *
 
 #import "LastFmCache.h"
-#import "GVCache.h"
+#import "EGOCache.h"
 
 @interface LastFmCache ()
 @property (strong, nonatomic) NSCache *cache;
@@ -63,7 +63,8 @@
 }
 
 - (BOOL)cacheExpiredForKey:(NSString *)key requestParams:(NSDictionary *)params {
-    NSTimeInterval age = [[GVCache globalCache] ageForKey:key];
+    NSDate *created = [[EGOCache globalCache] dateForKey:key];
+    NSTimeInterval age = [[NSDate date] timeIntervalSinceDate:created];
     NSTimeInterval maxAge = 24*60*60;
     if (age > maxAge) {
         return YES;
@@ -80,7 +81,7 @@
     }
 
     // Get from disk
-    NSData *data = [[GVCache globalCache] dataForKey:key];
+    NSData *data = [[EGOCache globalCache] dataForKey:key];
     if (data) {
         // Save in memory
         result = [NSKeyedUnarchiver unarchiveObjectWithData:data];
@@ -97,7 +98,7 @@
 
     // Also save to disk. Timeout is 10 years, never automatically remove stuff from cache.
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:array];
-    [[GVCache globalCache] setData:data forKey:key withTimeoutInterval:60*60*24*365*10];
+    [[EGOCache globalCache] setData:data forKey:key withTimeoutInterval:60*60*24*365*10];
 }
 
 @end
