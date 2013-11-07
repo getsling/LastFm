@@ -1,9 +1,12 @@
+1.11.1 - September 12, 2013
+- Fixed the pod spec, no code changes.
+
 1.11.0 - August 19, 2013
 - Added new method:
     - (NSOperation *)getSimilarTracksTo:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
 
 1.10.0 - August 13, 2013
-- Fix the Podspec so it’s compatible with Cocoapods 0.21.0 and up.
+- Fix the pod spec so it’s compatible with Cocoapods 0.21.0 and up.
 
 1.9.2 - May 24, 2013
 - Fix for the 4th date formatter
