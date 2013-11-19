@@ -29,7 +29,7 @@
 
     // Check if we're logged in with a valid session
     [[LastFm sharedInstance] getSessionInfoWithSuccessHandler:^(NSDictionary *result) {
-        [self.loginButton setTitle:[NSString stringWithFormat:@"Logout %@", [result objectForKey:@"name"]]];
+        [self.loginButton setTitle:[NSString stringWithFormat:@"Logout %@", result[@"name"]]];
         [self.loginButton setAction:@selector(logout)];
     } failureHandler:^(NSError *error) {
         // No, show login form
@@ -41,15 +41,6 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
-}
-
-- (void)viewDidUnload {
-    [self setLoginFormView:nil];
-    [self setUsernameField:nil];
-    [self setPasswordField:nil];
-    [self setLoginButton:nil];
-    [self setTableView:nil];
-    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -67,20 +58,20 @@
 - (IBAction)loginButtonPressed {
     [[LastFm sharedInstance] getSessionForUser:self.usernameField.text password:self.passwordField.text successHandler:^(NSDictionary *result) {
         // Save the session into NSUserDefaults. It is loaded on app start up in AppDelegate.
-        [[NSUserDefaults standardUserDefaults] setObject:[result objectForKey:@"key"] forKey:SESSION_KEY];
-        [[NSUserDefaults standardUserDefaults] setObject:[result objectForKey:@"name"] forKey:USERNAME_KEY];
+        [[NSUserDefaults standardUserDefaults] setObject:result[@"key"] forKey:SESSION_KEY];
+        [[NSUserDefaults standardUserDefaults] setObject:result[@"name"] forKey:USERNAME_KEY];
         [[NSUserDefaults standardUserDefaults] synchronize];
 
         // Also set the session of the LastFm object
-        [LastFm sharedInstance].session = [result objectForKey:@"key"];
-        [LastFm sharedInstance].username = [result objectForKey:@"name"];
+        [LastFm sharedInstance].session = result[@"key"];
+        [LastFm sharedInstance].username = result[@"name"];
 
         // Dismiss the keyboard
         [self.usernameField resignFirstResponder];
         [self.passwordField resignFirstResponder];
 
         // Show the logout button
-        [self.loginButton setTitle:[NSString stringWithFormat:@"Logout %@", [result objectForKey:@"name"]]];
+        [self.loginButton setTitle:[NSString stringWithFormat:@"Logout %@", result[@"name"]]];
         [self.loginButton setAction:@selector(logout)];
         self.loginFormView.hidden = YES;
     } failureHandler:^(NSError *error) {
