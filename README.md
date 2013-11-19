@@ -1,5 +1,8 @@
 # LastFm - block based Last.fm SDK for iOS and Mac OS X
 
+[![Badge w/ Version](https://cocoapod-badges.herokuapp.com/v/LastFm/badge.png)](http://cocoadocs.org/docsets/LastFm)
+[![Badge w/ Platform](https://cocoapod-badges.herokuapp.com/p/LastFm/badge.svg)](http://cocoadocs.org/docsets/LastFm)
+
 Loosely based on LastFMService from the [old Last.fm iPhone app](https://github.com/lastfm/lastfm-iphone/blob/master/Classes/LastFMService.m), but non-blocking, more readable, much easier to use (and to extend) and with less dependencies.
 
 ### Features
