@@ -10,7 +10,7 @@
 #import "DDXML.h"
 #include <CommonCrypto/CommonDigest.h>
 
-#define API_URL @"http://ws.audioscrobbler.com/2.0/"
+#define API_URL @"https://ws.audioscrobbler.com/2.0/"
 
 @interface DDXMLNode (objectAtXPath)
 - (id)objectAtXPath:(NSString *)XPath;
