@@ -9,10 +9,10 @@
     - (NSOperation *)getSimilarTracksTo:(NSString *)title artist:(NSString *)artist successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
 
 1.10.0 - August 13, 2013
-- Fix the pod spec so it’s compatible with Cocoapods 0.21.0 and up.
+- Fixed the pod spec so it’s compatible with Cocoapods 0.21.0 and up.
 
 1.9.2 - May 24, 2013
-- Fix for the 4th date formatter
+- Fixed the 4th date formatter
 
 1.9.1 - May 24, 2013
 - Added "registered" node to getInfoForUserOrNil. This used a 4th date format, 
@@ -27,7 +27,7 @@
   but now add a "date" node, which is of the proper NSDate format.
 
 1.8.0 - May 23, 2013
-- Added a new property BOOL nextRequestIgnoresCache. Use this on the static 
+- Added a new property BOOL nextRequestIgnoresCache. Use this on the shared 
   instance to bypass the cache ONLY for the next request.
 
 1.7.1 - May 23, 2013
@@ -35,7 +35,6 @@
     - (NSOperation *)getRecentTracksForUserOrNil:(NSString *)username limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
     - (NSOperation *)getLovedTracksForUserOrNil:(NSString *)username limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
     - (NSOperation *)getTopTracksForUserOrNil:(NSString *)username period:(LastFmPeriod)period limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
-
 
 1.7.0 - May 23, 2013
 - When Last.fm returned an empty response (for example, because the user doesn't have any events)
@@ -55,7 +54,7 @@
 - Simplified example app, removed SDURLCache dependancy
 
 1.4.2 - March 21, 2013
-- Add dummy parameter to getTracksForAlbum to give this method a different cache key from the getInfoForAlbum method
+- Added dummy parameter to getTracksForAlbum to give this method a different cache key from the getInfoForAlbum method
 
 1.4.1 - March 20, 2013
 - Add a mapping for the summary node in the getInfoForAlbum method
