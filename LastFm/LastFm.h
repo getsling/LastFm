@@ -22,7 +22,8 @@ enum LastFmServiceErrorCodes {
 	kLastFmErrorCodeInvalidAPIKey = 10,
 	kLastFmErrorCodeServiceOffline = 11,
 	kLastFmErrorCodeSubscribersOnly = 12,
-	kLastFmErrorCodeInvalidAPISignature = 13
+	kLastFmErrorCodeInvalidAPISignature = 13,
+    kLastFmerrorCodeServiceError = 16
 };
 
 enum LastFmRadioErrorCodes {
