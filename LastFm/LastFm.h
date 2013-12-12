@@ -64,10 +64,10 @@ typedef void (^LastFmReturnBlockWithError)(NSError *error);
 
 @interface LastFm : NSObject
 
-@property (strong, nonatomic) NSString *session;
-@property (strong, nonatomic) NSString *username;
-@property (strong, nonatomic) NSString *apiKey;
-@property (strong, nonatomic) NSString *apiSecret;
+@property (copy, nonatomic) NSString *session;
+@property (copy, nonatomic) NSString *username;
+@property (copy, nonatomic) NSString *apiKey;
+@property (copy, nonatomic) NSString *apiSecret;
 @property (unsafe_unretained, nonatomic) id <LastFmCache> cacheDelegate;
 @property (nonatomic) NSInteger maxConcurrentOperationCount; // default: 4
 @property (nonatomic) NSTimeInterval timeoutInterval;        // default: 10
