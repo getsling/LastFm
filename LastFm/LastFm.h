@@ -22,8 +22,7 @@ enum LastFmServiceErrorCodes {
 	kLastFmErrorCodeInvalidAPIKey = 10,
 	kLastFmErrorCodeServiceOffline = 11,
 	kLastFmErrorCodeSubscribersOnly = 12,
-	kLastFmErrorCodeInvalidAPISignature = 13,
-    kLastFmerrorCodeServiceError = 16
+	kLastFmErrorCodeInvalidAPISignature = 13
 };
 
 enum LastFmRadioErrorCodes {
@@ -64,10 +63,10 @@ typedef void (^LastFmReturnBlockWithError)(NSError *error);
 
 @interface LastFm : NSObject
 
-@property (copy, nonatomic) NSString *session;
-@property (copy, nonatomic) NSString *username;
-@property (copy, nonatomic) NSString *apiKey;
-@property (copy, nonatomic) NSString *apiSecret;
+@property (strong, nonatomic) NSString *session;
+@property (strong, nonatomic) NSString *username;
+@property (strong, nonatomic) NSString *apiKey;
+@property (strong, nonatomic) NSString *apiSecret;
 @property (unsafe_unretained, nonatomic) id <LastFmCache> cacheDelegate;
 @property (nonatomic) NSInteger maxConcurrentOperationCount; // default: 4
 @property (nonatomic) NSTimeInterval timeoutInterval;        // default: 10
@@ -130,6 +129,7 @@ typedef void (^LastFmReturnBlockWithError)(NSError *error);
 
 - (NSOperation *)getInfoForUserOrNil:(NSString *)username successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
 - (NSOperation *)getTopArtistsForUserOrNil:(NSString *)username period:(LastFmPeriod)period limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
+- (NSOperation *)getTopAlbumsForUserOrNil:(NSString *)username period:(LastFmPeriod)period limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
 - (NSOperation *)getRecentTracksForUserOrNil:(NSString *)username limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
 - (NSOperation *)getLovedTracksForUserOrNil:(NSString *)username limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
 - (NSOperation *)getTopTracksForUserOrNil:(NSString *)username period:(LastFmPeriod)period limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
