@@ -1,3 +1,7 @@
+1.14.0 - December 16, 2013
+- Added new method:
+    - (NSOperation *)getTopAlbumsForUserOrNil:(NSString *)username period:(LastFmPeriod)period limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
+
 1.13.0 - December 12, 2013
 - Added new error code value for Last.fm error code 16
 - Changed the NSString properties to be copy to prevent NSMutableString from being passed and changed later on

@@ -1153,6 +1153,31 @@
                           failureHandler:failureHandler];
 }
 
+- (NSOperation *)getTopAlbumsForUserOrNil:(NSString *)username period:(LastFmPeriod)period limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"name": @[ @"./name", @"NSString" ],
+        @"artist": @[ @"./artist/name", @"NSString" ],
+        @"image": @[ @"./image[@size=\"large\"]", @"NSURL" ],
+        @"playcount": @[ @"./playcount", @"NSNumber" ],
+        @"url": @[ @"url", @"NSURL" ],
+    };
+
+    NSDictionary *params = @{
+        @"user": username ? [self forceString:username] : [self forceString:self.username],
+        @"period": [self period:period],
+        @"limit": @(limit),
+    };
+
+    return [self performApiCallForMethod:@"user.getTopAlbums"
+                                useCache:[self useCache]
+                              withParams:params
+                               rootXpath:@"./topalbums/album"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
+}
+
 #pragma mark Chart methods
 
 - (NSOperation *)getTopTracksWithLimit:(NSInteger)limit page:(NSInteger)page successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
