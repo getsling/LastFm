@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 Gangverk. All rights reserved.
 //
 
+#import <LastFm/LastFm.h>
 #import "AppDelegate.h"
-#import "LastFm.h"
 #import "ViewController.h"
 #import "LastFmCache.h"
 

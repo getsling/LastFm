@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 Gangverk. All rights reserved.
 //
 
+#import <LastFm/LastFm.h>
 #import "DetailViewController.h"
-#import "LastFm.h"
 #import "UIImageView+WebCache.h"
 
 @interface DetailViewController ()

@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 Gangverk. All rights reserved.
 //
 
+#import <LastFm/LastFm.h>
 #import "ViewController.h"
-#import "LastFm.h"
 #import "UIImageView+WebCache.h"
 #import "ArtistCell.h"
 #import "DetailViewController.h"

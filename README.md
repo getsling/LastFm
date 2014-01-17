@@ -51,10 +51,7 @@ See the included iOS project for examples on login, logout, getting artist info 
 ### Example app
 There's an extensive example app available which handles login, logout, getting lots of artists in a tableview and showing their details, caching, canceling API calls, and much more.
 
-To install the example app, you need to use [CocoaPods](http://cocoapods.org) or install the following dependencies yourself:
-
-* SDWebCache (for caching artist images on disk)
-* KissXML (Last.fm SDK's only dependency)
+To install the example app, you need to use [CocoaPods](http://cocoapods.org): `pod install`. You can also try it by running `pod try LastFm`.
 
 _The example app only works in iOS 5 and higher due to the usage of storyboards. The SDK itself works in iOS 4 and higher._
 

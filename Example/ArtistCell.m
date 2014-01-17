@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 Gangverk. All rights reserved.
 //
 
+#import <LastFm/LastFm.h>
 #import "ArtistCell.h"
 #import "UIImageView+WebCache.h"
-#import "LastFm.h"
 
 @interface ArtistCell ()
 @property (strong, nonatomic) NSOperation *operation;

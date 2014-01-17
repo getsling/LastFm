@@ -238,24 +238,6 @@
 }
 
 - (NSOperation *)performApiCallForMethod:(NSString*)method
-                              withParams:(NSDictionary *)params
-                               rootXpath:(NSString *)rootXpath
-                        returnDictionary:(BOOL)returnDictionary
-                           mappingObject:(NSDictionary *)mappingObject
-                          successHandler:(LastFmReturnBlockWithObject)successHandler
-                          failureHandler:(LastFmReturnBlockWithError)failureHandler {
-
-    return [self performApiCallForMethod:method
-                                useCache:YES
-                              withParams:params
-                               rootXpath:rootXpath
-                        returnDictionary:returnDictionary
-                           mappingObject:mappingObject
-                          successHandler:successHandler
-                          failureHandler:failureHandler];
-}
-
-- (NSOperation *)performApiCallForMethod:(NSString*)method
                                 useCache:(BOOL)useCache
                               withParams:(NSDictionary *)params
                                rootXpath:(NSString *)rootXpath
@@ -957,7 +939,7 @@
     };
 
     NSDictionary *params = @{
-        @"user": [self forceString:[self username]],
+        @"user": [self forceString:self.username],
         @"userec": @(basedOnRecommendations)
     };
 
@@ -1211,6 +1193,29 @@
                                 useCache:[self useCache]
                               withParams:@{ @"limit": @(limit), @"page": @(page) }
                                rootXpath:@"./tracks/track"
+                        returnDictionary:NO
+                           mappingObject:mappingObject
+                          successHandler:successHandler
+                          failureHandler:failureHandler];
+}
+
+#pragma mark Geo methods
+
+- (NSOperation *)getEventsForLocation:(NSString *)location successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+    NSDictionary *mappingObject = @{
+        @"title": @[ @"./title", @"NSString" ],
+        @"venue": @[ @"./venue/name", @"NSString" ],
+        @"city": @[ @"./venue/location/city", @"NSString" ],
+        @"country": @[ @"./venue/location/country", @"NSString" ],
+        @"latitude": @[ @"./venue/location/*/*[local-name()='lat']", @"NSNumber" ],
+        @"longitude": @[ @"./venue/location/*/*[local-name()='long']", @"NSNumber" ],
+        @"url": @[ @"url", @"NSURL" ]
+    };
+
+    return [self performApiCallForMethod:@"geo.getEvents"
+                                useCache:[self useCache]
+                              withParams:@{ @"location": [self forceString:location] }
+                               rootXpath:@"./events/event"
                         returnDictionary:NO
                            mappingObject:mappingObject
                           successHandler:successHandler

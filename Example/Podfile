@@ -1,4 +1,4 @@
 platform :ios, '5.0'
 
+pod 'LastFm', :path => '../LastFm.podspec'
 pod 'SDWebImage'
-pod 'KissXML'
