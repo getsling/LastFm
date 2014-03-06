@@ -28,13 +28,6 @@ Loosely based on LastFMService from the [old Last.fm iPhone app](https://github.
     NSLog(@"error: %@", error);
 }];
 
-// Get images for an artist
-[[LastFm sharedInstance] getImagesForArtist:@"Cher" successHandler:^(NSArray *result) {
-    NSLog(@"result: %@", result);
-} failureHandler:^(NSError *error) {
-    NSLog(@"error: %@", error);
-}];
-
 // Scrobble a track
 [[LastFm sharedInstance] sendScrobbledTrack:@"Wish You Were Here" byArtist:@"Pink Floyd" onAlbum:@"Wish You Were Here" withDuration:534 atTimestamp:(int)[[NSDate date] timeIntervalSince1970] successHandler:^(NSDictionary *result) {
     NSLog(@"result: %@", result);
