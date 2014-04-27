@@ -72,6 +72,7 @@ typedef void (^LastFmReturnBlockWithError)(NSError *error);
 @property (nonatomic) NSInteger maxConcurrentOperationCount; // default: 4
 @property (nonatomic) NSTimeInterval timeoutInterval;        // default: 10
 @property (nonatomic) BOOL nextRequestIgnoresCache;
+@property (nonatomic) NSURLRequestCachePolicy httpCachePolicy;
 
 + (LastFm *)sharedInstance;
 - (NSString *)forceString:(NSString *)value;
@@ -129,7 +130,13 @@ typedef void (^LastFmReturnBlockWithError)(NSError *error);
 
 - (NSOperation *)getInfoForUserOrNil:(NSString *)username successHandler:(LastFmReturnBlockWithDictionary)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
 - (NSOperation *)getTopArtistsForUserOrNil:(NSString *)username period:(LastFmPeriod)period limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
-- (NSOperation *)getRecentTracksForUserOrNil:(NSString *)username limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
+- (NSOperation *)getRecentTracksForUserOrNil:(NSString *)username
+                                        page:(NSInteger)pageNum
+                                        from:(NSDate *)from
+                                          to:(NSDate *)to
+                                       limit:(NSInteger)limit
+                              successHandler:(LastFmReturnBlockWithArray)successHandler
+                              failureHandler:(LastFmReturnBlockWithError)failureHandler;
 - (NSOperation *)getLovedTracksForUserOrNil:(NSString *)username limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
 - (NSOperation *)getTopTracksForUserOrNil:(NSString *)username period:(LastFmPeriod)period limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;
 - (NSOperation *)getEventsForUserOrNil:(NSString *)username festivalsOnly:(BOOL)festivalsonly limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler;

@@ -67,6 +67,7 @@
         self.queue = [[NSOperationQueue alloc] init];
         self.maxConcurrentOperationCount = 4;
         self.timeoutInterval = 10;
+        self.httpCachePolicy = -1;
     }
     return self;
 }
@@ -353,10 +354,15 @@
             NSString *paramsString = [NSString stringWithFormat:@"%@&api_sig=%@", [sortedParamsArray componentsJoinedByString:@"&"], signature];
             NSString *urlString = [NSString stringWithFormat:@"%@?%@", API_URL, paramsString];
 
-            NSURLRequestCachePolicy policy = NSURLRequestUseProtocolCachePolicy;
-            if (!useCache) {
-                policy = NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
+            NSURLRequestCachePolicy policy;
+            if (self.httpCachePolicy != -1) {
+              policy = self.httpCachePolicy;
+            } else {
+              policy = (useCache) ? NSURLRequestUseProtocolCachePolicy :
+                  NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
             }
+
+            if (self)
             request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString] cachePolicy:policy timeoutInterval:self.timeoutInterval];
         }
 
@@ -1030,7 +1036,13 @@
                           failureHandler:failureHandler];
 }
 
-- (NSOperation *)getRecentTracksForUserOrNil:(NSString *)username limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+- (NSOperation *)getRecentTracksForUserOrNil:(NSString *)username
+                                        page:(NSInteger)pageNum
+                                        from:(NSDate *)from
+                                          to:(NSDate *)to
+                                       limit:(NSInteger)limit
+                              successHandler:(LastFmReturnBlockWithArray)successHandler
+                              failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
         @"name": @[ @"./name", @"NSString" ],
         @"artist": @[ @"./artist", @"NSString" ],
@@ -1043,6 +1055,9 @@
     NSDictionary *params = @{
         @"user": username ? [self forceString:username] : [self forceString:self.username],
         @"limit": @(limit),
+        @"page": @(pageNum),
+        @"from": @([from timeIntervalSince1970]),
+        @"to": @([to timeIntervalSince1970]),
     };
 
     return [self performApiCallForMethod:@"user.getRecentTracks"
