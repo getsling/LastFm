@@ -356,13 +356,12 @@
 
             NSURLRequestCachePolicy policy;
             if (self.httpCachePolicy != -1) {
-              policy = self.httpCachePolicy;
+                policy = self.httpCachePolicy;
             } else {
-              policy = (useCache) ? NSURLRequestUseProtocolCachePolicy :
-                  NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
+                policy = (useCache) ? NSURLRequestUseProtocolCachePolicy :
+                                      NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
             }
 
-            if (self)
             request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString] cachePolicy:policy timeoutInterval:self.timeoutInterval];
         }
 
@@ -1036,13 +1035,11 @@
                           failureHandler:failureHandler];
 }
 
-- (NSOperation *)getRecentTracksForUserOrNil:(NSString *)username
-                                        page:(NSInteger)pageNum
-                                        from:(NSDate *)from
-                                          to:(NSDate *)to
-                                       limit:(NSInteger)limit
-                              successHandler:(LastFmReturnBlockWithArray)successHandler
-                              failureHandler:(LastFmReturnBlockWithError)failureHandler {
+- (NSOperation *)getRecentTracksForUserOrNil:(NSString *)username limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
+  return [self getRecentTracksForUserOrNil:username page:0 from:NULL to:NULL limit:limit successHandler:successHandler failureHandler:failureHandler];
+}
+
+- (NSOperation *)getRecentTracksForUserOrNil:(NSString *)username page:(NSInteger)pageNum from:(NSDate *)from to:(NSDate *)to limit:(NSInteger)limit successHandler:(LastFmReturnBlockWithArray)successHandler failureHandler:(LastFmReturnBlockWithError)failureHandler {
     NSDictionary *mappingObject = @{
         @"name": @[ @"./name", @"NSString" ],
         @"artist": @[ @"./artist", @"NSString" ],
@@ -1052,13 +1049,17 @@
         @"date": @[ @"./date", @"NSDate" ],
     };
 
-    NSDictionary *params = @{
+    NSMutableDictionary *params = [@{
         @"user": username ? [self forceString:username] : [self forceString:self.username],
         @"limit": @(limit),
         @"page": @(pageNum),
-        @"from": @([from timeIntervalSince1970]),
-        @"to": @([to timeIntervalSince1970]),
-    };
+    } mutableCopy];
+    if (from) {
+        [params setObject:@([from timeIntervalSince1970]) forKey:@"from"];
+    }
+    if (to) {
+        [params setObject:@([to timeIntervalSince1970]) forKey:@"to"];
+    }
 
     return [self performApiCallForMethod:@"user.getRecentTracks"
                                 useCache:[self useCache]
