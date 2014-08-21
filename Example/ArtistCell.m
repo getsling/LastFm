@@ -26,7 +26,7 @@
         if ([artist isEqualToString:[[result objectForKey:@"_params"] objectForKey:@"artist"]]) {
             NSURL *image = [result objectForKey:@"image"];
             if (image) {
-                [self.imageView setImageWithURL:image placeholderImage:[UIImage imageNamed:@"Icon"]];
+                [self.imageView sd_setImageWithURL:image placeholderImage:[UIImage imageNamed:@"Icon"]];
             }
             self.detailTextLabel.text = [NSString stringWithFormat:@"%@ scrobbles", [result objectForKey:@"playcount"]];
         }
@@ -35,7 +35,7 @@
 
 - (void)prepareForReuse {
     [self.operation cancel];
-    [self.imageView cancelCurrentImageLoad];
+    [self.imageView sd_cancelCurrentImageLoad];
     [super prepareForReuse];
 }
 
