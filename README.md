@@ -71,6 +71,7 @@ Have a bug? Please [create an issue on GitHub](https://github.com/gangverk/LastF
 * MetroLyrics
 * Radio.com
 * [ShazamScrobbler for OS X](https://github.com/stephanebruckert/ShazamScrobbler)
+* [Radiant Player](http://radiant-player.github.io/radiant-player-mac/)
 
 Are you using LastFm in your iOS or Mac OS X app? Send a pull request with an updated README.md file to be included.
 
