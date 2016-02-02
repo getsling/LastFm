@@ -1,3 +1,9 @@
+1.16.0 - February 2, 2016
+- Added tvOS support to the podfile
+- Updated minimum iOS version to 6
+- Updated minimum OS X version to 10.8
+- Fixed compiler notice
+
 1.15.0 - January 17, 2014
 - The LastFm podspec is now used by the example app as well
 - Removed deprecated method:
