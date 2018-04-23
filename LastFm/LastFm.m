@@ -7,7 +7,7 @@
 //
 
 #import "LastFm.h"
-#import "DDXML.h"
+#import <KissXML/DDXML.h>
 #include <CommonCrypto/CommonDigest.h>
 
 #define API_URL @"https://ws.audioscrobbler.com/2.0/"

@@ -19,3 +19,8 @@ Pods
 Build
 Podfile.lock
 
+# Carthage
+Carthage
+
+# macOS
+.DS_Store
